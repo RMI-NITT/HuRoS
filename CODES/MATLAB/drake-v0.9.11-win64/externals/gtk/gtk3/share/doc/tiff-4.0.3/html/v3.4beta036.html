@@ -1,0 +1,170 @@
+ew thread. Note, this cannot be undone."
+            },
+            {
+              "type": "WAIT_FOR_CLICK",
+              "targetSelector": ".threadBreakerHeading .threadBreakerBreak",
+              "function": "next",
+              "suppressClick": true
+            }
+          ]
+        },
+        {
+          "itemsOnScreen": [{
+            "type": "MODAL",
+            "title": "Split Away!",
+            "html": "You can split as many emails you want without any limits. This feature is completely free!",
+            "rightButtonText": "OK",
+            "showRightButton": true,
+            "rightButtonFunction": {
+              "functionName": "changeChapterTo",
+              "args": ["pixelTrackingInterstitial"]
+            },
+            "showLeftButton": false
+          }]
+        }
+      ]
+    },
+
+    "threadBreakerNoRelevantThread": {
+      "pages": [
+        {
+           "itemsOnScreen": [
+           {
+              "type": "MODAL",
+              "title": "Move Emails to a New Thread",
+              "html": " *threadBreakerNoRelevantThread*",
+              "rightButtonText": "Finish",
+              "showRightButton": true,
+              "rightButtonFunction": "finish",
+              "showLeftButton": false
+            }
+          ]
+        }
+      ]
+    },
+
+    "threadBreakerConversationViewDisabled": {
+      "pages": [
+        {
+          "itemsOnScreen": [
+            {
+              "type": "MODAL",
+              "title": "Problem with the Tour",
+              "html": "Thread Splitter only works if you have Gmail's conversation view enabled. Please turn on Conversation View in Gmail's settings if you want to access this feature.",
+              "rightButtonText": "Finish",
+              "showRightButton": true,
+              "rightButtonFunction": "finish",
+              "showLeftButton": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+
+  "tourData": {
+    "fakeBoxInformation": {
+      "data": {
+        "names": {
+          "peopleNames": [
+            "Nancy Hardman",
+            "Janice O'Reilly",
+            "Jacklyn Dennis",
+            "Ed Levine",
+            "John Jester",
+            "Steven Atchison",
+            "Roger Lee",
+            "Chris Wright",
+            "Ann Miura",
+            "Donald Pierce",
+            "Roy Ybarr",
+            "Bev Wheatley",
+            "Robert Maultsby",
+            "Donna Monaghan",
+            "Harold Ent",
+            "Valerie Dupont",
+            "Tom Washington",
+            "Malcolm Hanks",
+            "Jim Cruise",
+            "Michelle Gonzalez",
+            "Katy Simone",
+            "Charles Simmons",
+            "Bruce Levitte",
+            "Joseph Bale",
+            "Christian Hardy"
+          ],
+
+          "companyNames": [
+            "Acme Corporation",
+            "GM",
+            "Chrysler",
+            "Apple",
+            "Google",
+            "Microsoft",
+            "Sony",
+            "Panasonic",
+            "DuPont",
+            "Boeing",
+            "Qualcomm",
+            "Whole Foods",
+            "Intel",
+            "Nordstrom",
+            "Macy's",
+            "Geico",
+            "Hasbro",
+            "Mattel",
+            "Capital One",
+            "Bank of America",
+            "Samsung",
+            "Electronic Arts",
+            "Louis Vuitton",
+            "D&G",
+            "Exxon",
+            "Chase"
+          ],
+
+          "issueNames": [
+            "Website redesign",
+            "Stripe integration",
+            "Facebook connect support",
+            "v2 launch",
+            "New documentation",
+            "page titles for SEO",
+            "new blog",
+            "twitter account",
+            "Facebook page",
+            "business cards",
+            "new login"
+          ],
+
+          "placeNames": [
+            "W Hotel",
+            "Fisherman's Warf",
+            "Flight to California",
+            "Flight Home",
+            "Alcatraz",
+            "Dinner at Castro",
+            "Streetcar Tour",
+            "Ferry building",
+            "Ferry from Sausalito",
+            "Treasure Island",
+            "SFMOMA",
+            "AT&T Park",
+            "Coit Tower",
+            "Union Square",
+            "Cable Cars",
+            "Taxi from airport",
+            "Taxi to airport"
+          ],
+
+          "eventNames": [
+            "booked caterer",
+            "made guest list",
+            "sent out invites",
+            "booked venue",
+            "booked necessary hotels",
+            "designed decorations",
+            "booked DJ"
+          ]
+        },
+       

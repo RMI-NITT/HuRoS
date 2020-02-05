@@ -1,0 +1,52 @@
+       },
+        {
+          "itemsOnScreen": [
+             {
+              "type": "TOOLTIP",
+              "targetID": ".streak__bumpLaterMenu",
+              "position": "right",
+              "title": "The Snooze Menu",
+              "html": "The Snooze menu lets you choose when you want to bring the email back to the top of your inbox. You can type in a specific date or you can set relative times like \"in 2 days\".",
+              "addAsChildElement": true
+            }
+          ]
+        },
+        {
+          "itemsOnScreen": [
+             {
+              "type": "TOOLTIP",
+              "targetID": ".streak__scheduler_addedSection",
+              "position": "right",
+              "title": "Based on Replies",
+              "html": "This checkox below tells Streak to only pop the thread back in your inbox if there haven't been any new messages on the thread. If you're using snooze to remind you to follow up with someone who hasn't replied, this is really useful.",
+              "addAsChildElement": true
+            }
+          ]
+        },
+        {
+          "onEnter": "openComposeToolbarOverflow",
+          "itemsOnScreen": [
+            {
+              "type": "TOOLTIP",
+              "targetID": ".nn[style *= height]:last .inboxsdk__compose_actionToolbar .streak__snoozeIcon",
+              "position": "top",
+              "title": "Snooze Button on Compose",
+              "html": "You can also snooze an email that you're composing which will cause the email to be brought back to the top of your inbox at the specified time.<br/><br/>It works just like the other Snooze menu."
+            }
+          ],
+          "onExit": "closeComposeWindow"
+        },
+        {
+          "onEnter": "ensureTrackedSearchLinkVisible",
+          "itemsOnScreen": [
+            {
+              "type": "TOOLTIP",
+              "targetID": ".TK > .inboxsdk__navItem[data-group-order-hint*=streak]:eq(0)",
+              "position": "right",
+              "title": "See Your Snoozed Emails",
+              "html": "Click on this link to see all your upcoming snoozed emails"
+            }
+          ]
+        },
+        {
+          "onEnter

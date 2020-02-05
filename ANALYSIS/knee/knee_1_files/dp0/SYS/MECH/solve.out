@@ -1,0 +1,1914 @@
+
+ ANSYS Mechanical Enterprise                       
+
+
+ *------------------------------------------------------------------*
+ |                                                                  |
+ |   W E L C O M E   T O   T H E   A N S Y S (R)  P R O G R A M     |
+ |                                                                  |
+ *------------------------------------------------------------------*
+
+
+
+
+ ***************************************************************
+ *            ANSYS Release 19.2     LEGAL NOTICES             *
+ ***************************************************************
+ *                                                             *
+ * Copyright 1971-2018 ANSYS, Inc.  All rights reserved.       *
+ * Unauthorized use, distribution or duplication is            *
+ * prohibited.                                                 *
+ *                                                             *
+ * Ansys is a registered trademark of ANSYS, Inc. or its       *
+ * subsidiaries in the United States or other countries.       *
+ * See the ANSYS, Inc. online documentation or the ANSYS, Inc. *
+ * documentation CD or online help for the complete Legal      *
+ * Notice.                                                     *
+ *                                                             *
+ ***************************************************************
+ *                                                             *
+ * THIS ANSYS SOFTWARE PRODUCT AND PROGRAM DOCUMENTATION       *
+ * INCLUDE TRADE SECRETS AND CONFIDENTIAL AND PROPRIETARY      *
+ * PRODUCTS OF ANSYS, INC., ITS SUBSIDIARIES, OR LICENSORS.    *
+ * The software products and documentation are furnished by    *
+ * ANSYS, Inc. or its subsidiaries under a software license    *
+ * agreement that contains provisions concerning               *
+ * non-disclosure, copying, length and nature of use,          *
+ * compliance with exporting laws, warranties, disclaimers,    *
+ * limitations of liability, and remedies, and other           *
+ * provisions.  The software products and documentation may be *
+ * used, disclosed, transferred, or copied only in accordance  *
+ * with the terms and conditions of that software license      *
+ * agreement.                                                  *
+ *                                                             *
+ * ANSYS, Inc. is a UL registered                              *
+ * ISO 9001:2008 company.                                      *
+ *                                                             *
+ ***************************************************************
+ *                                                             *
+ * This product is subject to U.S. laws governing export and   *
+ * re-export.                                                  *
+ *                                                             *
+ * For U.S. Government users, except as specifically granted   *
+ * by the ANSYS, Inc. software license agreement, the use,     *
+ * duplication, or disclosure by the United States Government  *
+ * is subject to restrictions stated in the ANSYS, Inc.        *
+ * software license agreement and FAR 12.212 (for non-DOD      *
+ * licenses).                                                  *
+ *                                                             *
+ ***************************************************************
+
+ Release 19.2
+     
+ Point Releases and Patches installed:   
+     
+ ANSYS, Inc. Products Release 19.2   
+ SpaceClaim Release 19.2 
+ AIM Release 19.2
+ Autodyn Release 19.2
+ LS-DYNA Release 19.2
+ CFD-Post only Release 19.2  
+ CFX (includes CFD-Post) Release 19.2
+ Chemkin Release 19.2
+ EnSight Release 19.2
+ FENSAP-ICE Release 19.2 
+ Fluent (includes CFD-Post) Release 19.2 
+ Forte Release 19.2  
+ Polyflow (includes CFD-Post) Release 19.2   
+ TurboGrid Release 19.2  
+ ICEM CFD Release 19.2   
+ Aqwa Release 19.2   
+ Customization Files for User Programmable Features Release 19.2 
+ Mechanical Products Release 19.2
+ Icepak (includes CFD-Post) Release 19.2 
+ Remote Solve Manager Standalone Services Release 19.2   
+ Viewer Release 19.2 
+ ACIS Geometry Interface Release 19.2
+ AutoCAD Geometry Interface Release 19.2 
+ Catia, Version 4 Geometry Interface Release 19.2
+ Catia, Version 5 Geometry Interface Release 19.2
+ Catia, Version 6 Geometry Interface Release 19.2
+ Creo Elements/Direct Modeling Geometry Interface Release 19.2   
+ Creo Parametric Geometry Interface Release 19.2 
+ Inventor Geometry Interface Release 19.2
+ JTOpen Geometry Interface Release 19.2  
+ NX Geometry Interface Release 19.2  
+ Parasolid Geometry Interface  Release 19.2  
+ Solid Edge Geometry Interface Release 19.2  
+ SOLIDWORKS Geometry Interface Release 19.2  
+ ANSYS, Inc. License Manager Release 19.2
+
+
+          *****  ANSYS COMMAND LINE ARGUMENTS  *****
+  BATCH MODE REQUESTED (-b)    = NOLIST
+  INPUT FILE COPY MODE (-c)    = COPY
+  DISTRIBUTED MEMORY PARALLEL REQUESTED
+       2 PARALLEL PROCESSES REQUESTED WITH SINGLE THREAD PER PROCESS
+    TOTAL OF     2 CORES REQUESTED
+  MPI OPTION                   = INTELMPI
+  INPUT FILE NAME              = S:\FILES(imp)\BIPED\ANALYSIS\knee\_ProjectScratch\Scr74A7\dummy.dat
+  OUTPUT FILE NAME             = S:\FILES(imp)\BIPED\ANALYSIS\knee\_ProjectScratch\Scr74A7\solve.out
+  START-UP FILE MODE           = NOREAD
+  STOP FILE MODE               = NOREAD
+
+ RELEASE= Release 19.2         BUILD= 19.2      UP20180808   VERSION=WINDOWS x64 
+ CURRENT JOBNAME=file0  00:34:50  DEC 22, 2018 CP=      0.469
+
+
+ PARAMETER _DS_PROGRESS =     999.0000000    
+
+ /INPUT FILE= ds.dat  LINE=       0
+
+
+
+ *** NOTE ***                            CP =       0.609   TIME= 00:34:50
+ The /CONFIG,NOELDB command is not valid in a Distributed ANSYS          
+ solution.  Command is ignored.                                          
+
+ *GET  _WALLSTRT  FROM  ACTI  ITEM=TIME WALL  VALUE= 0.580555556    
+
+ TITLE= 
+ knee_1--Transient (B5)                                                        
+
+
+ SET PARAMETER DIMENSIONS ON  _WB_PROJECTSCRATCH_DIR
+  TYPE=STRI  DIMENSIONS=      248        1        1
+
+ PARAMETER _WB_PROJECTSCRATCH_DIR(1) = S:\FILES(imp)\BIPED\ANALYSIS\knee\_ProjectScratch\Scr74A7\
+
+ SET PARAMETER DIMENSIONS ON  _WB_SOLVERFILES_DIR
+  TYPE=STRI  DIMENSIONS=      248        1        1
+
+ PARAMETER _WB_SOLVERFILES_DIR(1) = S:\FILES(imp)\BIPED\ANALYSIS\knee\knee_1_files\dp0\SYS\MECH\
+
+ SET PARAMETER DIMENSIONS ON  _WB_USERFILES_DIR
+  TYPE=STRI  DIMENSIONS=      248        1        1
+
+ PARAMETER _WB_USERFILES_DIR(1) = S:\FILES(imp)\BIPED\ANALYSIS\knee\knee_1_files\user_files\
+ --- Data in consistent MKS units. See Solving Units in the help system for more
+
+ MKS UNITS SPECIFIED FOR INTERNAL    
+  LENGTH        (l)  = METER (M)
+  MASS          (M)  = KILOGRAM (KG)
+  TIME          (t)  = SECOND (SEC)
+  TEMPERATURE   (T)  = CELSIUS (C)
+  TOFFSET            = 273.0
+  CHARGE        (Q)  = COULOMB
+  FORCE         (f)  = NEWTON (N) (KG-M/SEC2)
+  HEAT               = JOULE (N-M)
+
+  PRESSURE           = PASCAL (NEWTON/M**2)
+  ENERGY        (W)  = JOULE (N-M)
+  POWER         (P)  = WATT (N-M/SEC)
+  CURRENT       (i)  = AMPERE (COULOMBS/SEC)
+  CAPACITANCE   (C)  = FARAD
+  INDUCTANCE    (L)  = HENRY
+  MAGNETIC FLUX      = WEBER
+  RESISTANCE    (R)  = OHM
+  ELECTRIC POTENTIAL = VOLT
+
+ INPUT  UNITS ARE ALSO SET TO MKS 
+
+ *** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE Release 19.2     19.2     ***
+ DISTRIBUTED ANSYS Mechanical Enterprise                       
+
+ 00000000  VERSION=WINDOWS x64   00:34:50  DEC 22, 2018 CP=      0.609
+
+ knee_1--Transient (B5)                                                        
+
+
+
+          ***** ANSYS ANALYSIS DEFINITION (PREP7) *****
+ *********** Nodes for the whole assembly ***********
+ *********** Nodes for all Remote Points ***********
+ *********** Elements for Body 1 "KNEE_1_UPPER_1[40]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 2 "KNEE_AXLE_1[51]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 3 "KNEE_1_BEARING_1[63]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 4 "KNEE_1_BEARING_1[64]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 5 "ALUMINIUM_EXT[77]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 6 "MOTOR_MOUNT_[84]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 7 "MOTOR_MOUNT_EXT_[109]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 8 "KNEE_1_MOTOR_1[89]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 9 "KNEE_1_AXLE_1[124]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 10 "GEAR_SHAFT_MOUNT_1_[134]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 11 "GEAR_FINAL_1_[224]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 12 "GEAR_FINAL_2_[230]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 13 "GEAR_FINAL_1_[233]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 14 "GEAR_FINAL_2_[236]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 15 "KNEE_LOWER_1[239]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 16 "KNEE_1_BEARING_1[243]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Elements for Body 17 "KNEE_1_BEARING_1[246]" ***********
+ *********** Send Body as a Rigid Body ***********
+ *********** Send User Defined Coordinate System(s) ***********
+ *********** Set Reference Temperature ***********
+ *********** Send Materials ***********
+ *********** Create Contact "Frictional - GEAR_FINAL_1_[224] To GEAR_FINAL_2_[23
+             Real Constant Set For Above Contact Is 21 & 20
+ *********** Create Contact "Frictional - GEAR_FINAL_1_[233] To GEAR_FINAL_2_[23
+             Real Constant Set For Above Contact Is 25 & 24
+ *********** Create Remote Point "Internal Remote Point 2" ***********
+ *********** Create Remote Point "Internal Remote Point 3" ***********
+ *********** Create Remote Point "Internal Remote Point 4" ***********
+ *********** Create Remote Point "Internal Remote Point 5" ***********
+ *********** Create Remote Point "Internal Remote Point 6" ***********
+ *********** Create Remote Point "Internal Remote Point 7" ***********
+ *********** Create Remote Point "Internal Remote Point 8" ***********
+ *********** Create Remote Point "Internal Remote Point 9" ***********
+ *********** Create Remote Point "Internal Remote Point 10" ***********
+ *********** Create Remote Point "Internal Remote Point 11" ***********
+ *********** Create Remote Point "Internal Remote Point 12" ***********
+ *********** Create Remote Point "Internal Remote Point 13" ***********
+ *********** Create Remote Point "Internal Remote Point 14" ***********
+ *********** Create Remote Point "Internal Remote Point 15" ***********
+ *********** Create Remote Point "Internal Remote Point 16" ***********
+ *********** Create Remote Point "Internal Remote Point 17" ***********
+ *********** Create Remote Point "Internal Remote Point 18" ***********
+ *********** Create Remote Point "Internal Remote Point 19" ***********
+ *********** Create Remote Point "Internal Remote Point 20" ***********
+ *********** Create Remote Point "Internal Remote Point 21" ***********
+ *********** Create Remote Point "Internal Remote Point 22" ***********
+ *********** Create Remote Point "Internal Remote Point 23" ***********
+ *********** Create Remote Point "Internal Remote Point 24" ***********
+ *********** Create Remote Point "Internal Remote Point 25" ***********
+ *********** Create Remote Point "Internal Remote Point 26" ***********
+ *********** Create Remote Point "Internal Remote Point 27" ***********
+ *********** Create Remote Point "Internal Remote Point 28" ***********
+ *********** Create Remote Point "Internal Remote Point 29" ***********
+ *********** Create Remote Point "Internal Remote Point 30" ***********
+ *********** Create Remote Point "Internal Remote Point 31" ***********
+ *********** Create Remote Point "Internal Remote Point 32" ***********
+ *********** Create Remote Point "Internal Remote Point 33" ***********
+ *********** Create Remote Point "Internal Remote Point 34" ***********
+ *********** Create Remote Point "Internal Remote Point 35" ***********
+ *********** Create Remote Point "Internal Remote Point 36" ***********
+ *********** Create Remote Point "Internal Remote Point 37" ***********
+ *********** Create Remote Point "Internal Remote Point 38" ***********
+ *********** Create Remote Point "Internal Remote Point 39" ***********
+ *********** Create Remote Point "Internal Remote Point 40" ***********
+ *********** Create Remote Point "Internal Remote Point 41" ***********
+ *********** Create Remote Point "Internal Remote Point 42" ***********
+ *********** Create Joint "Fixed - Ground To ALUMINIUM_EXT[77]" ***********
+ *********** Create Joint "Fixed - ALUMINIUM_EXT[77] To MOTOR_MOUNT_[84]" ******
+ *********** Create Joint "Revolute - KNEE_1_MOTOR_1[89] To GEAR_FINAL_1_[224]" 
+             Real Constant Set For Above Joint Is 40
+ *********** Create Joint "Revolute - KNEE_1_AXLE_1[124] To GEAR_FINAL_1_[233]" 
+             Real Constant Set For Above Joint Is 41
+ *********** Create Joint "Revolute - KNEE_1_AXLE_1[124] To GEAR_FINAL_2_[230]" 
+             Real Constant Set For Above Joint Is 42
+ *********** Create Joint "Revolute - KNEE_AXLE_1[51] To GEAR_FINAL_2_[236]" ***
+             Real Constant Set For Above Joint Is 43
+ *********** Create Joint "Revolute - KNEE_1_BEARING_1[243] To KNEE_LOWER_1[239]
+             Real Constant Set For Above Joint Is 44
+ *********** Create Joint "Revolute - KNEE_1_BEARING_1[64] To KNEE_1_UPPER_1[40]
+             Real Constant Set For Above Joint Is 45
+ *********** Create Joint "Revolute - KNEE_1_BEARING_1[63] To KNEE_1_UPPER_1[40]
+             Real Constant Set For Above Joint Is 46
+ *********** Create Joint "Revolute - KNEE_1_BEARING_1[246] To KNEE_LOWER_1[239]
+             Real Constant Set For Above Joint Is 47
+ *********** Create Joint "Fixed - GEAR_FINAL_2_[236] To KNEE_LOWER_1[239]" ****
+ *********** Create Joint "Fixed - GEAR_FINAL_1_[233] To GEAR_FINAL_2_[230]" ***
+ *********** Create Joint "Fixed - ALUMINIUM_EXT[77] To GEAR_SHAFT_MOUNT_1_[134]
+ *********** Create Joint "Fixed - ALUMINIUM_EXT[77] To KNEE_1_UPPER_1[40]" ****
+ *********** Create Joint "Fixed - KNEE_AXLE_1[51] To KNEE_1_BEARING_1[63]" ****
+ *********** Create Joint "Fixed - KNEE_AXLE_1[51] To KNEE_1_BEARING_1[64]" ****
+ *********** Create Joint "Fixed - KNEE_AXLE_1[51] To KNEE_1_BEARING_1[243]" ***
+ *********** Create Joint "Fixed - KNEE_AXLE_1[51] To KNEE_1_BEARING_1[246]" ***
+ *********** Create Joint "Fixed - MOTOR_MOUNT_[84] To MOTOR_MOUNT_EXT_[109]" **
+ *********** Create Joint "Fixed - MOTOR_MOUNT_[84] To KNEE_1_MOTOR_1[89]" *****
+ *********** Create Joint "Fixed - GEAR_SHAFT_MOUNT_1_[134] To KNEE_1_AXLE_1[124
+ *********** Create Joint Drivers **********
+
+
+ ***** ROUTINE COMPLETED *****  CP =         0.812
+
+
+ --- Number of total nodes = 9805
+ --- Number of contact elements = 5364
+ --- Number of spring elements = 0
+ --- Number of bearing elements = 0
+ --- Number of solid elements = 2699
+ --- Number of condensed parts = 0
+ --- Number of total elements = 5473
+
+ *GET  _WALLBSOL  FROM  ACTI  ITEM=TIME WALL  VALUE= 0.580555556    
+ ****************************************************************************
+ *************************    SOLUTION       ********************************
+ ****************************************************************************
+
+ *****  ANSYS SOLUTION ROUTINE  *****
+
+
+ PERFORM A TRANSIENT ANALYSIS
+  THIS WILL BE A NEW ANALYSIS
+
+ LARGE DEFORMATION ANALYSIS
+
+ STEP BOUNDARY CONDITION KEY= 1
+
+ USE SPARSE MATRIX DIRECT SOLVER
+
+ CONTACT INFORMATION PRINTOUT LEVEL       1
+
+ DO NOT COMBINE ELEMENT MATRIX FILES (.emat) AFTER DISTRIBUTED PARALLEL SOLUTION
+
+ DO NOT COMBINE ELEMENT SAVE DATA FILES (.esav) AFTER DISTRIBUTED PARALLEL SOLUTION
+
+ PERFORM A FULL TRANSIENT ANALYSIS
+  USING HHT ALGORITHM
+
+ USE AMPLITUDE DECAY FACTOR FOR SECOND ORDER TRANSIENT PARAMETERS
+   GAMMA= 0.1000      (ALPHA= 0.3025      DELTA= 0.6000      ALPHAF= 0.1000      ALPHAM=  0.000    )
+
+ NLDIAG: Nonlinear diagnostics CONT option is set to ON. 
+         Writing frequency : each ITERATION.
+
+ DEFINE RESTART CONTROL FOR LOADSTEP LAST
+ AT FREQUENCY OF LAST AND NUMBER FOR OVERWRITE IS    0
+
+ DELETE RESTART FILES OF ENDSTEP
+ ****************************************************
+ ******************* SOLVE FOR LS 1 OF 20 ****************
+
+ PRINTOUT RESUMED BY /GOP
+
+ SELECT       FOR ITEM=TYPE COMPONENT=    
+  IN RANGE        40 TO         40 STEP          1
+
+          1  ELEMENTS (OF       5473  DEFINED) SELECTED BY  ESEL  COMMAND.
+
+ APPLIED BOUNDARY CONDITIONS OR FORCES FOR JOINT ELEMENTS
+
+SPECIFIED VALUE FOR ALL SELECTED ELEMENTS
+FORCE, MOMENT, DISPLACEMENT OR ROTATION LABEL = ROTZ
+SET ACCORDING TO TABLE PARAMETER              = _LOADVARI306                    
+
+ ALL SELECT   FOR ITEM=ELEM COMPONENT=    
+  IN RANGE         1 TO      21270 STEP          1
+
+       5473  ELEMENTS (OF       5473  DEFINED) SELECTED BY  ESEL  COMMAND.
+
+ DO NOT USE AUTOMATIC TIME STEPPING THIS LOAD STEP
+
+ USE INITIAL TIME STEP SIZE OF  1.000000     FOR ALL  DEGREES OF FREEDOM
+ FOR AUTOMATIC TIME STEPPING:
+   USE  1.000000     AS THE MINIMUM TIME STEP SIZE
+   USE  1.000000     AS THE MAXIMUM TIME STEP SIZE
+
+ TIME=  1.0000    
+
+ INCLUDE TRANSIENT EFFECTS FOR  ALL DEGREES OF FREEDOM THIS LOAD STEP
+
+ ERASE THE CURRENT DATABASE OUTPUT CONTROL TABLE.
+
+
+ WRITE ALL  ITEMS TO THE DATABASE WITH A FREQUENCY OF NONE
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE NSOL ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE RSOL ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE NLOA ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE STRS ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE EPEL ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE EPPL ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE V    ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE A    ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ PRINTOUT RESUMED BY /GOP
+
+ WRITE MISC ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR THE ENTITIES DEFINED BY COMPONENT _ELMISC 
+
+ NONLINEAR STABILIZATION CONTROL:
+ KEY=OFF 
+
+
+ *GET  ANSINTER_  FROM  ACTI  ITEM=INT        VALUE=  0.00000000    
+
+ *IF  ANSINTER_                         ( =   0.00000     )  NE  
+      0                                 ( =   0.00000     )  THEN    
+
+ *ENDIF
+
+ *** NOTE ***                            CP =       0.875   TIME= 00:34:50
+ The automatic domain decomposition logic has selected the MESH domain   
+ decomposition method with 2 processes per solution.                     
+
+ *****  ANSYS SOLVE    COMMAND  *****
+
+ *** WARNING ***                         CP =       0.875   TIME= 00:34:50
+ Element shape checking is currently inactive.  Issue SHPP,ON or         
+ SHPP,WARN to reactivate, if desired.                                    
+
+ *** NOTE ***                            CP =       0.875   TIME= 00:34:50
+ The model data was checked and warning messages were found.             
+  Please review output or errors file (                                  
+ S:\FILES(imp)\BIPED\ANALYSIS\knee\_ProjectScratch\Scr74A7\file0.err )   
+ for these warning messages.                                             
+
+ *** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE Release 19.2     19.2     ***
+ DISTRIBUTED ANSYS Mechanical Enterprise                       
+
+ 00000000  VERSION=WINDOWS x64   00:34:50  DEC 22, 2018 CP=      0.875
+
+ knee_1--Transient (B5)                                                        
+
+
+
+                       S O L U T I O N   O P T I O N S
+
+   PROBLEM DIMENSIONALITY. . . . . . . . . . . . .3-D                  
+   DEGREES OF FREEDOM. . . . . . UX   UY   UZ   ROTX ROTY ROTZ
+   ANALYSIS TYPE . . . . . . . . . . . . . . . . .TRANSIENT            
+      SOLUTION METHOD. . . . . . . . . . . . . . .FULL                 
+   OFFSET TEMPERATURE FROM ABSOLUTE ZERO . . . . .  273.15    
+   NONLINEAR GEOMETRIC EFFECTS . . . . . . . . . .ON
+   EQUATION SOLVER OPTION. . . . . . . . . . . . .SPARSE             
+   NEWTON-RAPHSON OPTION . . . . . . . . . . . . .PROGRAM CHOSEN   
+   GLOBALLY ASSEMBLED MATRIX . . . . . . . . . . .SYMMETRIC  
+
+ *** WARNING ***                         CP =       0.875   TIME= 00:34:50
+ Material number 40 (used by element 15780) should normally have at      
+ least one MP or one TB type command associated with it.  Output of      
+ energy by material may not be available.                                
+
+ *** NOTE ***                            CP =       0.938   TIME= 00:34:50
+ The step data was checked and warning messages were found.              
+  Please review output or errors file (                                  
+ S:\FILES(imp)\BIPED\ANALYSIS\knee\_ProjectScratch\Scr74A7\file0.err )   
+ for these warning messages.                                             
+
+ *** NOTE ***                            CP =       0.938   TIME= 00:34:50
+ This nonlinear analysis defaults to using the full Newton-Raphson       
+ solution procedure.  This can be modified using the NROPT command.      
+
+ *** NOTE ***                            CP =       0.938   TIME= 00:34:50
+ Internal nodes from 56402 to 56456 are created.                         
+ 31 internal nodes are used for handling degrees of freedom on pilot     
+ nodes of rigid target surfaces.                                         
+ 24 internal nodes are used for non-contact elements with mixed          
+ formulation.                                                            
+
+ *** NOTE ***                            CP =       0.969   TIME= 00:34:50
+ Internal nodes from 56402 to 56456 are created.                         
+ 31 internal nodes are used for handling degrees of freedom on pilot     
+ nodes of rigid target surfaces.                                         
+ 24 internal nodes are used for non-contact elements with mixed          
+ formulation.                                                            
+ *WARNING*: Node 832 is applied on different contact pairs (real ID 19 & 
+ 20) as the pilot node.  These two pairs will be merged.                 
+ *WARNING*: Node 829 has been used on different contact pairs (real ID   
+ 19 & 20).  These two pairs will be merged.  Please check the model      
+ carefully.                                                              
+ *WARNING*: Some rigid target elements (e.g.21235) in real constant set  
+ 23 overlap with other MPC/Lagrange based elements (e.g.15804) in real   
+ constant set 48 which can cause overconstraint.                         
+
+ *** NOTE ***                            CP =       1.266   TIME= 00:34:50
+ Rigid target surface identified by real constant set 18.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 5387.      
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.266   TIME= 00:34:50
+ Rigid target surface identified by real constant set 19.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 832.       
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 49.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.266   TIME= 00:34:50
+ Rigid-rigid contact pair identified by real constant set 20 and contact 
+ element type 20 has been set up.  The degrees of freedom of the rigid   
+ target surface are driven by the pilot node 832.                        
+
+ *** NOTE ***                            CP =       1.266   TIME= 00:34:50
+ The degrees of freedom of the rigid contact surface are driven by the   
+ pilot node 5387.                                                        
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 19.                                                                     
+ Contact algorithm: Penalty method
+ Contact detection at: Gauss integration point
+ Contact stiffness factor FKN                  1.0000    
+ The resulting initial contact stiffness      0.23927E+14
+ Default penetration tolerance factor FTOLN   0.10000    
+ The resulting penetration tolerance          0.14273E-03
+ Max. initial friction coefficient MU         0.10000    
+ Default tangent stiffness factor FKT          1.0000    
+
+ *** WARNING ***                         CP =       1.266   TIME= 00:34:50
+ It is highly recommended to set KEYOPT(10)=0 (update contact stiffness  
+ at each iteration) in order to achieve better convergence.              
+ Use constant contact stiffness
+ Default Max. friction stress TAUMAX          0.10000E+21
+ Average contact surface length               0.14273E-02
+ Average contact pair depth                   0.14273E-02
+ Default pinball region factor PINB            3.0000    
+ The resulting pinball region                 0.42818E-02
+ Auto contact offset used to close gap        0.17581E-03
+ Initial penetration is excluded.
+
+ *** NOTE ***                            CP =       1.266   TIME= 00:34:50
+ Min.  Initial gap 1.740707704E-04 was detected between contact element  
+ 17371 and target element 18518.                                         
+ The gap is closed due to initial settings.                              
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.266   TIME= 00:34:50
+ Rigid target surface identified by real constant set 22.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 8049.      
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 49.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.266   TIME= 00:34:50
+ Rigid target surface identified by real constant set 23.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 3045.      
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 24.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21235&21260) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid-rigid contact pair identified by real constant set 24 and contact 
+ element type 24 has been set up.  The degrees of freedom of the rigid   
+ target surface are driven by the pilot node 3045.                       
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ The degrees of freedom of the rigid contact surface are driven by the   
+ pilot node 8049.                                                        
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 23.                                                                     
+ Contact algorithm: Penalty method
+ Contact detection at: Gauss integration point
+ Contact stiffness factor FKN                  1.0000    
+ The resulting initial contact stiffness      0.23927E+14
+ Default penetration tolerance factor FTOLN   0.10000    
+ The resulting penetration tolerance          0.14273E-03
+ Max. initial friction coefficient MU         0.10000    
+ Default tangent stiffness factor FKT          1.0000    
+ *WARNING*: It is highly recommended to set KEYOPT(10)=0 (update contact 
+ stiffness at each iteration) in order to achieve better convergence.    
+ Use constant contact stiffness
+ Default Max. friction stress TAUMAX          0.10000E+21
+ Average contact surface length               0.14273E-02
+ Average contact pair depth                   0.14273E-02
+ Default pinball region factor PINB            3.0000    
+ The resulting pinball region                 0.42818E-02
+ Auto contact offset used to close gap        0.23043E-03
+ Initial penetration is excluded.
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Min.  Initial gap 2.281520974E-04 was detected between contact element  
+ 19865 and target element 20848.                                         
+ The gap is closed due to initial settings.                              
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 26.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 2.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 51.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Boundary conditions, coupling, and/or constraint equations   
+ have been applied on certain target nodes (for example 56361).          
+ *WARNING*: Certain rigid elements (for example 21239&21262) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 27.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 7.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 39.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21255&21269) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 28.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 8.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 57.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 29.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 6.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 58.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 30.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 3.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 55.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21248&21266) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 31.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 11.        
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 54.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 32.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 4439.      
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 48.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 33.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 5.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 53.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 34.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 1.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 51.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 35.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 4.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 52.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 36.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 12.        
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 55.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 37.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 10.        
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 50.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21257&21270) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 38.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 9.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 56.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 39.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56362.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 27.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21259&21207) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 48.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56380.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 32.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21260&21235) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 49.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56382.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 19.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 50.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56384.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 37.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21262&21239) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 51.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56386.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 34.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 52.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56388.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 35.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21264&21244) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 53.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56390.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 33.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21265&21246) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 54.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56392.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 31.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21266&21248) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 55.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56394.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 36.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 56.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56396.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 38.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21268&21252) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 57.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56398.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 28.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21269&21255) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Rigid target surface identified by real constant set 58.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56400.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ The rigid surface does not overlap other elements.                      
+ This pair will be merged with other pair defined by real constant set   
+ 29.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21270&21257) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** WARNING ***                         CP =       1.281   TIME= 00:34:50
+ Overconstraint may occur for Lagrange multiplier or MPC based contact   
+ algorithm.                                                              
+ The reasons for possible overconstraint are:                            
+
+ *** WARNING ***                         CP =       1.281   TIME= 00:34:50
+ Boundary conditions, coupling, and/or constraint equations have been    
+ applied on certain contact nodes (for example 56361).                   
+
+ *** WARNING ***                         CP =       1.281   TIME= 00:34:50
+ Certain contact elements (for example 21270 & 21257) overlap with       
+ other.                                                                  
+ ****************************************
+  
+  
+
+ *** NOTE ***                            CP =       1.281   TIME= 00:34:50
+ Internal nodes from 56402 to 56456 are created.                         
+ 31 internal nodes are used for handling degrees of freedom on pilot     
+ nodes of rigid target surfaces.                                         
+ 24 internal nodes are used for non-contact elements with mixed          
+ formulation.                                                            
+
+  
+  
+     D I S T R I B U T E D   D O M A I N   D E C O M P O S E R
+  
+  ...Number of elements: 5473
+  ...Number of nodes:    9860
+  ...Decompose to 2 CPU domains
+  ...Element load balance ratio =     1.977
+
+
+                      L O A D   S T E P   O P T I O N S
+
+   LOAD STEP NUMBER. . . . . . . . . . . . . . . .     1
+   TIME AT END OF THE LOAD STEP. . . . . . . . . .  1.0000    
+   TIME STEP SIZE. . . . . . . . . . . . . . . . .  1.0000    
+   MAXIMUM NUMBER OF EQUILIBRIUM ITERATIONS. . . .    15
+   STEP CHANGE BOUNDARY CONDITIONS . . . . . . . .   YES
+   STRESS-STIFFENING . . . . . . . . . . . . . . .    ON
+   TRANSIENT (INERTIA) EFFECTS
+      STRUCTURAL DOFS. . . . . . . . . . . . . . .    ON
+   TRANSIENT INTEGRATION PARAMETERS
+      GAMMA. . . . . . . . . . . . . . . . . . . . 0.10000    
+      ALPHA. . . . . . . . . . . . . . . . . . . . 0.30250    
+      DELTA. . . . . . . . . . . . . . . . . . . . 0.60000    
+      USING HHT TIME INTEGRATION
+      ALPHAF . . . . . . . . . . . . . . . . . . . 0.10000    
+      ALPHAM . . . . . . . . . . . . . . . . . . .  0.0000    
+   TERMINATE ANALYSIS IF NOT CONVERGED . . . . . .YES (EXIT)  
+   CONVERGENCE CONTROLS. . . . . . . . . . . . . .USE DEFAULTS
+   PRINT OUTPUT CONTROLS . . . . . . . . . . . . .NO PRINTOUT
+   DATABASE OUTPUT CONTROLS
+      ITEM     FREQUENCY   COMPONENT
+       ALL       NONE               
+      NSOL        ALL               
+      RSOL        ALL               
+      NLOA        ALL               
+      STRS        ALL               
+      EPEL        ALL               
+      EPPL        ALL               
+      V           ALL               
+      A           ALL               
+      MISC        ALL       _ELMISC 
+
+
+ SOLUTION MONITORING INFO IS WRITTEN TO FILE= file.mntr                                                                                                                                                                                                                                                           
+ *WARNING*: Node 56362 has been used on different contact pairs (real ID 
+ 39 & 26).  These two pairs will be merged.  Please check the model      
+ carefully.                                                              
+ *WARNING*: Some rigid target elements (e.g.21207) in real constant set  
+ 26 overlap with other MPC/Lagrange based elements (e.g.15777) in real   
+ constant set 39 which can cause overconstraint.                         
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 26.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 2.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 51.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Boundary conditions, coupling, and/or constraint equations   
+ have been applied on certain target nodes (for example 56361).          
+ *WARNING*: Certain rigid elements (for example 21239&21262) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 27.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 7.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 39.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21255&21269) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 28.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 8.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 57.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 29.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 6.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 58.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 30.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 3.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 55.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21248&21266) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 31.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 11.        
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 54.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 33.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 5.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 53.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 34.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 1.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 51.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 35.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 4.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 52.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 36.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 12.        
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 55.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 37.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 10.        
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 50.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21257&21270) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 38.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 9.         
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 56.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 39.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56362.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 27.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21259&21207) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 50.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56384.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 37.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21262&21239) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 51.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56386.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 34.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 52.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56388.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 35.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21264&21244) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 53.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56390.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 33.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21265&21246) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 54.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56392.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 31.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21266&21248) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 55.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56394.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 36.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 56.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56396.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 38.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21268&21252) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 57.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56398.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 28.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21269&21255) overlap     
+ each other.                                                             
+ ****************************************
+  
+
+ *** NOTE ***                            CP =       1.359   TIME= 00:34:50
+ Rigid target surface identified by real constant set 58.  The degrees   
+ of freedom of the rigid surface are driven by the pilot node 56400.     
+ Internal MPC will be built.                                             
+ Boundary conditions can be applied on any target node.
+ This pair will be merged with other pair defined by real constant set   
+ 29.                                                                     
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain rigid elements (for example 21270&21257) overlap     
+ each other.                                                             
+ ****************************************
+  
+ MAXIMUM NUMBER OF EQUILIBRIUM ITERATIONS HAS BEEN MODIFIED              
+  TO BE, NEQIT = 25, BY SOLUTION CONTROL LOGIC.                          
+
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 26 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 27 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 28 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 29 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 30 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 31 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 33 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 34 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 35 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 36 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 37 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 38 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 39 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 50 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 51 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 53 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 54 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 55 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 56 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+ *WARNING*: No MPC equations were built for the rigid constraint surface 
+ identified by real constant set 57 due to overconstraint detection      
+ logic.  Please check your model carefully.                              
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56375, degree   
+ of freedom 1 of the element 15795.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56375, degree   
+ of freedom 2 of the element 15795.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56375, degree   
+ of freedom 3 of the element 15795.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56375, degree   
+ of freedom 4 of the element 15795.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56375, degree   
+ of freedom 5 of the element 15795.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56375, degree   
+ of freedom 6 of the element 15795.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56377, degree   
+ of freedom 1 of the element 15798.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56377, degree   
+ of freedom 2 of the element 15798.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56377, degree   
+ of freedom 3 of the element 15798.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56377, degree   
+ of freedom 4 of the element 15798.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56377, degree   
+ of freedom 5 of the element 15798.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56377, degree   
+ of freedom 6 of the element 15798.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56368, degree   
+ of freedom 1 of the element 15786.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56368, degree   
+ of freedom 2 of the element 15786.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56368, degree   
+ of freedom 3 of the element 15786.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56368, degree   
+ of freedom 4 of the element 15786.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56368, degree   
+ of freedom 5 of the element 15786.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56368, degree   
+ of freedom 6 of the element 15786.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56366, degree   
+ of freedom 1 of the element 15783.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56366, degree   
+ of freedom 2 of the element 15783.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56366, degree   
+ of freedom 3 of the element 15783.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56366, degree   
+ of freedom 4 of the element 15783.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56366, degree   
+ of freedom 5 of the element 15783.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56366, degree   
+ of freedom 6 of the element 15783.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56364, degree   
+ of freedom 1 of the element 15780.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56364, degree   
+ of freedom 2 of the element 15780.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56364, degree   
+ of freedom 3 of the element 15780.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56364, degree   
+ of freedom 4 of the element 15780.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56364, degree   
+ of freedom 5 of the element 15780.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       1.938   TIME= 00:34:51
+ An internal boundary condition has been imposed on node 56364, degree   
+ of freedom 6 of the element 15780.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+  
+ The FEA model contains 0 external CE equations and 6144 internal CE     
+ equations.                                                              
+
+
+                         ***********  PRECISE MASS SUMMARY  ***********
+
+   TOTAL RIGID BODY MASS MATRIX ABOUT ORIGIN
+               Translational mass               |   Coupled translational/rotational mass
+         1.2904       0.70174E-19  -0.46637E-18 |   -0.12255E-18   0.56167E-02  -0.15175    
+       -0.43368E-17    1.2904      -0.78713E-18 |   -0.56167E-02  -0.11615E-18   0.55389E-01
+       -0.61617E-18   0.26385E-18    1.2904     |    0.15175      -0.55389E-01   0.12189E-18
+     ------------------------------------------ | ------------------------------------------
+                                                |         Rotational mass (inertia)
+                                                |    0.27428E-01  -0.76264E-02   0.19293E-04
+                                                |   -0.76264E-02   0.45596E-02   0.59722E-03
+                                                |    0.19293E-04   0.59722E-03   0.28977E-01
+
+   TOTAL MASS =  1.2904    
+     The mass principal axes coincide with the global Cartesian axes
+
+   CENTER OF MASS (X,Y,Z)=   0.42923E-01   0.11760       0.43526E-02
+
+   TOTAL INERTIA ABOUT CENTER OF MASS
+        0.95575E-02  -0.11128E-02   0.26038E-03
+       -0.11128E-02   0.21578E-02   0.12577E-02
+        0.26038E-03   0.12577E-02   0.87538E-02
+
+   PRINCIPAL INERTIAS =   0.97285E-02   0.17590E-02   0.89816E-02
+   ORIENTATION VECTORS OF THE INERTIA PRINCIPAL AXES IN GLOBAL CARTESIAN
+     ( 0.987,-0.129, 0.097) ( 0.145, 0.973,-0.180) (-0.071, 0.192, 0.979) 
+
+
+  *** MASS SUMMARY BY ELEMENT TYPE ***
+
+  TYPE      MASS
+     1  0.770099E-01
+     2  0.229500E-01
+     3  0.157094E-01
+     4  0.157094E-01
+     5  0.129571    
+     6  0.297081E-01
+     7  0.144982E-01
+     8  0.521320    
+     9  0.221954E-01
+    10  0.112415E-01
+    11  0.195592E-01
+    12  0.132697    
+    13  0.195592E-01
+    14  0.132697    
+    15  0.945829E-01
+    16  0.157094E-01
+    17  0.157094E-01
+
+ Range of element maximum matrix coefficients in global coordinates
+ Maximum = 22686860.7 at element 17369.                                  
+ Minimum = 10813324.9 at element 19869.                                  
+
+   *** ELEMENT MATRIX FORMULATION TIMES
+     TYPE    NUMBER   ENAME      TOTAL CP  AVE CP
+
+        1         1  MASS21        0.000   0.000000
+        2         1  MASS21        0.000   0.000000
+        3         1  MASS21        0.000   0.000000
+        4         1  MASS21        0.000   0.000000
+        5         1  MASS21        0.000   0.000000
+        6         1  MASS21        0.000   0.000000
+        7         1  MASS21        0.000   0.000000
+        8         1  MASS21        0.000   0.000000
+        9         1  MASS21        0.000   0.000000
+       10         1  MASS21        0.000   0.000000
+       11         1  MASS21        0.000   0.000000
+       12         1  MASS21        0.000   0.000000
+       13         1  MASS21        0.000   0.000000
+       14         1  MASS21        0.000   0.000000
+       15         1  MASS21        0.000   0.000000
+       16         1  MASS21        0.000   0.000000
+       17         1  MASS21        0.000   0.000000
+       18       769  TARGE170      0.000   0.000000
+       19       577  TARGE170      0.000   0.000000
+       20       767  CONTA174      0.109   0.000143
+       21       575  TARGE170      0.000   0.000000
+       22       770  TARGE170      0.016   0.000020
+       23       577  TARGE170      0.000   0.000000
+       24       767  CONTA174      0.109   0.000143
+       25       575  TARGE170      0.031   0.000054
+       26         5  TARGE170      0.000   0.000000
+       27         4  TARGE170      0.016   0.003906
+       28         3  TARGE170      0.000   0.000000
+       29         4  TARGE170      0.000   0.000000
+       30         6  TARGE170      0.000   0.000000
+       31         3  TARGE170      0.000   0.000000
+       32         4  TARGE170      0.000   0.000000
+       33         3  TARGE170      0.000   0.000000
+       34         4  TARGE170      0.000   0.000000
+       35         3  TARGE170      0.000   0.000000
+       36         3  TARGE170      0.000   0.000000
+       37         3  TARGE170      0.000   0.000000
+       38         2  TARGE170      0.000   0.000000
+       39         2  TARGE170      0.000   0.000000
+       40         1  MPC184        0.000   0.000000
+       41         1  MPC184        0.000   0.000000
+       42         1  MPC184        0.000   0.000000
+       43         1  MPC184        0.000   0.000000
+       44         1  MPC184        0.000   0.000000
+       45         1  MPC184        0.000   0.000000
+       46         1  MPC184        0.000   0.000000
+       47         1  MPC184        0.000   0.000000
+       48         2  TARGE170      0.000   0.000000
+       49         2  TARGE170      0.000   0.000000
+       50         2  TARGE170      0.000   0.000000
+       51         2  TARGE170      0.000   0.000000
+       52         2  TARGE170      0.000   0.000000
+       53         2  TARGE170      0.000   0.000000
+       54         2  TARGE170      0.000   0.000000
+       55         2  TARGE170      0.000   0.000000
+       56         2  TARGE170      0.000   0.000000
+       57         2  TARGE170      0.000   0.000000
+       58         2  TARGE170      0.000   0.000000
+ Time at end of element matrix formulation CP = 1.953125.                
+
+ ALL CURRENT ANSYS DATA WRITTEN TO FILE NAME= file.rdb
+  FOR POSSIBLE RESUME FROM THIS POINT
+     FORCE CONVERGENCE VALUE  =  0.7893E-09  CRITERION=  0.5102E-04
+
+ DISTRIBUTED SPARSE MATRIX DIRECT SOLVER.
+  Number of equations =          79,    Maximum wavefront =      6
+
+  Local memory allocated for solver              =     11.747 MB
+  Local memory required for in-core solution     =      1.765 MB
+  Local memory required for out-of-core solution =      1.765 MB
+
+  Total memory allocated for solver              =     23.503 MB
+  Total memory required for in-core solution     =      3.538 MB
+  Total memory required for out-of-core solution =      3.538 MB
+
+ *** NOTE ***                            CP =       2.172   TIME= 00:34:51
+ The Distributed Sparse Matrix Solver is currently running in the        
+ in-core memory mode.  This memory mode uses the most amount of memory   
+ in order to avoid using the hard drive as much as possible, which most  
+ often results in the fastest solution time.  This mode is recommended   
+ if enough physical memory is present to accommodate all of the solver   
+ data.                                                                   
+
+ *** WARNING ***                         CP =       2.172   TIME= 00:34:51
+ Pivoting has been activated for the Distributed Sparse Matrix Solver .  
+ The memory required may greatly exceed the predicted amount.  In that   
+ event, use the DSPOPTION command to change the memory mode and/or       
+ memory size used by the Distributed Sparse Matrix Solver.               
+ curEqn=     20  totEqn=     47 Job CP sec=      2.188
+      Factor Done= 207% Factor Wall sec=      0.001 rate=      21.5 Mflops
+ curEqn=     47  totEqn=     47 Job CP sec=      2.203
+      Factor Done= 356% Factor Wall sec=      0.011 rate=       4.8 Mflops
+ Distributed sparse solver maximum pivot= 85559195.3 at node 832 UY.     
+ Distributed sparse solver minimum pivot= 3.848817219E-03 at node 3045   
+ ROTX.                                                                   
+ Distributed sparse solver minimum pivot in absolute value=              
+ 3.848817219E-03 at node 3045 ROTX.                                      
+     DISP CONVERGENCE VALUE   =  0.1607E-01  CRITERION=  0.8198E-03
+    EQUIL ITER   1 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=  0.5236E-01
+     DISP CONVERGENCE VALUE   =  0.1426E-01  CRITERION=  0.8366E-03
+     LINE SEARCH PARAMETER =  0.8876     SCALED MAX DOF INC =  0.4647E-01
+     FORCE CONVERGENCE VALUE  =   6472.      CRITERION=  0.5206E-04
+    EQUIL ITER   2 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=  0.5886E-02
+     DISP CONVERGENCE VALUE   =  0.2358E-02  CRITERION=  0.8830E-03
+     LINE SEARCH PARAMETER =   1.000     SCALED MAX DOF INC =  0.5886E-02
+     FORCE CONVERGENCE VALUE  =   2218.      CRITERION=  0.5312E-04
+    EQUIL ITER   3 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC= -0.3484E-03
+     DISP CONVERGENCE VALUE   =  0.3484E-03  CRITERION=  0.9199E-03 <<< CONVERGED
+     LINE SEARCH PARAMETER =   1.000     SCALED MAX DOF INC = -0.3484E-03
+     FORCE CONVERGENCE VALUE  =   248.0      CRITERION=  0.5421E-04
+    EQUIL ITER   4 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=  0.1279E-03
+     DISP CONVERGENCE VALUE   =  0.1439E-04  CRITERION=  0.9394E-03 <<< CONVERGED
+     LINE SEARCH PARAMETER =   1.000     SCALED MAX DOF INC =  0.1279E-03
+     FORCE CONVERGENCE VALUE  =   10.14      CRITERION=  0.5531E-04
+    EQUIL ITER   5 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC= -0.5611E-02
+     DISP CONVERGENCE VALUE   =  0.1280E-02  CRITERION=  0.9586E-03
+     LINE SEARCH PARAMETER =  0.2281     SCALED MAX DOF INC = -0.1280E-02
+     FORCE CONVERGENCE VALUE  =   7.942      CRITERION=  0.5644E-04
+    EQUIL ITER   6 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC= -0.4331E-02
+     DISP CONVERGENCE VALUE   =  0.2165E-03  CRITERION=  0.9782E-03 <<< CONVERGED
+     LINE SEARCH PARAMETER =  0.5000E-01 SCALED MAX DOF INC = -0.2165E-03
+     FORCE CONVERGENCE VALUE  =   438.5      CRITERION=  0.5760E-04
+    EQUIL ITER   7 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC= -0.8952E-04
+     DISP CONVERGENCE VALUE   =  0.5843E-04  CRITERION=  0.9981E-03 <<< CONVERGED
+     LINE SEARCH PARAMETER =   1.000     SCALED MAX DOF INC = -0.8952E-04
+     FORCE CONVERGENCE VALUE  =   41.46      CRITERION=  0.5877E-04
+    EQUIL ITER   8 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=   14.57    
+     DISP CONVERGENCE VALUE   =  0.2576E-05  CRITERION=  0.1019E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =   1.000     SCALED MAX DOF INC =   14.57    
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     5 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =   2.122      CRITERION=  0.5997E-04
+    EQUIL ITER   9 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=  -1057.    
+     DISP CONVERGENCE VALUE   =  0.1485E-05  CRITERION=  0.1039E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =   1.000     SCALED MAX DOF INC =  -1057.    
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     7 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =  0.5356      CRITERION=  0.1224E-03
+    EQUIL ITER  10 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=  0.3341    
+     DISP CONVERGENCE VALUE   =  0.2101E-05  CRITERION=  0.1061E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =   1.000     SCALED MAX DOF INC =  0.3341    
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     7 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =  0.1521      CRITERION=  0.1249E-03
+    EQUIL ITER  11 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=  0.1854    
+     DISP CONVERGENCE VALUE   =  0.2447E-05  CRITERION=  0.1082E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =  0.7282     SCALED MAX DOF INC =  0.1350    
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     7 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =  0.4490E-01  CRITERION=  0.1274E-03
+    EQUIL ITER  12 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC= -0.4622E-02
+     DISP CONVERGENCE VALUE   =  0.1313E-05  CRITERION=  0.1104E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =  0.8642     SCALED MAX DOF INC = -0.3994E-02
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     7 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =  0.1392E-01  CRITERION=  0.1300E-03
+    EQUIL ITER  13 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=  0.3471    
+     DISP CONVERGENCE VALUE   =  0.2458E-05  CRITERION=  0.1127E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =   1.000     SCALED MAX DOF INC =  0.3471    
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     5 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =  0.7678E-02  CRITERION=  0.1327E-03
+    EQUIL ITER  14 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=  0.6909E-02
+     DISP CONVERGENCE VALUE   =  0.2174E-05  CRITERION=  0.1150E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =  0.6893     SCALED MAX DOF INC =  0.4763E-02
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     8 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =  0.3320E-01  CRITERION=  0.1354E-03
+    EQUIL ITER  15 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=   3.721    
+     DISP CONVERGENCE VALUE   =  0.5280E-06  CRITERION=  0.1173E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =  0.7842E-01 SCALED MAX DOF INC =  0.2918    
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     8 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =  0.2941E-01  CRITERION=  0.1382E-03
+    EQUIL ITER  16 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=  -3.693    
+     DISP CONVERGENCE VALUE   =  0.1459E-05  CRITERION=  0.1197E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =  0.4355     SCALED MAX DOF INC =  -1.609    
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     8 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =  0.1027E-01  CRITERION=  0.1410E-03
+    EQUIL ITER  17 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=   1.167    
+     DISP CONVERGENCE VALUE   =  0.2526E-06  CRITERION=  0.1222E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =  0.1373     SCALED MAX DOF INC =  0.1602    
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     7 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =  0.5815E-02  CRITERION=  0.1439E-03
+    EQUIL ITER  18 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=  0.1726    
+     DISP CONVERGENCE VALUE   =  0.9346E-03  CRITERION=  0.1247E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =  0.5000E-01 SCALED MAX DOF INC =  0.8628E-02
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     7 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =   9560.      CRITERION=  0.1468E-03
+    EQUIL ITER  19 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=  0.2016    
+     DISP CONVERGENCE VALUE   =  0.3692E-03  CRITERION=  0.1272E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =  0.8708     SCALED MAX DOF INC =  0.1756    
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     5 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =   3655.      CRITERION=  0.1498E-03
+    EQUIL ITER  20 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=  0.2119E-01
+     DISP CONVERGENCE VALUE   =  0.3714E-02  CRITERION=  0.1298E-02
+     LINE SEARCH PARAMETER =   1.000     SCALED MAX DOF INC =  0.2119E-01
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     5 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =  0.1203E+06  CRITERION=  0.7642E-04
+    EQUIL ITER  21 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=  -1.177    
+     DISP CONVERGENCE VALUE   =  0.2059E-02  CRITERION=  0.1325E-02
+     LINE SEARCH PARAMETER =  0.7233     SCALED MAX DOF INC = -0.8513    
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     7 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =  0.3279E+05  CRITERION=  0.7798E-04
+    EQUIL ITER  22 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC= -0.1091    
+     DISP CONVERGENCE VALUE   =  0.4783E-03  CRITERION=  0.1352E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =  0.5065     SCALED MAX DOF INC = -0.5527E-01
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     7 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =  0.1895E+05  CRITERION=  0.1591E-03
+    EQUIL ITER  23 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC=  0.2556    
+     DISP CONVERGENCE VALUE   =  0.7136E-03  CRITERION=  0.1379E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =  0.8616     SCALED MAX DOF INC =  0.2202    
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     6 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =   4424.      CRITERION=  0.1624E-03
+    EQUIL ITER  24 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC= -0.3616E-01
+     DISP CONVERGENCE VALUE   =  0.6142E-03  CRITERION=  0.1407E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =   1.000     SCALED MAX DOF INC = -0.3616E-01
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     8 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =   412.5      CRITERION=  0.1657E-03
+    EQUIL ITER  25 COMPLETED.  NEW TRIANG MATRIX.  MAX DOF INC= -0.1105    
+     DISP CONVERGENCE VALUE   =  0.3006E-04  CRITERION=  0.1407E-02 <<< CONVERGED
+     LINE SEARCH PARAMETER =   1.000     SCALED MAX DOF INC = -0.1105    
+     CONSTRAINT CONDITIONS ARE NOT SATISFIED FOR     7 JOINT ELEMENTS WITH LAG MULT OPTION
+     FORCE CONVERGENCE VALUE  =   17.29      CRITERION=  0.1657E-03
+
+ *** ERROR ***                           CP =      23.641   TIME= 00:35:16
+ Solution not converged at time 1 (load step 1 substep 1).               
+  Run terminated.                                                        
+
+ *** WARNING ***                         CP =      23.641   TIME= 00:35:16
+ The unconverged solution (identified as time 1 substep 999999) is       
+ output for analysis debug purposes.  Results should not be used for     
+ any other purpose.                                                      
+
+
+
+
+         R E S T A R T   I N F O R M A T I O N
+
+ REASON FOR TERMINATION. . . . . . . . . .UNCONVERGED SOLUTION                    
+ RESTART BY RE-RUNNING THE ANALYSIS
+
+ ALL CURRENT ANSYS DATA WRITTEN TO FILE NAME= file.db
+  FOR POSSIBLE RESUME FROM THIS POINT
+
+
+
+
+
+ NUMBER OF WARNING MESSAGES ENCOUNTERED=         38
+ NUMBER OF ERROR   MESSAGES ENCOUNTERED=          1
+
+
+
+ ***** PROBLEM TERMINATED BY INDICATED ERROR(S) OR BY END OF INPUT DATA *****
+
++--------- D I S T R I B U T E D   A N S Y S   S T A T I S T I C S ------------+
+
+Release: Release 19.2       Build: 19.2       Update: UP20180808   Platform: WINDOWS x64 
+Date Run: 12/22/2018   Time: 00:35     Process ID: 1324
+Operating System: Windows 8  (Build: 9200)
+
+Processor Model: Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+
+Compiler: Intel(R) FORTRAN Compiler Version 17.0.4  (Build: 20170411)
+          Intel(R) C/C++ Compiler Version 17.0.4  (Build: 20170411)
+          Intel(R) Math Kernel Library Version 2017.0.3 Product Build 20170413
+
+Number of machines requested            :    1
+Total number of cores available         :    4
+Number of physical cores available      :    2
+Number of processes requested           :    2
+Number of threads per process requested :    1
+Total number of cores requested         :    2 (Distributed Memory Parallel)               
+MPI Type: INTELMPI
+MPI Version: Intel(R) MPI Library 2017 Update 3 for Windows* OS
+
+
+GPU Acceleration: Not Requested
+
+Job Name: file0
+Input File: dummy.dat
+
+  Core                Machine Name   Working Directory
+ -----------------------------------------------------
+     0                      PSVSSK   S:\FILES(imp)\BIPED\ANALYSIS\knee\_ProjectScratch\Scr74A7
+     1                      PSVSSK   S:\FILES(imp)\BIPED\ANALYSIS\knee\_ProjectScratch\Scr74A7
+ 
+Latency time from master to core     1 =    2.190 microseconds
+ 
+Communication speed from master to core     1 =  2871.61 MB/sec
+
+Total CPU time for main thread                    :       23.5 seconds
+Total CPU time summed for all threads             :       23.9 seconds
+
+Elapsed time spent pre-processing model (/PREP7)  :        0.1 seconds
+Elapsed time spent solution - preprocessing       :        0.3 seconds
+Elapsed time spent computing solution             :       25.9 seconds
+Elapsed time spent solution - postprocessing      :        0.0 seconds
+Elapsed time spent post-processing model (/POST1) :        0.0 seconds
+ 
+Equation solver used                              :            Sparse (symmetric)
+
+Maximum total memory used                         :      195.0 MB
+Maximum total memory allocated                    :     3136.0 MB
+Total physical memory available                   :          8 GB
+
+Total amount of I/O written to disk               :        0.5 GB
+Total amount of I/O read from disk                :        1.6 GB
+
++------ E N D   D I S T R I B U T E D   A N S Y S   S T A T I S T I C S -------+
+
+
+ *---------------------------------------------------------------------------*
+ |                                                                           |
+ |                       DISTRIBUTED ANSYS RUN COMPLETED                     |
+ |                                                                           |
+ |---------------------------------------------------------------------------|
+ |                                                                           |
+ | Ansys Release 19.2          Build 19.2         UP20180808     WINDOWS x64 |
+ |                                                                           |
+ |---------------------------------------------------------------------------|
+ |                                                                           |
+ | Database Requested(-db)  1024 MB    Scratch Memory Requested      1024 MB |
+ | Maximum Database Used      13 MB    Maximum Scratch Memory Used     44 MB |
+ |                                                                           |
+ |---------------------------------------------------------------------------|
+ |                                                                           |
+ |        CP Time      (sec) =         23.906       Time  =  00:35:17        |
+ |        Elapsed Time (sec) =         35.000       Date  =  12/22/2018      |
+ |                                                                           |
+ *---------------------------------------------------------------------------*

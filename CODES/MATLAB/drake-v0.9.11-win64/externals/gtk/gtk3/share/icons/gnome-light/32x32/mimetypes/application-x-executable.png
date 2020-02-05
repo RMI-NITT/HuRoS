@@ -1,0 +1,19 @@
+isterEventSource() function error with error code: 1717
+1018-18:49:52.609[I]: NetworkService::Server::Stop: Stopping RPC server.
+1018-18:49:52.609[I]: NetworkService::TaskManager::StopAllTasks: Trying to stop all tasks
+1018-18:49:52.616[I]: NetworkService::TaskManager::StopAllTasks: Successfully stored cache data
+1018-18:49:52.616[I]: NetworkService::Server::HandleStop: RPC server stopped successfully.
+1018-18:49:52.618[I]: NetworkService::Service::HandleServiceStop: Service stopped successfully.
+1018-18:58:26.654[I]: Logging initialized successfully. Binary Version: 2.4.13.69
+1018-18:58:26.841[I]: NetworkService::CacheManager::LoadData: Successfully loaded data from C:\ProgramData\NVIDIA Corporation\NetService\NSManagedTasks.xml
+1018-18:58:26.844[I]: NetworkService::TaskManager::LoadTaskManager: Loading tasks from cache data
+1018-18:58:26.846[I]: NetworkService::TaskManager::LoadTaskManager: Loading tasks from cache data succeeded
+1018-18:58:26.919[I]: NetworkService::TaskManager::StoreTasksLoadedFromOldCache: Successfully serialized Task Manager to disk.
+1018-18:58:26.920[I]: NetworkService::CacheManager::LoadData: Successfully loaded data from C:/ProgramData/NVIDIA Corporation/NetService/NS_DT_94ee563f-2351-4411-a4aa-5a547735e8e3.xml
+1018-18:58:26.921[I]: NetworkService::DownloadTask::LoadTask: Loaded download task 94ee563f-2351-4411-a4aa-5a547735e8e3
+1018-18:58:26.921[I]: NetworkService::TaskManager::DeleteOrphanedDownloads: Cleaning up older downloaded packages on system
+1018-18:58:26.922[I]: NetworkService::Service::OnStart: Trying to restart resumable tasks (if any).
+1018-18:58:26.951[I]: NetworkService::Service::ServiceWorkerThread: Starting RPC server...
+1018-18:58:26.952[I]: NetworkService::Server::StartAccept: RPC server waiting for new connections.
+1018-18:58:26.952[I]: NetworkService::Service::OnStart: Service started successfully.
+1018-19:03:26.930

@@ -1,0 +1,49 @@
+# encoding: utf-8
+# Release 19.2
+SetScriptVersion(Version="19.2.120")
+DesignModeler.CreateGeometrySystemWithActiveCAD(
+    FilePath=r"S:\FILES(imp)\Drive\Biped\CAD\module_1\MODULE_7.ASM.43",
+    PlugInName="ProEngineer[10152]")
+template1 = GetTemplate(
+    TemplateName="Transient Structural",
+    Solver="ANSYS")
+system1 = GetSystem(Name="Geometry")
+geometryComponent1 = system1.GetComponent(Name="Geometry")
+system2 = template1.CreateSystem(
+    ComponentsToShare=[geometryComponent1],
+    Position="Right",
+    RelativeTo=system1)
+modelComponent1 = system2.GetComponent(Name="Model")
+modelComponent1.Refresh()
+model1 = system2.GetContainer(ComponentName="Model")
+model1.Edit()
+favorites1 = EngData.LoadFavoriteItems()
+library1 = EngData.OpenLibrary(
+    Name="General Materials",
+    Source="General_Materials.xml")
+library2 = EngData.OpenLibrary(
+    Name="Additive Manufacturing Materials",
+    Source="Additive_Manufacturing_Materials.xml")
+library3 = EngData.OpenLibrary(
+    Name="Geomechanical Materials",
+    Source="GeoMechanical_Materials.xml")
+library4 = EngData.OpenLibrary(
+    Name="Composite Materials",
+    Source="Composite_Materials.xml")
+library5 = EngData.OpenLibrary(
+    Name="Explicit Materials",
+    Source="Explicit_Materials.xml")
+library6 = EngData.OpenLibrary(
+    Name="Granta Design Sample Materials",
+    Source="Granta_Design_Typical_Materials.xml")
+engineeringData1 = system2.GetContainer(ComponentName="Engineering Data")
+matl1 = engineeringData1.ImportMaterial(
+    Name="ABS plastic",
+    Source="Granta_Design_Typical_Materials.xml")
+matl2 = engineeringData1.ImportMaterial(
+    Name="Aluminum Alloy",
+    Source="General_Materials.xml")
+EngData.EnableFilter(Enable=False)
+modelComponent1.Update(AllDependencies=True)
+Save(Overwrite=True)
+Open(FilePath="S:/FILES(imp)/BIPED/ANALYSIS/module_7/module_7_1.wbpj")

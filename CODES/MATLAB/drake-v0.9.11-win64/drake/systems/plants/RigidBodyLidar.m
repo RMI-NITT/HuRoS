@@ -1,0 +1,30 @@
+
+          <coordinates>
+            <x>27.151208</x>
+            <y>24.931504</y>
+            <z>4.795</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>27.331589</x>
+            <y>25.000959</y>
+            <z>4.795</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>27.514475</x>
+            <y>25.063519</y>
+            <z>4.795</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>27.699644</x>
+            <y>25.118965</y>
+            <z>4.795</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          

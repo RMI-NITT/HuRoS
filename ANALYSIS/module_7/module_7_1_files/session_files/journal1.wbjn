@@ -1,0 +1,78 @@
+# encoding: utf-8
+# Release 19.2
+SetScriptVersion(Version="19.2.120")
+DesignModeler.CreateGeometrySystemWithActiveCAD(
+    FilePath=r"S:\FILES(imp)\Drive\Biped\CAD\module_1\MODULE_7.ASM.36",
+    PlugInName="ProEngineer[12756]")
+template1 = GetTemplate(
+    TemplateName="Static Structural",
+    Solver="ANSYS")
+system1 = GetSystem(Name="Geometry")
+geometryComponent1 = system1.GetComponent(Name="Geometry")
+system2 = template1.CreateSystem(
+    ComponentsToShare=[geometryComponent1],
+    Position="Right",
+    RelativeTo=system1)
+modelComponent1 = system2.GetComponent(Name="Model")
+modelComponent1.Refresh()
+EngData.EnableFilter(Enable=False)
+favorites1 = EngData.LoadFavoriteItems()
+library1 = EngData.OpenLibrary(
+    Name="Granta Design Sample Materials",
+    Source="Granta_Design_Typical_Materials.xml")
+engineeringData1 = system2.GetContainer(ComponentName="Engineering Data")
+matl1 = engineeringData1.ImportMaterial(
+    Name="ABS plastic",
+    Source="Granta_Design_Typical_Materials.xml")
+matl2 = engineeringData1.ImportMaterial(
+    Name="Aluminum alloy, high strength, wrought",
+    Source="Granta_Design_Typical_Materials.xml")
+matl3 = engineeringData1.ImportMaterial(
+    Name="Granite",
+    Source="Granta_Design_Typical_Materials.xml")
+system2.Delete()
+system3 = template1.CreateSystem(
+    ComponentsToShare=[geometryComponent1],
+    Position="Right",
+    RelativeTo=system1)
+modelComponent2 = system3.GetComponent(Name="Model")
+modelComponent2.Refresh()
+model1 = system3.GetContainer(ComponentName="Model")
+model1.Edit()
+engineeringDataComponent1 = system3.GetComponent(Name="Engineering Data")
+engineeringDataComponent1.Update(AllDependencies=True)
+modelComponent2.Update(AllDependencies=True)
+Update()
+library2 = EngData.OpenLibrary(
+    Name="General Materials",
+    Source="General_Materials.xml")
+engineeringData2 = system3.GetContainer(ComponentName="Engineering Data")
+matl4 = engineeringData2.ImportMaterial(
+    Name="ABS plastic",
+    Source="Granta_Design_Typical_Materials.xml")
+matl5 = engineeringData2.ImportMaterial(
+    Name="Aluminum alloy, high strength, wrought",
+    Source="Granta_Design_Typical_Materials.xml")
+modelComponent2.Update(AllDependencies=True)
+modelComponent2.UpdateUpstreamComponents()
+modelComponent2.Update(AllDependencies=True)
+modelComponent2.UpdateUpstreamComponents()
+model1.Exit()
+model1.Edit()
+model1.Exit()
+template2 = GetTemplate(TemplateName="Rigid Dynamics")
+system4 = template2.CreateSystem(
+    Position="Right",
+    RelativeTo=system3)
+modelComponent3 = system4.GetComponent(Name="Model")
+modelComponent2.TransferData(TargetComponent=modelComponent3)
+modelComponent3.Update(AllDependencies=True)
+setup1 = system4.GetContainer(ComponentName="Setup")
+setup1.Edit()
+model2 = system4.GetContainer(ComponentName="Model")
+model2.Exit()
+setup2 = system3.GetContainer(ComponentName="Setup")
+setup2.Edit()
+modelComponent3.Update(AllDependencies=True)
+model2.Edit()
+Save(Overwrite=True)

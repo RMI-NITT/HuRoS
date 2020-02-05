@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cr-additional-sel</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Libcroco Reference Manual">
+<link rel="up" href="ch01.html" title="Extensive APIs description">
+<link rel="prev" href="ch01.html" title="Extensive APIs description">
+<link rel="next" href="libcroco-cr-attr-sel.html" title="cr-attr-sel">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ch01.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Libcroco Reference Manual</th>
+<td><a accesskey="n" href="libcroco-cr-attr-sel.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#libcroco-cr-additional-sel.synopsis" class="shortcut">Top</a>
+                  Â |Â 
+                  <a href="#libcroco-cr-additional-sel.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="libcroco-cr-additional-sel"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="libcroco-cr-additional-sel.top_of_page"></a>cr-additional-sel</span></h2>
+<p>cr-additional-sel</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="libcroco-cr-additional-sel.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">struct              <a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel">CRAdditionalSel</a>;
+<a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="returnvalue">CRAdditionalSel</span></a> *   <a class="link" href="libcroco-cr-additional-sel.html#cr-additional-sel-append" title="cr_additional_sel_append ()">cr_additional_sel_append</a>            (<em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> *a_this</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> *a_sel</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="libcroco-cr-additional-sel.html#cr-additional-sel-destroy" title="cr_additional_sel_destroy ()">cr_additional_sel_destroy</a>           (<em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> *a_this</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="libcroco-cr-additional-sel.html#cr-additional-sel-dump" title="cr_additional_sel_dump ()">cr_additional_sel_dump</a>              (<em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> const *a_this</code></em>,
+                                                         <em class="parameter"><code><span class="type">FILE</span> *a_fp</code></em>);
+<a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="returnvalue">CRAdditionalSel</span></a> *   <a class="link" href="libcroco-cr-additional-sel.html#cr-additional-sel-new" title="cr_additional_sel_new ()">cr_additional_sel_new</a>               (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="returnvalue">CRAdditionalSel</span></a> *   <a class="link" href="libcroco-cr-additional-sel.html#cr-additional-sel-new-with-type" title="cr_additional_sel_new_with_type ()">cr_additional_sel_new_with_type</a>     (<em class="parameter"><code><span class="type">enum AddSelectorType</span> a_sel_type</code></em>);
+<a href="../glib/glib-Basic-Types.html#guchar"><span class="returnvalue">guchar</span></a> *            <a class="link" href="libcroco-cr-additional-sel.html#cr-additional-sel-one-to-string" title="cr_additional_sel_one_to_string ()">cr_additional_sel_one_to_string</a>     (<em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> const *a_this</code></em>);
+<a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="returnvalue">CRAdditionalSel</span></a> *   <a class="link" href="libcroco-cr-additional-sel.html#cr-additional-sel-prepend" title="cr_additional_sel_prepend ()">cr_additional_sel_prepend</a>           (<em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> *a_this</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> *a_sel</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="libcroco-cr-additional-sel.html#cr-additional-sel-set-attr-sel" title="cr_additional_sel_set_attr_sel ()">cr_additional_sel_set_attr_sel</a>      (<em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> *a_this</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="libcroco-cr-attr-sel.html#CRAttrSel" title="struct CRAttrSel"><span class="type">CRAttrSel</span></a> *a_sel</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="libcroco-cr-additional-sel.html#cr-additional-sel-set-class-name" title="cr_additional_sel_set_class_name ()">cr_additional_sel_set_class_name</a>    (<em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> *a_this</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="libcroco-cr-string.html#CRString" title="struct CRString"><span class="type">CRString</span></a> *a_class_name</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="libcroco-cr-additional-sel.html#cr-additional-sel-set-id-name" title="cr_additional_sel_set_id_name ()">cr_additional_sel_set_id_name</a>       (<em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> *a_this</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="libcroco-cr-string.html#CRString" title="struct CRString"><span class="type">CRString</span></a> *a_id</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="libcroco-cr-additional-sel.html#cr-additional-sel-set-pseudo" title="cr_additional_sel_set_pseudo ()">cr_additional_sel_set_pseudo</a>        (<em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> *a_this</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="libcroco-cr-pseudo.html#CRPseudo" title="struct CRPseudo"><span class="type">CRPseudo</span></a> *a_pseudo</code></em>);
+<a href="../glib/glib-Basic-Types.html#guchar"><span class="returnvalue">guchar</span></a> *            <a class="link" href="libcroco-cr-additional-sel.html#cr-additional-sel-to-string" title="cr_additional_sel_to_string ()">cr_additional_sel_to_string</a>         (<em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> const *a_this</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="libcroco-cr-additional-sel.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1">
+<a name="libcroco-cr-additional-sel.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="CRAdditionalSel"></a><h3>struct CRAdditionalSel</h3>
+<pre class="programlisting">struct CRAdditionalSel {
+        enum AddSelectorType type ;
+        union CRAdditionalSelectorContent content ;
+
+        CRAdditionalSel * next ;
+        CRAdditionalSel * prev ;
+        CRParsingLocation location ;
+};
+</pre>
+<p>
+<a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> abstracts an additionnal selector.
+An additional selector is the selector part
+that comes after the combination of type selectors.
+It can be either "a class selector (the .class part),
+a pseudo class selector, an attribute selector 
+or an id selector.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cr-additional-sel-append"></a><h3>cr_additional_sel_append ()</h3>
+<pre class="programlisting"><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="returnvalue">CRAdditionalSel</span></a> *   cr_additional_sel_append            (<em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> *a_this</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> *a_sel</code></em>);</pre>
+<p>
+Appends a new instance of <span class="type">CRAdditional</span> to the
+current list of <span class="type">CRAdditional</span>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>a_this</code></em>Â :</span></p></td>
+<td>the "this pointer" of the current instance
+of <a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> .</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>a_sel</code></em>Â :</span></p></td>
+<td>the new instance to <span class="type">CRAdditional</span> to append.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span>Â :</span></p></td>
+<td>the new list of CRAdditionalSel or NULL if an error arises.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cr-additional-sel-destroy"></a><h3>cr_additional_sel_destroy ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cr_additional_sel_destroy           (<em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> *a_this</code></em>);</pre>
+<p>
+Destroys an instance of <span class="type">CRAdditional</span>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>a_this</code></em>Â :</span></p></td>
+<td>the "this pointer" of the current instance
+of <a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> .</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cr-additional-sel-dump"></a><h3>cr_additional_sel_dump ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                cr_additional_sel_dump              (<em class="parameter"><code><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> const *a_this</code></em>,
+                                                         <em class="parameter"><code><span class="type">FILE</span> *a_fp</code></em>);</pre>
+<p>
+Dumps the current instance of <a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a> to a file
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>a_this</code></em>Â :</span></p></td>
+<td>the "this pointer" of the current instance of
+<a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>a_fp</code></em>Â :</span></p></td>
+<td>the destination file.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cr-additional-sel-new"></a><h3>cr_additional_sel_new ()</h3>
+<pre class="programlisting"><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="returnvalue">CRAdditionalSel</span></a> *   cr_additional_sel_new               (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Default constructor of <a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span>Â :</span></p></td>
+<td>the newly build instance of <a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a>.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="cr-additional-sel-new-with-type"></a><h3>cr_additional_sel_new_with_type ()</h3>
+<pre class="programlisting"><a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="returnvalue">CRAdditionalSel</span></a> *   cr_additional_sel_new_with_type     (<em class="parameter"><code><span class="type">enum AddSelectorType</span> a_sel_type</code></em>);</pre>
+<p>
+Constructor of <a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>a_sel_type</code></em>Â :</span></p></td>
+<td>the type of the newly built instance
+of <a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span>Â :</span></p></td>
+<td>the newly built instance of <a class="link" href="libcroco-cr-additional-sel.html#CRAdditionalSel" title="struct CRAdditionalSel"><span class="type">CRAdditionalSel</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="crpÿÁ§ º   H‹ÿ³¦ L¤şÿH-¿ H‹L$pèÃıÿL¼n  H}× H‹L$pè«ıÿÿ§ H‹ĞÇD$ ÿÿÿÿE3ÉLh× HL$xÿE¨ H‹|$xH…ÿuÿe§ H‹|$xH”$€   H‹L$pÿ-§ H‰\$8H‰\$ E3ÉL	m  H‹×H‹èNıÿÿ°¦ H‹ĞÇD$ ÿÿÿÿE3ÉL× HL$xÿØ§ H‹|$xH…ÿuÿø¦ H‹|$xH”$€   H‹L$pÿÀ¦ H‰\$8H‰\$ E3ÉLìk  H‹×H‹èáıÿHL$HÿU¦ H‹œ$ˆ   HƒÄ`_ÃÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹Ïè‚ H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ LA I;ÁuHUr H‰H;ÏtèÈ ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_é§ıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹Ïèr H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ L1& I;ÁuH­  H‰H;Ïtè¸ ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_é—ıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹Ïèb H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ LÑ I;ÁuHe H‰H;Ïtè¨ ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_é‡ıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹ÏèR H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ L	 I;ÁuHÅ H‰H;Ïtè˜ ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_éwıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹ÏèB H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ Lñ? I;ÁuH• H‰H;Ïtèˆ ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_égıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹Ïè2 H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ LÙP I;ÁuH%S H‰H;Ïtèx ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_éWıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹Ïè" H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ Lá! I;ÁuH•  H‰H;Ïtèh ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_éGıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹Ïè H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ L I;ÁuH H‰H;ÏtèX ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_é7ıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹Ïè H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ L12 I;ÁuH= H‰H;ÏtèH ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_é'ıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹Ïèò H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ Lq5 I;ÁuHÅ` H‰H;Ïtè8 ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_éıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹Ïèâ H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ L	3 I;ÁuHíR H‰H;Ïtè( ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_éıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹ÏèÒ
+ H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ L9) I;ÁuH=d H‰H;Ïtè
+ ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_é÷ıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹ÏèÂ	 H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ L‘8 I;ÁuHeA H‰H;Ïtè	 ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_éçıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹Ïè² H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ L I;ÁuH H‰H;Ïtèø ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_é×ıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹Ïè¢ H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ Lq I;ÁuH  H‰H;Ïtèè ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_éÇıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹Ïè’ H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ Léù I;ÁuHa H‰H;ÏtèØ ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_é·ıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹Ïè‚ H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ Lù@ I;ÁuHe+ H‰H;ÏtèÈ ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_é§
+ıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹Ïèr H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ Lñ0 I;ÁuH…L H‰H;Ïtè¸ ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_é—	ıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtºà   H‹Ïèb H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ÙH¹    H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{`H‹O8H…ÉtH‹H;Ï•ÂÿP HÇG8    H{ H‹O8H…Ét<H;Ï•ÂH‹L‹@ La I;ÁuH5ò H‰H;Ïtè¨ ëAÿĞHÇG8    H‹KH…ÉtH‹ÿPH‹ËH‹\$@HƒÄ0_é‡ıÿÌÌÌÌÌÌÌH‰\$WHƒì ‹ÚH‹ùè,   öÃtº`   H‹ÏèR H‹ÇH‹\$0HƒÄ _ÃÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒì0HÇD$ şÿÿÿH‰\$@H‹ùHY H‹K8H…Ét<H;Ë•ÂH‹L‹@ L( I;ÁuHìM H‰H;Ëtèß ëAÿĞHÇC8    H‹OH…ÉtH‹ÿPH‹ÏH‹\$@HƒÄ0_é¾ıÿÌÌÌÌÌÌÌÌÌÌÌÌÌÌH‰T$WHƒìpHÇD$0şÿÿÿH‰œ$€   I‹Ø‹ùÿ‘ H‹ĞHL$Pÿ‘ H‹H‹	HƒÁ0è\”  „À„¶  H‹H‹	HƒÁ0èå–  H‹ØHƒ¸˜    „«   H‹Œ$ˆ   H‰Œ$   H‹ˆ˜   H…Éuÿ ÌH‹H”$   ÿP„Àuvÿ H‹ĞÇD$ ÿÿÿÿE3ÉLäÀ HŒ$   ÿv H‹”$   H…ÒuÿÃ H‹”$   HŒ$˜   ÿe H‹œ$˜   ÿ' H‹ÈL‹ÃHT$8ÿ éë   H‹C9xHwsÿ H‹ĞÇD$ ÿÿÿÿE3ÉLÁ HŒ$   ÿ÷ H‹”$   H…ÒuÿD H‹”$   HŒ$˜   ÿæ H‹œ$˜   ÿ¨ H‹ÈL‹ÃHT$8ÿ‡ ëoHƒ»Ø    teH‹„$ˆ   H‰„$   H‹‹Ø   H…ÉuÿéŒ H‹L„$   HT$8ÿPH‹CH‹HPH…Éuÿ#’ ;xHsH‹ÇHÀD$8Áëÿ’ HL$Pÿ3 H‹œ$€   HƒÄp_ÃÌÌÌÌÌH‹ÄWHƒìpHÇ@¨şÿÿÿH‰XH‰p H‹ò‹Ùÿå H‹ĞHL$Pÿ÷ H‹H‹	HƒÁ0è?’  „À„|  H‹H‹	HƒÁ0èÈ”  H‹H9YH†`  H‹QPHƒxX …    H…Òuÿi‘ Ì;YHƒ„   H‹ÃHÀ3ÛH‰œ$ˆ   Â)D$0HT$0è$ó  H‹øH‰„$ˆ   H‰œ$ˆ   H‰„$ˆ   H‹H‹H‹ĞHŒ$   è#ò H‹ H…Àu
+H‹CH‰C ëH‹H‰S H…ÿ„Æ   H‹H‹ÏÿPé¸   ÿå ÌH…ÒuÿÉ Ì;YHƒ•   H‹ËHÁáHÊ)D$@L‹HXM…Éuÿ>‹ ÌI‹L‹PH‡ö H;Âu')D$0HT$0HŒ$   è¨Ó H‹H‰Œ$ˆ   ëLD$@H”$ˆ   I‹ÉAÿÒH‹Œ$ˆ   H‹H‹ H…Éu
+H‹HH‰H ëH‹H‰P ëÿ4 HL$PÿP L\$pI‹[I‹s(I‹ã_ÃÌÌÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒìPHÇD$ şÿÿÿH‰\$`H‹úÿûŒ H‹ĞHL$0ÿ H‹H‹	HƒÁ0èU  „ÀtcH‹H‹	HƒÁ0èâ’  H‹@‹XHÿ¼Œ D‹ÃH‹ĞHL$pÿƒŒ H‹HL$hèfúüÿH‹\$hH…Ûuÿ H‹H‹ H…ÛuH‹HëH‹H‰H HL$0ÿƒŒ H‹\$`HƒÄP_ÃÌÌÌÌÌÌÌÌH‰\$WHƒì0H‹ÙÿEŒ H¸€   ÿ8Œ E3ÉÇD$ ÿÿÿÿH‹ĞLs¡ HL$Hÿ` L‹D$HM…Àuÿ€Œ L‹D$HH‹HL$@L‹ÏH‹RHƒÂèsÂ H‹H‹H‹IHƒÁuH‹HH‰HH‹\$PHƒÄ0_ÃH‹H‹\$PH‰PHƒÄ0_ÃÌÌÌÌÌÌÌÌÌÌÌÌÌÌH‰T$WHƒì`HÇD$0şÿÿÿH‰\$pI‹Ø‹ùÿ…‹ H‹ĞHL$Hÿ—‹ H‹H‹	HƒÁ0è_  „À„›  H‹H‹	HƒÁ0èh‘  H‹ØHƒ¸˜    „¨   H‹L$xH‰Œ$€   H‹ˆ˜   H…Éuÿ ˆ ÌH‹H”$€   ÿP„Àuvÿ‹ H‹ĞÇD$ ÿÿÿÿE3ÉLj» HŒ$€   ÿü‰ H‹”$€   H…ÒuÿI‹ H‹”$€   HŒ$ˆ   ÿëŠ H‹œ$ˆ   ÿ­Š H‹ÈL‹ÃHT$8ÿŒŠ éÓ   H‹C9xHwsÿˆŠ H‹ĞÇD$ ÿÿÿÿE3ÉL›» HŒ$€   ÿ}‰ H‹”$€   H…ÒuÿÊŠ H‹”$€   HŒ$ˆ   ÿlŠ H‹œ$ˆ   ÿ.Š H‹ÈL‹ÃHT$8ÿŠ ëWHƒ»Ø    tMH‹D$xH‰„$€   H‹‹Ø   H…Éuÿr‡ H‹L„$€   H”$ˆ   ÿPH‹KHƒÁ L‹„$ˆ   ‹×èí‰  HL$HÿÑ‰ H‹\$pHƒÄ`_ÃÌÌÌÌÌÌ@SVWHƒì@HÇD$ şÿÿÿH‹ò‹ÙÿŒ‰ H‹ĞHL$(ÿ‰ H‹H‹	HƒÁ0èf‹  „À„=  H‹H‹	HƒÁ0èo  H‹H9YH†!  HƒxX …   H‹QPH…ÒuÿŒ Ì;YHseH‹Ú3ÛH‰\$hèô  H‹øH‰D$hH‰\$hH‰D$hH‹H‹H‹ĞHL$pèíì H‹ H…Àu
+H‹CH‰C ëH‹H‰S H…ÿ„ª   H‹H‹ÏÿPéœ   ÿ¯‹ ÌL‹APM…Àuÿ‹ Ì;YHsyMØòAòD$pH‹HXH…Éuÿ† ÌH‹L‹PHT
+ H;ÂuI‹HL$xèÒÜ H‹H‰L$hëLD$pHT$hAÿÒH‹L$hH‹H‹ H…Éu
+H‹HH‰H ëH‹H‰P ëÿ‹ HL$(ÿ6ˆ HƒÄ@_^[ÃÌÌÌÌÌÌÌÌÌÌÌÌÌÌ@WHƒìPHÇD$ şÿÿÿH‰\$`H‹úÿë‡ H‹ĞHL$0ÿı‡ H‹H‹	HƒÁ0èÅ‰  „ÀtcH‹H‹	HƒÁ0èÒ  H‹@‹XHÿ¬‡ D‹ÃH‹ĞHL$pÿs‡ H‹HL$hèVõüÿH‹\$hH…Ûuÿö‡ H‹H‹ H…ÛuH‹Hë

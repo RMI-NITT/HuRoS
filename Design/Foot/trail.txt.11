@@ -1,0 +1,68 @@
+﻿!trail file version No. 1900
+!Creo  TM  5.0  (c) 2019 by PTC Inc.  All Rights Reserved.
+!Exit Logger data:
+!	Process ID: 10928
+!	Application: Creo_Parametric
+!	Start date&time: 2019/02/10  11:19:37
+!	language: usascii
+!	machine type: x86e_win64
+!	datecode: 5.0.0.0
+!	Server: NONE
+!	Workspace: NONE
+!	traceback file: S:\FILES(imp)\BIPED\Design\Foot\traceback.log
+!end Exit Logger data.
+< 0 1.220741 1795 0 0 1030 1920 0 0 1080 13
+!mem_use INCREASE Blocks 766833, AppSize 82222888, SysSize 96109496
+< 0 0.988444 1650 0 0 834 1920 0 0 1080 13
+< 0 0.988444 1485 0 0 834 1920 0 0 1080 13
+< 0 0.987259 1485 0 0 833 1920 0 0 1080 13
+< 0 0.987259 1501 0 0 833 1920 0 0 1080 13
+< 0 0.987259 1517 0 0 833 1920 0 0 1080 13
+< 0 0.987259 1533 0 0 833 1920 0 0 1080 13
+!%CIWelcome to Creo Parametric 5.0.0.0.
+!AFX datecode: 5.0.0.0 2017.12.21.11
+!AFX exec path: C:\Program Files\PTC\Creo 5.0.0.0\Common Files\afx\x86e_win64\afx50.dll
+!AFX text path: C:\Program Files\PTC\Creo 5.0.0.0\Common Files\afx\
+< 0 1.114074 1533 0 0 940 1920 0 0 1080 13
+< 0 0.987259 1533 0 0 833 1920 0 0 1080 13
+#PART
+#RETRIEVE
+!%CPEnter object name: 
+!%TR
+S:\FILES(imp)\BIPED\Design\Foot\axleb_2-1.prt.1
+< 2 0.118519 178 0 0 100 1920 0 0 1080 13
+~ Trail `UI Desktop` `UI Desktop` `DLG_PREVIEW_POST` \
+ `file_open`
+!Command ProCmdModelOpenExe was pushed from the software.
+!10-Feb-19 11:20:23  Start S:\FILES(imp)\BIPED\Design\Foot\axleb_2-1.prt.1
+!10-Feb-19 11:20:23  End   S:\FILES(imp)\BIPED\Design\Foot\axleb_2-1.prt.1
+!%CEThe file S:\FILES(imp)\BIPED\Design\Foot\axleb_2-1.prt.1 is an invalid file
+!%CE'S:\FILES(imp)\BIPED\Design\Foot\axleb_2-1.prt.1' cannot be retrieved.
+!%CE'AXLEB_2-1' cannot be retrieved.
+!Command ProCmdWinActivate was pushed from the software.
+~ Timer `UI Desktop` `UI Desktop` `EmbedBrowserTimer`
+!Application (WB192PluginProWF): running DLL-mode user_initialize
+!Application (WB192PluginProWF): returned from DLL-mode user_initialize; status is 0
+!Application (WB192PluginProWF): started via registry.
+!	exec path: C:\Program Files\ANSYS Inc\v192\aisol\CADIntegration\ProE\winx64\WBPlugInCreo4COM.dll
+!	type: synchronous Pro/TOOLKIT DLL
+!Application (ac4pro192dll): running DLL-mode user_initialize
+!Application (ac4pro192dll): returned from DLL-mode user_initialize; status is 0
+!Application (ac4pro192dll): started via registry.
+!	exec path: C:\Program Files\ANSYS Inc\v192\ANSYS\ac4\bin\pro\winx64\ac4pro.exe
+!	type: synchronous Pro/TOOLKIT DLL
+~ Minimize `SA_BROWSER_WELCOME_SCREEN` `SA_BROWSER_WELCOME_SCREEN`
+!mem_use INCREASE Blocks 795302, AppSize 110754715, SysSize 127288256
+~ Minimize `main_dlg_cur` `main_dlg_cur`
+~ Close `SA_BROWSER_WELCOME_SCREEN` `SA_BROWSER_WELCOME_SCREEN`
+~ Close `main_dlg_cur` `main_dlg_cur`
+!Command ProCmdOSExit was pushed from the software.
+! Message Dialog: Warning
+!               : Creo Parametric will terminate and any unsaved work will be lost.
+!               : Do you really want to exit?
+~ Close `UI Message Dialog` `UI Message Dialog`
+~ Close `UI Message Dialog` `UI Message Dialog`
+~ Power `UI Desktop` `UI Desktop` 3
+~ Power `UI Desktop` `UI Desktop` 4
+~ Power `UI Desktop` `UI Desktop` 4
+!%CI dbg_err_crash() - continuing from serious error (ORDER_DEBUG). 

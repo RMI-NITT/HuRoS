@@ -1,0 +1,786 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Secure HMAC Digests</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="index.html" title="GLib Reference Manual">
+<link rel="up" href="glib-utilities.html" title="GLib Utilities">
+<link rel="prev" href="glib-Data-Checksums.html" title="Data Checksums">
+<link rel="next" href="glib-I18N.html" title="Internationalization">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="glib-Data-Checksums.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="glib-utilities.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GLib Reference Manual</th>
+<td><a accesskey="n" href="glib-I18N.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#glib-Data-HMACs.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#glib-Data-HMACs.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="glib-Data-HMACs"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="glib-Data-HMACs.top_of_page"></a>Secure HMAC Digests</span></h2>
+<p>Secure HMAC Digests — computes the HMAC for data</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="glib-Data-HMACs.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#include &lt;glib.h&gt;
+
+                    <a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac">GHmac</a>;
+<a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="returnvalue">GHmac</span></a> *             <a class="link" href="glib-Data-HMACs.html#g-hmac-new" title="g_hmac_new ()">g_hmac_new</a>                          (<em class="parameter"><code><a class="link" href="glib-Data-Checksums.html#GChecksumType" title="enum GChecksumType"><span class="type">GChecksumType</span></a> digest_type</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="glib-Basic-Types.html#guchar" title="guchar"><span class="type">guchar</span></a> *key</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="glib-Basic-Types.html#gsize" title="gsize"><span class="type">gsize</span></a> key_len</code></em>);
+<a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="returnvalue">GHmac</span></a> *             <a class="link" href="glib-Data-HMACs.html#g-hmac-copy" title="g_hmac_copy ()">g_hmac_copy</a>                         (<em class="parameter"><code>const <a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a> *hmac</code></em>);
+<a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="returnvalue">GHmac</span></a> *             <a class="link" href="glib-Data-HMACs.html#g-hmac-ref" title="g_hmac_ref ()">g_hmac_ref</a>                          (<em class="parameter"><code><a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a> *hmac</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="glib-Data-HMACs.html#g-hmac-unref" title="g_hmac_unref ()">g_hmac_unref</a>                        (<em class="parameter"><code><a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a> *hmac</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="glib-Data-HMACs.html#g-hmac-update" title="g_hmac_update ()">g_hmac_update</a>                       (<em class="parameter"><code><a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a> *hmac</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="glib-Basic-Types.html#guchar" title="guchar"><span class="type">guchar</span></a> *data</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="glib-Basic-Types.html#gssize" title="gssize"><span class="type">gssize</span></a> length</code></em>);
+const <a class="link" href="glib-Basic-Types.html#gchar" title="gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="glib-Data-HMACs.html#g-hmac-get-string" title="g_hmac_get_string ()">g_hmac_get_string</a>                   (<em class="parameter"><code><a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a> *hmac</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="glib-Data-HMACs.html#g-hmac-get-digest" title="g_hmac_get_digest ()">g_hmac_get_digest</a>                   (<em class="parameter"><code><a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a> *hmac</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="glib-Basic-Types.html#guint8" title="guint8"><span class="type">guint8</span></a> *buffer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="glib-Basic-Types.html#gsize" title="gsize"><span class="type">gsize</span></a> *digest_len</code></em>);
+
+<a class="link" href="glib-Basic-Types.html#gchar" title="gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="glib-Data-HMACs.html#g-compute-hmac-for-data" title="g_compute_hmac_for_data ()">g_compute_hmac_for_data</a>             (<em class="parameter"><code><a class="link" href="glib-Data-Checksums.html#GChecksumType" title="enum GChecksumType"><span class="type">GChecksumType</span></a> digest_type</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="glib-Basic-Types.html#guchar" title="guchar"><span class="type">guchar</span></a> *key</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="glib-Basic-Types.html#gsize" title="gsize"><span class="type">gsize</span></a> key_len</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="glib-Basic-Types.html#guchar" title="guchar"><span class="type">guchar</span></a> *data</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="glib-Basic-Types.html#gsize" title="gsize"><span class="type">gsize</span></a> length</code></em>);
+<a class="link" href="glib-Basic-Types.html#gchar" title="gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="glib-Data-HMACs.html#g-compute-hmac-for-string" title="g_compute_hmac_for_string ()">g_compute_hmac_for_string</a>           (<em class="parameter"><code><a class="link" href="glib-Data-Checksums.html#GChecksumType" title="enum GChecksumType"><span class="type">GChecksumType</span></a> digest_type</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="glib-Basic-Types.html#guchar" title="guchar"><span class="type">guchar</span></a> *key</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="glib-Basic-Types.html#gsize" title="gsize"><span class="type">gsize</span></a> key_len</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="glib-Basic-Types.html#gchar" title="gchar"><span class="type">gchar</span></a> *str</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="glib-Basic-Types.html#gssize" title="gssize"><span class="type">gssize</span></a> length</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="glib-Data-HMACs.description"></a><h2>Description</h2>
+<p>
+HMACs should be used when producing a cookie or hash based on data
+and a key. Simple mechanisms for using SHA1 and other algorithms to
+digest a key and data together are vulnerable to various security
+issues. <a class="ulink" href="http://en.wikipedia.org/wiki/HMAC" target="_top">HMAC</a>
+uses algorithms like SHA1 in a secure way to produce a digest of a
+key and data.
+</p>
+<p>
+Both the key and data are arbitrary byte arrays of bytes or characters.
+</p>
+<p>
+Support for HMAC Digests has been added in GLib 2.30.
+</p>
+</div>
+<div class="refsect1">
+<a name="glib-Data-HMACs.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GHmac"></a><h3>GHmac</h3>
+<pre class="programlisting">typedef struct _GHmac GHmac;</pre>
+<p>
+An opaque structure representing a HMAC operation.
+To create a new GHmac, use <a class="link" href="glib-Data-HMACs.html#g-hmac-new" title="g_hmac_new ()"><code class="function">g_hmac_new()</code></a>. To free
+a GHmac, use <a class="link" href="glib-Data-HMACs.html#g-hmac-unref" title="g_hmac_unref ()"><code class="function">g_hmac_unref()</code></a>.
+</p>
+<p class="since">Since 2.30</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="g-hmac-new"></a><h3>g_hmac_new ()</h3>
+<pre class="programlisting"><a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="returnvalue">GHmac</span></a> *             g_hmac_new                          (<em class="parameter"><code><a class="link" href="glib-Data-Checksums.html#GChecksumType" title="enum GChecksumType"><span class="type">GChecksumType</span></a> digest_type</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="glib-Basic-Types.html#guchar" title="guchar"><span class="type">guchar</span></a> *key</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="glib-Basic-Types.html#gsize" title="gsize"><span class="type">gsize</span></a> key_len</code></em>);</pre>
+<p>
+Creates a new <a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a>, using the digest algorithm <em class="parameter"><code>digest_type</code></em>.
+If the <em class="parameter"><code>digest_type</code></em> is not known, <a class="link" href="glib-Standard-Macros.html#NULL:CAPS" title="NULL"><code class="literal">NULL</code></a> is returned.
+A <a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a> can be used to compute the HMAC of a key and an
+arbitrary binary blob, using different hashing algorithms.
+</p>
+<p>
+A <a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a> works by feeding a binary blob through <a class="link" href="glib-Data-HMACs.html#g-hmac-update" title="g_hmac_update ()"><code class="function">g_hmac_update()</code></a>
+until the data is complete; the digest can then be extracted
+using <a class="link" href="glib-Data-HMACs.html#g-hmac-get-string" title="g_hmac_get_string ()"><code class="function">g_hmac_get_string()</code></a>, which will return the checksum as a
+hexadecimal string; or <a class="link" href="glib-Data-HMACs.html#g-hmac-get-digest" title="g_hmac_get_digest ()"><code class="function">g_hmac_get_digest()</code></a>, which will return a
+array of raw bytes. Once either <a class="link" href="glib-Data-HMACs.html#g-hmac-get-string" title="g_hmac_get_string ()"><code class="function">g_hmac_get_string()</code></a> or
+<a class="link" href="glib-Data-HMACs.html#g-hmac-get-digest" title="g_hmac_get_digest ()"><code class="function">g_hmac_get_digest()</code></a> have been called on a <a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a>, the HMAC
+will be closed and it won't be possible to call <a class="link" href="glib-Data-HMACs.html#g-hmac-update" title="g_hmac_update ()"><code class="function">g_hmac_update()</code></a>
+on it anymore.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>digest_type</code></em> :</span></p></td>
+<td>the desired type of digest</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>the key for the HMAC. <span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> length=key_len]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key_len</code></em> :</span></p></td>
+<td>the length of the keys</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the newly created <a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a>, or <a class="link" href="glib-Standard-Macros.html#NULL:CAPS" title="NULL"><code class="literal">NULL</code></a>.
+Use <a class="link" href="glib-Data-HMACs.html#g-hmac-unref" title="g_hmac_unref ()"><code class="function">g_hmac_unref()</code></a> to free the memory allocated by it.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.30</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="g-hmac-copy"></a><h3>g_hmac_copy ()</h3>
+<pre class="programlisting"><a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="returnvalue">GHmac</span></a> *             g_hmac_copy                         (<em class="parameter"><code>const <a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a> *hmac</code></em>);</pre>
+<p>
+Copies a <a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a>. If <em class="parameter"><code>hmac</code></em> has been closed, by calling
+<a class="link" href="glib-Data-HMACs.html#g-hmac-get-string" title="g_hmac_get_string ()"><code class="function">g_hmac_get_string()</code></a> or <a class="link" href="glib-Data-HMACs.html#g-hmac-get-digest" title="g_hmac_get_digest ()"><code class="function">g_hmac_get_digest()</code></a>, the copied
+HMAC will be closed as well.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hmac</code></em> :</span></p></td>
+<td>the <a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a> to copy</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the copy of the passed <a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a>. Use <a class="link" href="glib-Data-HMACs.html#g-hmac-unref" title="g_hmac_unref ()"><code class="function">g_hmac_unref()</code></a>
+when finished using it.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.30</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="g-hmac-ref"></a><h3>g_hmac_ref ()</h3>
+<pre class="programlisting"><a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="returnvalue">GHmac</span></a> *             g_hmac_ref                          (<em class="parameter"><code><a class="link" href="glib-Data-HMACs.html#GHmac" title="GHmac"><span class="type">GHmac</span></a> *hmac</code></em>);</pre>
+<p>
+Atomically increments the reference count of <em class="parameter"><code>hmac</code></em> by one.
+</p>
+<p>
+This function is MT-safe and may be >
+          <v1>32610</v1>
+          <v2>32592</v2>
+          <v3>32593</v3>
+        </triangle>
+        <triangle>
+          <v1>32610</v1>
+          <v2>32609</v2>
+          <v3>32592</v3>
+        </triangle>
+        <triangle>
+          <v1>32611</v1>
+          <v2>32593</v2>
+          <v3>32594</v3>
+        </triangle>
+        <triangle>
+          <v1>32611</v1>
+          <v2>32610</v2>
+          <v3>32593</v3>
+        </triangle>
+        <triangle>
+          <v1>32612</v1>
+          <v2>32594</v2>
+          <v3>32596</v3>
+        </triangle>
+        <triangle>
+          <v1>32612</v1>
+          <v2>32611</v2>
+          <v3>32594</v3>
+        </triangle>
+        <triangle>
+          <v1>32614</v1>
+          <v2>32612</v2>
+          <v3>32596</v3>
+        </triangle>
+        <triangle>
+          <v1>32615</v1>
+          <v2>32614</v2>
+          <v3>32596</v3>
+        </triangle>
+        <triangle>
+          <v1>32615</v1>
+          <v2>32596</v2>
+          <v3>32597</v3>
+        </triangle>
+        <triangle>
+          <v1>32616</v1>
+          <v2>32599</v2>
+          <v3>32601</v3>
+        </triangle>
+        <triangle>
+          <v1>32616</v1>
+          <v2>32598</v2>
+          <v3>32599</v3>
+        </triangle>
+        <triangle>
+          <v1>32617</v1>
+          <v2>32601</v2>
+          <v3>32600</v3>
+        </triangle>
+        <triangle>
+          <v1>32616</v1>
+          <v2>32601</v2>
+          <v3>32617</v3>
+        </triangle>
+        <triangle>
+          <v1>32618</v1>
+          <v2>32600</v2>
+          <v3>32602</v3>
+        </triangle>
+        <triangle>
+          <v1>32619</v1>
+          <v2>32617</v2>
+          <v3>32600</v3>
+        </triangle>
+        <triangle>
+          <v1>32618</v1>
+          <v2>32619</v2>
+          <v3>32600</v3>
+        </triangle>
+        <triangle>
+          <v1>32620</v1>
+          <v2>32602</v2>
+          <v3>32603</v3>
+        </triangle>
+        <triangle>
+          <v1>32620</v1>
+          <v2>32618</v2>
+          <v3>32602</v3>
+        </triangle>
+        <triangle>
+          <v1>32621</v1>
+          <v2>32603</v2>
+          <v3>32604</v3>
+        </triangle>
+        <triangle>
+          <v1>32621</v1>
+          <v2>32620</v2>
+          <v3>32603</v3>
+        </triangle>
+        <triangle>
+          <v1>32622</v1>
+          <v2>32604</v2>
+          <v3>32605</v3>
+        </triangle>
+        <triangle>
+          <v1>32622</v1>
+          <v2>32621</v2>
+          <v3>32604</v3>
+        </triangle>
+        <triangle>
+          <v1>32623</v1>
+          <v2>32605</v2>
+          <v3>32606</v3>
+        </triangle>
+        <triangle>
+          <v1>32623</v1>
+          <v2>32622</v2>
+          <v3>32605</v3>
+        </triangle>
+        <triangle>
+          <v1>32624</v1>
+          <v2>32606</v2>
+          <v3>32607</v3>
+        </triangle>
+        <triangle>
+          <v1>32624</v1>
+          <v2>32623</v2>
+          <v3>32606</v3>
+        </triangle>
+        <triangle>
+          <v1>32625</v1>
+          <v2>32607</v2>
+          <v3>32608</v3>
+        </triangle>
+        <triangle>
+          <v1>32625</v1>
+          <v2>32624</v2>
+          <v3>32607</v3>
+        </triangle>
+        <triangle>
+          <v1>32626</v1>
+          <v2>32608</v2>
+          <v3>32609</v3>
+        </triangle>
+        <triangle>
+          <v1>32626</v1>
+          <v2>32625</v2>
+          <v3>32608</v3>
+        </triangle>
+        <triangle>
+          <v1>32627</v1>
+          <v2>32609</v2>
+          <v3>32610</v3>
+        </triangle>
+        <triangle>
+          <v1>32627</v1>
+          <v2>32626</v2>
+          <v3>32609</v3>
+        </triangle>
+        <triangle>
+          <v1>32628</v1>
+          <v2>32610</v2>
+          <v3>32611</v3>
+        </triangle>
+        <triangle>
+          <v1>32628</v1>
+          <v2>32627</v2>
+          <v3>32610</v3>
+        </triangle>
+        <triangle>
+          <v1>32629</v1>
+          <v2>32611</v2>
+          <v3>32612</v3>
+        </triangle>
+        <triangle>
+          <v1>32629</v1>
+          <v2>32628</v2>
+          <v3>32611</v3>
+        </triangle>
+        <triangle>
+          <v1>32630</v1>
+          <v2>32612</v2>
+          <v3>32614</v3>
+        </triangle>
+        <triangle>
+          <v1>32630</v1>
+          <v2>32629</v2>
+          <v3>32612</v3>
+        </triangle>
+        <triangle>
+          <v1>32632</v1>
+          <v2>32630</v2>
+          <v3>32614</v3>
+        </triangle>
+        <triangle>
+          <v1>32633</v1>
+          <v2>32632</v2>
+          <v3>32614</v3>
+        </triangle>
+        <triangle>
+          <v1>32633</v1>
+          <v2>32614</v2>
+          <v3>32615</v3>
+        </triangle>
+        <triangle>
+          <v1>32634</v1>
+          <v2>32617</v2>
+          <v3>32619</v3>
+        </triangle>
+        <triangle>
+          <v1>32634</v1>
+          <v2>32616</v2>
+          <v3>32617</v3>
+        </triangle>
+        <triangle>
+          <v1>32635</v1>
+          <v2>32619</v2>
+          <v3>32618</v3>
+        </triangle>
+        <triangle>
+          <v1>32634</v1>
+          <v2>32619</v2>
+          <v3>32635</v3>
+        </triangle>
+        <triangle>
+          <v1>32636</v1>
+          <v2>32618</v2>
+          <v3>32620</v3>
+        </triangle>
+        <triangle>
+          <v1>32637</v1>
+          <v2>32635</v2>
+          <v3>32618</v3>
+        </triangle>
+        <triangle>
+          <v1>32636</v1>
+          <v2>32637</v2>
+          <v3>32618</v3>
+        </triangle>
+        <triangle>
+          <v1>32638</v1>
+          <v2>32620</v2>
+          <v3>32621</v3>
+        </triangle>
+        <triangle>
+          <v1>32638</v1>
+          <v2>32636</v2>
+          <v3>32620</v3>
+        </triangle>
+        <triangle>
+          <v1>32639</v1>
+          <v2>32621</v2>
+          <v3>32622</v3>
+        </triangle>
+        <triangle>
+          <v1>32639</v1>
+          <v2>32638</v2>
+          <v3>32621</v3>
+        </triangle>
+        <triangle>
+          <v1>32640</v1>
+          <v2>32622</v2>
+          <v3>32623</v3>
+        </triangle>
+        <triangle>
+          <v1>32640</v1>
+          <v2>32639</v2>
+          <v3>32622</v3>
+        </triangle>
+        <triangle>
+          <v1>32641</v1>
+          <v2>32623</v2>
+          <v3>32624</v3>
+        </triangle>
+        <triangle>
+          <v1>32641</v1>
+          <v2>32640</v2>
+          <v3>32623</v3>
+        </triangle>
+        <triangle>
+          <v1>32642</v1>
+          <v2>32624</v2>
+          <v3>32625</v3>
+        </triangle>
+        <triangle>
+          <v1>32642</v1>
+          <v2>32641</v2>
+          <v3>32624</v3>
+        </triangle>
+        <triangle>
+          <v1>32643</v1>
+          <v2>32625</v2>
+          <v3>32626</v3>
+        </triangle>
+        <triangle>
+          <v1>32643</v1>
+          <v2>32642</v2>
+          <v3>32625</v3>
+        </triangle>
+        <triangle>
+          <v1>32644</v1>
+          <v2>32626</v2>
+          <v3>32627</v3>
+        </triangle>
+        <triangle>
+          <v1>32644</v1>
+          <v2>32643</v2>
+          <v3>32626</v3>
+        </triangle>
+        <triangle>
+          <v1>32645</v1>
+          <v2>32627</v2>
+          <v3>32628</v3>
+        </triangle>
+        <triangle>
+          <v1>32645</v1>
+          <v2>32644</v2>
+          <v3>32627</v3>
+        </triangle>
+        <triangle>
+          <v1>32646</v1>
+          <v2>32628</v2>
+          <v3>32629</v3>
+        </triangle>
+        <triangle>
+          <v1>32646</v1>
+          <v2>32645</v2>
+          <v3>32628</v3>
+        </triangle>
+        <triangle>
+          <v1>32647</v1>
+          <v2>32629</v2>
+          <v3>32630</v3>
+        </triangle>
+        <triangle>
+          <v1>32647</v1>
+          <v2>32646</v2>
+          <v3>32629</v3>
+        </triangle>
+        <triangle>
+          <v1>32648</v1>
+          <v2>32630</v2>
+          <v3>32632</v3>
+        </triangle>
+        <triangle>
+          <v1>32648</v1>
+          <v2>32647</v2>
+          <v3>32630</v3>
+        </triangle>
+        <triangle>
+          <v1>32650</v1>
+          <v2>32648</v2>
+          <v3>32632</v3>
+        </triangle>
+        <triangle>
+          <v1>32651</v1>
+          <v2>32650</v2>
+          <v3>32632</v3>
+        </triangle>
+        <triangle>
+          <v1>32651</v1>
+          <v2>32632</v2>
+          <v3>32633</v3>
+        </triangle>
+        <triangle>
+          <v1>32652</v1>
+          <v2>32635</v2>
+          <v3>32637</v3>
+        </triangle>
+        <triangle>
+          <v1>32652</v1>
+          <v2>32634</v2>
+          <v3>32635</v3>
+        </triangle>
+        <triangle>
+          <v1>32653</v1>
+          <v2>32637</v2>
+          <v3>32636</v3>
+        </triangle>
+        <triangle>
+          <v1>32652</v1>
+          <v2>32637</v2>
+          <v3>32653</v3>
+        </triangle>
+        <triangle>
+          <v1>32654</v1>
+          <v2>32636</v2>
+          <v3>32638</v3>
+        </triangle>
+        <triangle>
+          <v1>32655</v1>
+          <v2>32653</v2>
+          <v3>32636</v3>
+        </triangle>
+        <triangle>
+          <v1>32654</v1>
+          <v2>32655</v2>
+          <v3>32636</v3>
+        </triangle>
+        <triangle>
+          <v1>32656</v1>
+          <v2>32638</v2>
+          <v3>32639</v3>
+        </triangle>
+        <triangle>
+          <v1>32656</v1>
+          <v2>32654</v2>
+          <v3>32638</v3>
+        </triangle>
+        <triangle>
+          <v1>32657</v1>
+          <v2>32639</v2>
+          <v3>32640</v3>
+        </triangle>
+        <triangle>
+          <v1>32657</v1>
+          <v2>32656</v2>
+          <v3>32639</v3>
+        </triangle>
+        <triangle>
+          <v1>32658</v1>
+          <v2>32640</v2>
+          <v3>32641</v3>
+        </triangle>
+        <triangle>
+          <v1>32658</v1>
+          <v2>32657</v2>
+          <v3>32640</v3>
+        </triangle>
+        <triangle>
+          <v1>32659</v1>
+          <v2>32641</v2>
+          <v3>32642</v3>
+        </triangle>
+        <triangle>
+          <v1>32659</v1>
+          <v2>32658</v2>
+          <v3>32641</v3>
+        </triangle>
+        <triangle>
+          <v1>32660</v1>
+          <v2>32642</v2>
+          <v3>32643</v3>
+        </triangle>
+        <triangle>
+          <v1>32660</v1>
+          <v2>32659</v2>
+          <v3>32642</v3>
+        </triangle>
+        <triangle>
+          <v1>32661</v1>
+          <v2>32643</v2>
+          <v3>32644</v3>
+        </triangle>
+        <triangle>
+          <v1>32661</v1>
+          <v2>32660</v2>
+          <v3>32643</v3>
+        </triangle>
+        <triangle>
+          <v1>32662</v1>
+          <v2>32644</v2>
+          <v3>32645</v3>
+        </triangle>
+        <triangle>
+          <v1>32662</v1>
+          <v2>32661</v2>
+          <v3>32644</v3>
+        </triangle>
+        <triangle>
+          <v1>32663</v1>
+          <v2>32645</v2>
+          <v3>32646</v3>
+        </triangle>
+        <triangle>
+          <v1>32663</v1>
+          <v2>32662</v2>
+          <v3>32645</v3>
+        </triangle>
+        <triangle>
+          <v1>32664</v1>
+          <v2>32646</v2>
+          <v3>32647</v3>
+        </triangle>
+        <triangle>
+          <v1>32664</v1>
+          <v2>32663</v2>
+          <v3>32646</v3>
+        </triangle>
+        <triangle>
+          <v1>32665</v1>
+          <v2>32647</v2>
+          <v3>32648</v3>
+        </triangle>
+        <triangle>
+          <v1>32665</v1>
+          <v2>32664</v2>
+          <v3>32647</v3>
+        </triangle>
+        <triangle>
+          <v1>32666</v1>
+          <v2>32648</v2>
+          <v3>32650</v3>
+        </triangle>
+        <triangle>
+          <v1>32666</v1>
+          <v2>32665</v2>
+          <v3>32648</v3>
+        </triangle>
+        <triangle>
+          <v1>32668</v1>
+          <v2>32666</v2>
+          <v3>32650</v3>
+        </triangle>
+        <triangle>
+          <v1>32669</v1>
+          <v2>32668</v2>
+          <v3>32650</v3>
+        </triangle>
+        <triangle>
+          <v1>32669</v1>
+          <v2>32650</v2>
+          <v3>32651</v3>
+        </triangle>
+        <triangle>
+          <v1>32670</v1>
+          <v2>32653</v2>
+          <v3>32655</v3>
+        </triangle>
+        <triangle>
+          <v1>32670</v1>
+          <v2>32652</v2>
+          <v3>32653</v3>
+        </triangle>
+        <triangle>
+          <v1>32671</v1>
+          <v2>32655</v2>
+          <v3>32654</v3>
+        </triangle>
+        <triangle>
+          <v1>32670</v1>
+          <v2>32655</v2>
+          <v3>32671</v3>
+        </triangle>
+        <triangle>
+          <v1>32672</v1>
+          <v2>32654</v2>
+          <v3>32656</v3>
+        </triangle>
+        <triangle>
+          <v1>32673</v1>
+          <v2>32671</v2>
+          <v3>32654</v3>
+        </triangle>
+        <triangle>
+          <v1>32672</v1>
+          <v2>32673</v2>
+          <v3>32654</v3>
+        </triangle>
+        <triangle>
+          <v1>32674</v1>
+          <v2>32656</v2>
+          <v3>32657</v3>
+        </triangle>
+        <triangle>
+          <v1>32674</v1>
+          <v2>32672</v2>
+          <v3>32656</v3>
+        </triangle>
+        <triangle>
+          <v1>32675</v1>
+          <v2>32657</v2>
+          <v3>32658</v3>
+        </triangle>
+        <triangle>
+          <v1>32675</v1>
+          <v2>32674</v2>
+          <v3>32657</v3>
+        </triangle>
+        <triangle>
+          <v1>32676</v1>
+          <v2>32658</v2>
+          <v3>32659</v3>
+        </triangle>
+        <triangle>
+          <v1>32676</v1>
+          <v2>32675</v2>
+          <v3>32658</v3>
+        </triangle>
+        <triangle>
+          <v1>32677</v1>
+          <v2>32659</v2>
+          <v3>32660</v3>
+        </triangle>
+        <triangle>
+          <v1>32677</v1>
+          <v2>32676</v2>
+          <v3>32659</v3>
+        </triangle>
+        <triangle>
+          <v1>32678</

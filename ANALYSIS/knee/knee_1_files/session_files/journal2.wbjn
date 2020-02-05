@@ -1,0 +1,54 @@
+# encoding: utf-8
+# Release 19.2
+SetScriptVersion(Version="19.2.120")
+system1 = GetSystem(Name="SYS")
+model1 = system1.GetContainer(ComponentName="Model")
+model1.Edit()
+favorites1 = EngData.LoadFavoriteItems()
+library1 = EngData.OpenLibrary(
+    Name="Granta Design Sample Materials",
+    Source="Granta_Design_Typical_Materials.xml")
+engineeringData1 = system1.GetContainer(ComponentName="Engineering Data")
+matl1 = engineeringData1.ImportMaterial(
+    Name="Aluminum alloy, wrought",
+    Source="Granta_Design_Typical_Materials.xml")
+matl2 = engineeringData1.ImportMaterial(
+    Name="ABS plastic",
+    Source="Granta_Design_Typical_Materials.xml")
+library2 = EngData.OpenLibrary(
+    Name="General Non-linear Materials",
+    Source="General Materials Non-linear.xml")
+modelComponent1 = system1.GetComponent(Name="Model")
+modelComponent1.UpdateUpstreamComponents()
+modelComponent1.Update(AllDependencies=True)
+template1 = GetTemplate(TemplateName="Rigid Dynamics")
+engineeringDataComponent1 = system1.GetComponent(Name="Engineering Data")
+geometryComponent1 = system1.GetComponent(Name="Geometry")
+system2 = template1.CreateSystem(
+    Name="",
+    ComponentsToShare=[engineeringDataComponent1, geometryComponent1, modelComponent1],
+    Position="Right",
+    RelativeTo=system1)
+system2.Delete()
+system3 = template1.CreateSystem(
+    ComponentsToShare=[engineeringDataComponent1, geometryComponent1, modelComponent1],
+    Position="Right",
+    RelativeTo=system1)
+system3 = template1.CreateSystem(
+    ComponentsToShare=[engineeringDataComponent1, geometryComponent1, modelComponent1],
+    Position="Right",
+    RelativeTo=system1)
+system1.Delete()
+template2 = GetTemplate(
+    TemplateName="Transient Structural",
+    Solver="ANSYS")
+engineeringDataComponent2 = system3.GetComponent(Name="Engineering Data")
+geometryComponent2 = system3.GetComponent(Name="Geometry")
+modelComponent2 = system3.GetComponent(Name="Model")
+system4 = template2.CreateSystem(
+    Name="",
+    ComponentsToShare=[engineeringDataComponent2, geometryComponent2, modelComponent2],
+    Position="Right",
+    RelativeTo=system3)
+model1.Exit()
+Save(Overwrite=True)

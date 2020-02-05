@@ -1,0 +1,20 @@
+# encoding: utf-8
+# Release 19.2
+SetScriptVersion(Version="19.2.120")
+DesignModeler.CreateGeometrySystemWithActiveCAD(
+    FilePath=r"S:\FILES(imp)\Drive\Biped\CAD\knee_2\ASM_NEW.ASM.1",
+    PlugInName="ProEngineer[9324]")
+template1 = GetTemplate(
+    TemplateName="Transient Structural",
+    Solver="ANSYS")
+system1 = GetSystem(Name="Geometry")
+geometryComponent1 = system1.GetComponent(Name="Geometry")
+system2 = template1.CreateSystem(
+    ComponentsToShare=[geometryComponent1],
+    Position="Right",
+    RelativeTo=system1)
+modelComponent1 = system2.GetComponent(Name="Model")
+modelComponent1.Refresh()
+model1 = system2.GetContainer(ComponentName="Model")
+model1.Edit()
+Save(Overwrite=True)

@@ -1,0 +1,102 @@
+ !BB.getUser().get('installAppId'))"
+      },
+
+      "pages": [{
+        "itemsOnScreen": [{
+          "type": "FUNCTION",
+          "name": "determineTeamStatus",
+          "callbacks": {
+            "continueTour": {
+              "functionName": "changeChapterTo",
+              "args": ["determinePipelineStatus"]
+            },
+            "requestedToJoinOtherTeam": {
+              "functionName": "finish"
+            }
+          }
+        }],
+        "noHistory": true
+      }]
+    },
+
+    "tourFromPixelTracking": {
+      "pages": [{
+        "itemsOnScreen": [{
+          "type": "FUNCTION",
+          "name": "determineTeamStatus",
+          "callbacks": {
+            "continueTour": {
+              "functionName": "changeChapterTo",
+              "args": ["determinePipelineStatus"]
+            },
+            "requestedToJoinOtherTeam": {
+              "functionName": "finish"
+            }
+          }
+        }],
+        "noHistory": true
+      }]
+    },
+
+    "determinePipelineStatus": {
+      "pages": [{
+        "itemsOnScreen": [{
+          "type": "FUNCTION",
+          "name": "condition",
+          "args": ["BB.Data.getAllPipelines().length===0"],
+          "callbacks": {
+            "true": {
+              "functionName": "changeChapterTo",
+              "args": ["createAndSharePipeline"]
+            },
+            "false": {
+              "functionName": "changeChapterTo",
+              "args": ["sharedOrCreatedPipeline"]
+            }
+          }
+        }],
+        "onEnter": "preload",
+        "noHistory": true
+      }]
+    },
+
+    "createAndSharePipeline": {
+      "pages": [{
+          "itemsOnScreen": [{
+            "type": "FUNCTION",
+            "name": "pickFirstPipeline",
+            "callbacks": {
+              "next": "next",
+              "previous": "previous"
+            }
+          }]
+        },
+        {
+          "itemsOnScreen": [{
+            "type": "MODAL",
+            "position": "top",
+            "title": "Take a 3 minute Tour",
+            "html": "Take a quick look at some of the cool things you can do with Streak and see how you can have a dramatic increase in your productivity.",
+            "rightButtonText": "Show me",
+            "showRightButton": true,
+            "rightButtonFunction": {
+              "functionName": "changeChapterTo",
+              "args": ["boxDetailView"]
+            },
+            "showLeftButton": true,
+            "leftButtonText": "Later",
+            "leftButtonFunction": "exit",
+            "showLink": false
+          }],
+          "onEnter": null,
+          "onExit": null
+        }
+      ]
+    },
+
+    "sharedOrCreatedPipeline": {
+      "pages": [{
+        "itemsOnScreen": [{
+          "type": "FUNCTION",
+          "name": "condition",
+          "args

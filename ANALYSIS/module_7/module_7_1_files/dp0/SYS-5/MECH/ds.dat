@@ -1,0 +1,2350 @@
+/batch
+/config,noeldb,1     ! force off writing results to database
+*get,_wallstrt,active,,time,wall
+! ANSYS input file written by Workbench version 19.2 RELEASE
+! File used for geometry attach: S:\FILES(imp)\Drive\Biped\CAD\module_1\MODULE_7.ASM.36
+/title,module_7_1--Transient (B5)
+*DIM,_wb_ProjectScratch_dir,string,248
+_wb_ProjectScratch_dir(1) = 'S:\FILES(imp)\BIPED\ANALYSIS\module_7\_ProjectScratch\Scr2671\'
+*DIM,_wb_SolverFiles_dir,string,248
+_wb_SolverFiles_dir(1) = 'S:\FILES(imp)\BIPED\ANALYSIS\module_7\module_7_1_files\dp0\SYS-5\MECH\'
+*DIM,_wb_userfiles_dir,string,248
+_wb_userfiles_dir(1) = 'S:\FILES(imp)\BIPED\ANALYSIS\module_7\module_7_1_files\user_files\'
+/com,--- Data in consistent NMM units. See Solving Units in the help system for more information.
+/units,MPA
+/nopr
+/wb,file,start              !  signify a WB generated input file
+/prep7
+! Turn off shape checking because checks already performed inside WB mesher.
+! See help system for more information.
+SHPP,OFF,,NOWARN
+/nolist
+etcon,set             ! allow ANSYS to choose best KEYOP's for 180x elements
+/com,*********** Nodes for the whole assembly ***********
+nblock,3,,28
+(1i9,3e20.9e3)
+        1     1.486227073E-16     6.147035174E-16    -1.000000000E+02
+        2     1.513776876E-07     2.727457460E-08    -2.270643840E+02
+        3     2.750000000E+01    -6.700000000E+01    -2.390412280E+02
+        4     2.747957900E+01    -9.559388093E+00    -3.750000000E+01
+        5     1.739907702E-07    -2.245999078E+01    -2.519944770E+02
+        6     2.750000000E+01    -5.081797368E+01    -2.442917420E+02
+        7    -1.157524541E-14     6.561660799E-15    -2.418955907E+02
+        8     2.750000000E+01    -8.318202632E+01    -2.442917420E+02
+        9     2.750000000E+01    -5.394132534E+01    -3.402698133E+01
+       10    -2.747957900E+01    -9.559388093E+00    -3.750000001E+01
+       11    -2.750000000E+01    -5.081797368E+01    -2.442917420E+02
+       12    -2.750000000E+01    -5.394132534E+01    -3.402698133E+01
+       13    -2.750000000E+01    -6.700000000E+01    -2.390412280E+02
+       14     2.750000000E+01    -5.883452954E+01    -1.549860857E+02
+       15    -2.750000000E+01    -8.318202632E+01    -2.442917420E+02
+       16    -1.807455003E-15     4.918515016E+00    -3.750000000E+01
+       17    -2.750000000E+01    -5.883452954E+01    -1.549860857E+02
+       18     2.193366461E-10    -7.516706470E-11    -2.044436429E+02
+       19     2.750000000E+01    -6.217623834E+01    -1.893686774E+02
+       20    -1.864370920E+01    -5.178418179E+01    -4.786657296E+01
+       21    -2.750000000E+01    -6.217623834E+01    -1.893686774E+02
+       22     3.635629080E+01    -5.178418179E+01    -4.786657296E+01
+       23     1.864370727E+01    -5.178417066E+01    -4.786656243E+01
+       24    -3.635629273E+01    -5.178417066E+01    -4.786656243E+01
+       25     2.750000000E+01    -5.816093357E+01    -1.480532277E+02
+       26    -2.750000000E+01    -5.816093357E+01    -1.480532277E+02
+-1
+/com,*********** Nodes for all Remote Points ***********
+nblock,3
+(1i9,3e20.9e3)
+   267006     2.750000000E+01     2.500000000E+00    -3.750000000E+01
+   267007     2.750000000E+01     2.500000000E+00    -3.750000000E+01
+   267008    -2.750000000E+01     2.500000000E+00    -3.750000000E+01
+   267009    -2.750000000E+01     2.500000000E+00    -3.750000000E+01
+   267010     2.750000000E+01    -5.935784829E+01    -1.603704732E+02
+   267011     2.750000000E+01    -5.935784829E+01    -1.603704732E+02
+   267012     2.750000000E+01    -6.274361341E+01    -1.952063571E+02
+   267013     2.750000000E+01    -6.274361341E+01    -1.952063571E+02
+   267016    -2.750000000E+01    -5.416818235E+01    -3.460743471E+01
+   266945    -2.750000000E+01    -5.416818235E+01    -3.460743471E+01
+   266946    -2.750000000E+01    -5.935784829E+01    -1.603704732E+02
+   266947    -2.750000000E+01    -5.935784829E+01    -1.603704732E+02
+   266948    -2.750000000E+01    -6.274361342E+01    -1.952063571E+02
+   266949    -2.750000000E+01    -6.274361342E+01    -1.952063571E+02
+   266952     2.750000000E+01    -5.416818235E+01    -3.460743471E+01
+   266953     2.750000000E+01    -5.416818235E+01    -3.460743471E+01
+   266958     2.988709692E-16    -1.327154304E-15    -2.000000000E+02
+   266959     2.988709692E-16    -1.327154304E-15    -2.000000000E+02
+   266960    -8.500000000E+00    -8.500000000E+00    -1.000000000E+02
+   266961    -8.500000000E+00    -8.500000000E+00    -1.000000000E+02
+   266962     2.750000000E+01     0.000000000E+00    -2.270000000E+02
+   266963     2.750000000E+01     0.000000000E+00    -2.270000000E+02
+   266964    -1.511366511E-14    -2.250001570E+01    -2.270000000E+02
+   266965    -1.511366511E-14    -2.250001570E+01    -2.270000000E+02
+   266966    -1.750000000E+01     1.501257671E-14    -2.450931656E+02
+   266967    -1.750000000E+01     1.501257671E-14    -2.450931656E+02
+   266968    -2.897512985E-08    -2.682304585E+01    -2.500000000E+02
+   266969    -2.897512985E-08    -2.682304585E+01    -2.500000000E+02
+   266970    -2.897512985E-08    -2.682304585E+01    -2.500000000E+02
+   266971    -2.897512985E-08    -2.682304585E+01    -2.500000000E+02
+   266972    -2.897512985E-08    -2.682304585E+01    -2.500000000E+02
+   266973    -2.897512985E-08    -2.682304585E+01    -2.500000000E+02
+   266974    -2.897512985E-08    -2.682304585E+01    -2.500000000E+02
+   266975    -2.897512985E-08    -2.682304585E+01    -2.500000000E+02
+   266976     2.750000000E+01    -2.440604868E+01    -3.750000000E+01
+   266977     2.750000000E+01    -2.440604868E+01    -3.750000000E+01
+   266978     2.750000000E+01    -2.440604868E+01    -3.750000000E+01
+   266979     2.750000000E+01    -2.440604868E+01    -3.750000000E+01
+   266980     2.750000000E+01    -5.250000000E+01    -2.400000000E+02
+   266981     2.750000000E+01    -5.250000000E+01    -2.400000000E+02
+   266982     2.750000000E+01    -7.550000000E+01    -2.400000000E+02
+   266983     2.750000000E+01    -7.550000000E+01    -2.400000000E+02
+   266984     3.100000000E+01    -6.700000000E+01    -2.390000000E+02
+   266985     3.100000000E+01    -6.700000000E+01    -2.390000000E+02
+   266986    -2.750000000E+01    -2.440604868E+01    -3.750000000E+01
+   266987    -2.750000000E+01    -2.440604868E+01    -3.750000000E+01
+   266988    -2.750000000E+01    -2.440604868E+01    -3.750000000E+01
+   266989    -2.750000000E+01    -2.440604868E+01    -3.750000000E+01
+   266990    -2.750000000E+01    -7.387985724E+01    -4.905217359E+01
+   266991    -2.750000000E+01    -7.387985724E+01    -4.905217359E+01
+   266992    -2.750000000E+01    -5.250000000E+01    -2.400000000E+02
+   266993    -2.750000000E+01    -5.250000000E+01    -2.400000000E+02
+   266994    -2.750000000E+01    -7.550000000E+01    -2.400000000E+02
+   266995    -2.750000000E+01    -7.550000000E+01    -2.400000000E+02
+   266996    -2.400000000E+01    -6.700000000E+01    -2.390000000E+02
+   266997    -2.400000000E+01    -6.700000000E+01    -2.390000000E+02
+   266998     2.750000000E+01    -7.387985724E+01    -4.905217359E+01
+   266999     2.750000000E+01    -7.387985724E+01    -4.905217359E+01
+   267000     2.750000000E+01    -5.429158757E+01    -1.082408186E+02
+   267001     2.750000000E+01    -5.429158757E+01    -1.082408186E+02
+   267002    -2.750000000E+01    -5.429158757E+01    -1.082408186E+02
+   267003    -2.750000000E+01    -5.429158757E+01    -1.082408186E+02
+   267004    -1.469971434E-16     6.137653237E-16     0.000000000E+00
+   267005    -1.469971434E-16     6.137653237E-16     0.000000000E+00
+-1
+/wb,elem,start            !  set before creation of elements
+/com,*********** Elements for Body 1 "MODULE_6_TSLOT[72]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,1,21
+keyo,1,2,1             ! Moments of inertia in nodal coordinates
+keyo,1,3,0         ! 3D Mass With Rotary Intertia
+r,1,8.82928508258397e-005,8.82928508258397e-005,8.82928508258397e-005,0.298110754124261,0.298110754124661,7.64586380707356e-003
+local,11,0,1.48622707295776e-016,6.14703517375331e-016,-99.99999999999,0.,0.,0.
+nrot,1
+csys,0
+mat,1
+real,1
+type,1
+en,1,1
+/com,*********** Elements for Body 2 "MODULE_7_UNIVERSAL_BLINK[73]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,2,21
+keyo,2,2,1             ! Moments of inertia in nodal coordinates
+keyo,2,3,0         ! 3D Mass With Rotary Intertia
+r,2,3.70134365470909e-005,3.70134365470909e-005,3.70134365470909e-005,1.86170274070143e-002,1.77123767808767e-002,9.86611811608152e-003
+local,11,0,2.19336646086078e-010,-7.51670647009758e-011,-204.443642926291,-7.199574831046,-89.9999999896277,82.8004476867924
+nrot,18
+csys,0
+mat,2
+real,2
+type,2
+en,18,18
+/com,*********** Elements for Body 3 "MODULE_7_UNIVERSAL_SPIDER[78]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,3,21
+keyo,3,2,1             ! Moments of inertia in nodal coordinates
+keyo,3,3,0         ! 3D Mass With Rotary Intertia
+r,3,7.37709868371619e-006,7.37709868371619e-006,7.37709868371619e-006,7.85501866614259e-004,1.43702231173187e-003,7.85502842883162e-004
+local,11,0,1.51377687638756e-007,2.72745745982139e-008,-227.064383995621,97.8661129081395,89.9999998101473,-99.3550344552797
+nrot,2
+csys,0
+mat,3
+real,3
+type,3
+en,2,2
+/com,*********** Elements for Body 4 "MODULE_7_UNIVERSAL_ALINK[80]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,4,21
+keyo,4,2,1             ! Moments of inertia in nodal coordinates
+keyo,4,3,0         ! 3D Mass With Rotary Intertia
+r,4,2.24641300977019e-005,2.24641300977019e-005,2.24641300977019e-005,1.15284511446379e-002,1.23412893189937e-002,3.56795167001477e-003
+local,11,0,-1.15752454114128e-014,6.5616607986577e-015,-241.895590677965,-2.1945813245022e-003,90.,2.19458132447895e-003
+nrot,7
+csys,0
+mat,4
+real,4
+type,4
+en,7,7
+/com,*********** Elements for Body 5 "MODULE_7_FOOT[81]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,5,21
+keyo,5,2,1             ! Moments of inertia in nodal coordinates
+keyo,5,3,0         ! 3D Mass With Rotary Intertia
+r,5,5.97260895098191e-005,5.97260895098191e-005,5.97260895098191e-005,0.11181357433409,0.134962593188883,2.37901354563541e-002
+local,11,0,1.73990770235832e-007,-22.4599907844625,-251.994476988321,-179.999982174705,89.6271200202616,179.99998261406
+nrot,5
+csys,0
+mat,5
+real,5
+type,5
+en,5,5
+/com,*********** Elements for Body 6 "MODULE_7_LINK1_2[100]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,6,21
+keyo,6,2,1             ! Moments of inertia in nodal coordinates
+keyo,6,3,0         ! 3D Mass With Rotary Intertia
+r,6,3.41843444611637e-005,3.41843444611637e-005,3.41843444611637e-005,1.97881214618959e-002,1.6324166087077e-002,7.28814902193089e-003
+local,11,0,-1.80745500304871e-015,4.91851501590758,-37.5000000001401,5.08888749034163e-015,0.,-90.
+nrot,16
+csys,0
+mat,6
+real,6
+type,6
+en,16,16
+/com,*********** Elements for Body 7 "MODULE_7_LINK2_2[105]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,7,21
+keyo,7,2,1             ! Moments of inertia in nodal coordinates
+keyo,7,3,0         ! 3D Mass With Rotary Intertia
+r,7,9.37678438992809e-006,9.37678438992809e-006,9.37678438992809e-006,3.34286124637995e-004,2.05027437509173e-003,2.05550091095434e-003
+local,11,0,27.4795790023969,-9.55938809252039,-37.4999999996429,-89.7726550365265,-89.9998615172245,0.200915339062989
+nrot,4
+csys,0
+mat,7
+real,7
+type,7
+en,4,4
+/com,*********** Elements for Body 8 "MODULE_7_LINK4[109]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,8,21
+keyo,8,2,1             ! Moments of inertia in nodal coordinates
+keyo,8,3,0         ! 3D Mass With Rotary Intertia
+r,8,9.54899453289728e-007,9.54899453289728e-007,9.54899453289728e-007,2.95698460149525e-005,1.53191207568732e-005,2.83205438769724e-005
+local,11,0,27.5,-50.8179736829365,-244.29174198552,179.9999999967,62.1046086565306,89.999999988297
+nrot,6
+csys,0
+mat,8
+real,8
+type,8
+en,6,6
+/com,*********** Elements for Body 9 "MODULE_7_LINK5[121]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,9,21
+keyo,9,2,1             ! Moments of inertia in nodal coordinates
+keyo,9,3,0         ! 3D Mass With Rotary Intertia
+r,9,2.12401132934494e-006,2.12401132934494e-006,2.12401132934494e-006,1.42931623044673e-004,1.476686824201e-004,4.86455226359431e-005
+local,11,0,27.500000001832,-66.999999999291,-239.041227993772,90.,2.15259940841449e-011,-90.
+nrot,3
+csys,0
+mat,9
+real,9
+type,9
+en,3,3
+/com,*********** Elements for Body 10 "MODULE_7_LINK4[114]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,10,21
+keyo,10,2,1             ! Moments of inertia in nodal coordinates
+keyo,10,3,0         ! 3D Mass With Rotary Intertia
+r,10,9.54899453289728e-007,9.54899453289728e-007,9.54899453289728e-007,2.95698460149525e-005,1.53191207568732e-005,2.83205438769724e-005
+local,11,0,27.5,-83.1820263170635,-244.29174198552,-3.29969375911822e-009,62.1046086565306,89.999999988297
+nrot,8
+csys,0
+mat,10
+real,10
+type,10
+en,8,8
+/com,*********** Elements for Body 11 "MODULE_7_LINK6[122]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,11,21
+keyo,11,2,1             ! Moments of inertia in nodal coordinates
+keyo,11,3,0         ! 3D Mass With Rotary Intertia
+r,11,6.07293638927339e-006,6.07293638927339e-006,6.07293638927339e-006,2.15336360375762e-004,3.9734378181169e-003,3.97158725568152e-003
+local,11,0,27.500000000019,-62.1762383400784,-189.368677442797,90.012897408687,1.25352343768784e-003,-84.4487511857878
+nrot,19
+csys,0
+mat,11
+real,11
+type,11
+en,19,19
+/com,*********** Elements for Body 12 "MODULE_7_LEADSCREWNUT[128]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,12,21
+keyo,12,2,1             ! Moments of inertia in nodal coordinates
+keyo,12,3,0         ! 3D Mass With Rotary Intertia
+r,12,1.05582056853223e-005,1.05582056853223e-005,1.05582056853223e-005,6.03411740064974e-004,4.12655845418091e-004,4.126560733797e-004
+local,11,0,27.5000000000319,-58.8345295350236,-154.986085745964,-2.01369768449615,-5.54784220339693,89.8052425470035
+nrot,14
+csys,0
+mat,12
+real,12
+type,12
+en,14,14
+/com,*********** Elements for Body 13 "MODULE_7_LINK2_2[137]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,13,21
+keyo,13,2,1             ! Moments of inertia in nodal coordinates
+keyo,13,3,0         ! 3D Mass With Rotary Intertia
+r,13,9.37678438992809e-006,9.37678438992809e-006,9.37678438992809e-006,3.34286124637995e-004,2.05027437509173e-003,2.05550091095434e-003
+local,11,0,-27.4795790023969,-9.5593880925204,-37.5000000141984,89.6840547708544,89.9999003515963,-179.710484395265
+nrot,10
+csys,0
+mat,13
+real,13
+type,13
+en,10,10
+/com,*********** Elements for Body 14 "MODULE_7_LINK3_2[138]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,14,21
+keyo,14,2,1             ! Moments of inertia in nodal coordinates
+keyo,14,3,0         ! 3D Mass With Rotary Intertia
+r,14,1.37574593318118e-005,1.37574593318118e-005,1.37574593318118e-005,4.13797019239563e-003,4.69842268613648e-003,8.36245696992168e-003
+local,11,0,-18.6437092005128,-51.7841817930984,-47.8665729634739,-5.50287598683953,-36.7093995398785,92.1855316693044
+nrot,20
+csys,0
+mat,14
+real,14
+type,14
+en,20,20
+/com,*********** Elements for Body 15 "MODULE_7_LINK4[143]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,15,21
+keyo,15,2,1             ! Moments of inertia in nodal coordinates
+keyo,15,3,0         ! 3D Mass With Rotary Intertia
+r,15,9.54899453289728e-007,9.54899453289728e-007,9.54899453289728e-007,2.95698460149525e-005,1.53191207568732e-005,2.83205438769724e-005
+local,11,0,-27.5,-50.8179736829365,-244.29174198552,179.9999999967,62.1046086565306,89.999999988297
+nrot,11
+csys,0
+mat,15
+real,15
+type,15
+en,11,11
+/com,*********** Elements for Body 16 "MODULE_7_LINK5[144]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,16,21
+keyo,16,2,1             ! Moments of inertia in nodal coordinates
+keyo,16,3,0         ! 3D Mass With Rotary Intertia
+r,16,2.12401132934494e-006,2.12401132934494e-006,2.12401132934494e-006,1.42931623044673e-004,1.476686824201e-004,4.86455226359431e-005
+local,11,0,-27.5000000018321,-67.000000000709,-239.041227993772,-90.,2.26837159881978e-011,-90.
+nrot,13
+csys,0
+mat,16
+real,16
+type,16
+en,13,13
+/com,*********** Elements for Body 17 "MODULE_7_LINK4[145]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,17,21
+keyo,17,2,1             ! Moments of inertia in nodal coordinates
+keyo,17,3,0         ! 3D Mass With Rotary Intertia
+r,17,9.54899453289728e-007,9.54899453289728e-007,9.54899453289728e-007,2.95698460149525e-005,1.53191207568732e-005,2.83205438769724e-005
+local,11,0,-27.5,-83.1820263170635,-244.29174198552,-3.29969375911822e-009,62.1046086565306,89.999999988297
+nrot,15
+csys,0
+mat,17
+real,17
+type,17
+en,15,15
+/com,*********** Elements for Body 18 "MODULE_7_LINK6[146]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,18,21
+keyo,18,2,1             ! Moments of inertia in nodal coordinates
+keyo,18,3,0         ! 3D Mass With Rotary Intertia
+r,18,6.07293638927339e-006,6.07293638927339e-006,6.07293638927339e-006,2.15336360375762e-004,3.9734378181169e-003,3.97158725568152e-003
+local,11,0,-27.5000000000201,-62.1762383421849,-189.368677442592,-89.9871025913129,-1.25352339295741e-003,-95.5512488117804
+nrot,21
+csys,0
+mat,18
+real,18
+type,18
+en,21,21
+/com,*********** Elements for Body 19 "MODULE_7_LEADSCREWNUT[147]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,19,21
+keyo,19,2,1             ! Moments of inertia in nodal coordinates
+keyo,19,3,0         ! 3D Mass With Rotary Intertia
+r,19,1.05582056853223e-005,1.05582056853223e-005,1.05582056853223e-005,6.03411740064974e-004,4.12655845418091e-004,4.126560733797e-004
+local,11,0,-27.5000000000337,-58.8345295385893,-154.986085745617,-2.0136976844921,-5.5478422009651,89.805242547045
+nrot,17
+csys,0
+mat,19
+real,19
+type,19
+en,17,17
+/com,*********** Elements for Body 20 "MODULE_7_LINK3_2[166]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,20,21
+keyo,20,2,1             ! Moments of inertia in nodal coordinates
+keyo,20,3,0         ! 3D Mass With Rotary Intertia
+r,20,1.37574593318118e-005,1.37574593318118e-005,1.37574593318118e-005,4.13797019239563e-003,4.69842268613648e-003,8.36245696992168e-003
+local,11,0,36.3562907994856,-51.7841817930983,-47.8665729634754,-5.5028759868326,-36.7093995398793,92.185531669316
+nrot,22
+csys,0
+mat,20
+real,20
+type,20
+en,22,22
+/com,*********** Elements for Body 21 "MODULE_7_LINK3_3[167]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,21,21
+keyo,21,2,1             ! Moments of inertia in nodal coordinates
+keyo,21,3,0         ! 3D Mass With Rotary Intertia
+r,21,1.37574593317952e-005,1.37574593317952e-005,1.37574593317952e-005,4.13797030732812e-003,4.6984152909175e-003,8.36244968418773e-003
+local,11,0,18.6437072701384,-51.7841706628115,-47.866562429418,5.50288225366507,-36.7092853020508,87.8144734599992
+nrot,23
+csys,0
+mat,21
+real,21
+type,21
+en,23,23
+/com,*********** Elements for Body 22 "MODULE_7_LINK3_3[168]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,22,21
+keyo,22,2,1             ! Moments of inertia in nodal coordinates
+keyo,22,3,0         ! 3D Mass With Rotary Intertia
+r,22,1.37574593317952e-005,1.37574593317952e-005,1.37574593317952e-005,4.13797030732812e-003,4.6984152909175e-003,8.36244968418773e-003
+local,11,0,-36.3562927298599,-51.7841706628121,-47.8665624294197,5.50288225365819,-36.7092853020523,87.8144734599878
+nrot,24
+csys,0
+mat,22
+real,22
+type,22
+en,24,24
+/com,*********** Elements for Body 23 "KNEE_1_MOTOR_1[169]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,23,21
+keyo,23,2,1             ! Moments of inertia in nodal coordinates
+keyo,23,3,0         ! 3D Mass With Rotary Intertia
+r,23,5.23650379661026e-004,5.23650379661026e-004,5.23650379661026e-004,0.427105611041614,0.426554048657675,6.56491853844505e-002
+local,11,0,27.4999999999497,-53.9413253449258,-34.0269813270084,-3.27910174101149e-006,-4.84415309881052,179.999999723314
+nrot,9
+csys,0
+mat,23
+real,23
+type,23
+en,9,9
+/com,*********** Elements for Body 24 "KNEE_1_MOTOR_1[170]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,24,21
+keyo,24,2,1             ! Moments of inertia in nodal coordinates
+keyo,24,3,0         ! 3D Mass With Rotary Intertia
+r,24,5.23650379661026e-004,5.23650379661026e-004,5.23650379661026e-004,0.427105611041614,0.426554048657675,6.56491853844505e-002
+local,11,0,-27.5000000000509,-53.9413253449261,-34.0269813270072,-3.27910216278012e-006,-4.84415309881047,179.999999723305
+nrot,12
+csys,0
+mat,24
+real,24
+type,24
+en,12,12
+/com,*********** Elements for Body 25 "MODULE_7_LEADSCREW[174]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,25,21
+keyo,25,2,1             ! Moments of inertia in nodal coordinates
+keyo,25,3,0         ! 3D Mass With Rotary Intertia
+r,25,3.15667229832702e-005,3.15667229832702e-005,3.15667229832702e-005,2.5231821211804e-004,1.69545570936917e-002,1.69545571998736e-002
+local,11,0,27.4999999999909,-58.1609335716621,-148.053227662646,-180.,5.55111067823463,-90.0000000000047
+nrot,25
+csys,0
+mat,25
+real,25
+type,25
+en,25,25
+/com,*********** Elements for Body 26 "MODULE_7_LEADSCREW[175]" ***********
+/com,*********** Send Body as a Rigid Body ***********
+et,26,21
+keyo,26,2,1             ! Moments of inertia in nodal coordinates
+keyo,26,3,0         ! 3D Mass With Rotary Intertia
+r,26,3.15667229832702e-005,3.15667229832702e-005,3.15667229832702e-005,2.5231821211804e-004,1.69545570936917e-002,1.69545571998736e-002
+local,11,0,-27.4999999999911,-58.160933571662,-148.053227662645,-5.47107252752595e-013,-5.55111067823448,-90.0000000000046
+nrot,26
+csys,0
+mat,26
+real,26
+type,26
+en,26,26
+/wb,elem,end               !  done creating elements
+/com,*********** Send User Defined Coordinate System(s) ***********
+local,12,0,27.5,2.5,-37.5,90.,0.,90.
+local,13,0,-27.5,2.5,-37.5,90.,0.,90.
+local,14,0,27.5000000000299,-59.3578482888977,-160.370473222974,-90.0000000002213,2.89269763149015e-027,174.448751044702
+local,15,0,27.5000000000168,-62.7436134147768,-195.20635710621,89.9999999997787,-6.7876880565616e-016,95.5512489552976
+local,16,0,-27.5000000000002,-54.1681823482146,-34.6074347143454,90.0000000000476,-7.23174407872538e-028,5.55111067823467
+local,17,0,-27.5000000000316,-59.3578482922349,-160.370473222649,-89.9999999997667,2.89269763149015e-027,174.448751047134
+local,18,0,-27.5000000000178,-62.7436134166355,-195.206357106029,90.0000000002333,-6.78768805361104e-016,95.5512489528658
+local,19,0,27.5000000000002,-54.1681823482146,-34.6074347143454,89.9999999999515,0.,5.55111067823453
+local,20,0,2.98870969184189e-016,-1.32715430372e-015,-200.,0.,0.,0.
+local,21,0,-8.49999999999994,-8.49999999999994,-100.,0.,0.,0.
+local,22,0,27.5,0.,-227.,-180.,-7.01670929853488e-015,-90.
+local,23,0,-1.51136651134429e-014,-22.5000156994441,-227.,-90.,1.05250639478023e-014,90.
+local,24,0,-17.5,1.50125767133465e-014,-245.093165608355,0.,0.,0.
+local,25,0,-2.89751298510055e-008,-26.8230458519341,-250.,0.,0.,0.
+local,26,0,-2.89751298510055e-008,-26.8230458519341,-250.,0.,0.,0.
+local,27,0,-2.89751298510055e-008,-26.8230458519341,-250.,0.,0.,0.
+local,28,0,-2.89751298510055e-008,-26.8230458519341,-250.,0.,0.,0.
+local,29,0,27.5,-24.406048684428,-37.5,-180.,-7.01670929853488e-015,-90.
+local,30,0,27.5,-24.406048684428,-37.5,-180.,-7.01670929853488e-015,-90.
+local,31,0,27.5,-52.5,-240.,-116.565051177078,90.,-63.434948822922
+local,32,0,27.5,-75.5,-240.,-180.,90.,180.
+local,33,0,31.0000000000003,-67.,-239.000000000001,-180.,-7.01670929853488e-015,-90.
+local,34,0,-27.5,-24.406048684428,-37.5,-180.,-7.01670929853488e-015,-90.
+local,35,0,-27.5,-24.406048684428,-37.5,-180.,-7.01670929853488e-015,-90.
+local,36,0,-27.4999999999991,-73.8798572433962,-49.0521735855862,0.,0.,0.
+local,37,0,-27.5,-52.5,-240.,-116.565051177078,90.,-63.434948822922
+local,38,0,-27.5000000000001,-75.5,-240.,-116.565051177078,90.,-63.434948822922
+local,39,0,-24.0000000000005,-67.,-238.999999999999,-180.,-7.01670929853488e-015,-90.
+local,40,0,27.4999999999991,-73.8798572433961,-49.0521735855863,0.,0.,0.
+local,41,0,27.4999999999942,-54.2915875681341,-108.240818574969,0.,0.,0.
+local,42,0,-27.4999999999943,-54.2915875681345,-108.240818574965,0.,0.,0.
+local,43,0,-1.46997143351664e-016,6.13765323662635e-016,0.,0.,0.,0.
+csys,0
+toffst,273.15,  ! Temperature offset from absolute zero
+/com,*********** Set Reference Temperature ***********
+tref,22.
+/wb,mat,start              !  starting to send materials
+/com,*********** Send Materials ***********
+MP,DENS,1,2.77e-09,	! tonne mm^-3
+MP,EX,1,73800,	! tonne s^-2 mm^-1
+MP,NUXY,1,0.337,
+MP,KXX,1,157,	! tonne mm s^-3 C^-1
+MP,ALPX,1,2.38e-05,	! C^-1
+MP,C,1,875000000,	! mm^2 s^-2 C^-1
+MP,RSVX,1,4.49e-05,	! ohm mm
+
+MP,DENS,2,1.04e-09,	! tonne mm^-3
+MP,EX,2,2390,	! tonne s^-2 mm^-1
+MP,NUXY,2,0.399,
+MP,KXX,2,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,2,9.54e-05,	! C^-1
+MP,C,2,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,2,9.95e+16,	! ohm mm
+
+MP,DENS,3,1.04e-09,	! tonne mm^-3
+MP,EX,3,2390,	! tonne s^-2 mm^-1
+MP,NUXY,3,0.399,
+MP,KXX,3,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,3,9.54e-05,	! C^-1
+MP,C,3,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,3,9.95e+16,	! ohm mm
+
+MP,DENS,4,1.04e-09,	! tonne mm^-3
+MP,EX,4,2390,	! tonne s^-2 mm^-1
+MP,NUXY,4,0.399,
+MP,KXX,4,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,4,9.54e-05,	! C^-1
+MP,C,4,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,4,9.95e+16,	! ohm mm
+
+MP,DENS,5,1.04e-09,	! tonne mm^-3
+MP,EX,5,2390,	! tonne s^-2 mm^-1
+MP,NUXY,5,0.399,
+MP,KXX,5,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,5,9.54e-05,	! C^-1
+MP,C,5,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,5,9.95e+16,	! ohm mm
+
+MP,DENS,6,1.04e-09,	! tonne mm^-3
+MP,EX,6,2390,	! tonne s^-2 mm^-1
+MP,NUXY,6,0.399,
+MP,KXX,6,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,6,9.54e-05,	! C^-1
+MP,C,6,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,6,9.95e+16,	! ohm mm
+
+MP,DENS,7,1.04e-09,	! tonne mm^-3
+MP,EX,7,2390,	! tonne s^-2 mm^-1
+MP,NUXY,7,0.399,
+MP,KXX,7,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,7,9.54e-05,	! C^-1
+MP,C,7,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,7,9.95e+16,	! ohm mm
+
+MP,DENS,8,1.04e-09,	! tonne mm^-3
+MP,EX,8,2390,	! tonne s^-2 mm^-1
+MP,NUXY,8,0.399,
+MP,KXX,8,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,8,9.54e-05,	! C^-1
+MP,C,8,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,8,9.95e+16,	! ohm mm
+
+MP,DENS,9,1.04e-09,	! tonne mm^-3
+MP,EX,9,2390,	! tonne s^-2 mm^-1
+MP,NUXY,9,0.399,
+MP,KXX,9,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,9,9.54e-05,	! C^-1
+MP,C,9,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,9,9.95e+16,	! ohm mm
+
+MP,DENS,10,1.04e-09,	! tonne mm^-3
+MP,EX,10,2390,	! tonne s^-2 mm^-1
+MP,NUXY,10,0.399,
+MP,KXX,10,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,10,9.54e-05,	! C^-1
+MP,C,10,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,10,9.95e+16,	! ohm mm
+
+MP,DENS,11,1.04e-09,	! tonne mm^-3
+MP,EX,11,2390,	! tonne s^-2 mm^-1
+MP,NUXY,11,0.399,
+MP,KXX,11,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,11,9.54e-05,	! C^-1
+MP,C,11,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,11,9.95e+16,	! ohm mm
+
+Temperature = 'TEMP' ! Temperature
+MP,DENS,12,7.85e-09,	! tonne mm^-3
+MP,ALPX,12,1.2e-05,	! C^-1
+MP,C,12,434000000,	! mm^2 s^-2 C^-1
+MP,KXX,12,60.5,	! tonne mm s^-3 C^-1
+MP,RSVX,12,0.00017,	! ohm mm
+MP,EX,12,200000,	! tonne s^-2 mm^-1
+MP,NUXY,12,0.3,
+MP,MURX,12,10000,
+
+MP,DENS,13,1.04e-09,	! tonne mm^-3
+MP,EX,13,2390,	! tonne s^-2 mm^-1
+MP,NUXY,13,0.399,
+MP,KXX,13,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,13,9.54e-05,	! C^-1
+MP,C,13,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,13,9.95e+16,	! ohm mm
+
+MP,DENS,14,1.04e-09,	! tonne mm^-3
+MP,EX,14,2390,	! tonne s^-2 mm^-1
+MP,NUXY,14,0.399,
+MP,KXX,14,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,14,9.54e-05,	! C^-1
+MP,C,14,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,14,9.95e+16,	! ohm mm
+
+MP,DENS,15,1.04e-09,	! tonne mm^-3
+MP,EX,15,2390,	! tonne s^-2 mm^-1
+MP,NUXY,15,0.399,
+MP,KXX,15,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,15,9.54e-05,	! C^-1
+MP,C,15,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,15,9.95e+16,	! ohm mm
+
+MP,DENS,16,1.04e-09,	! tonne mm^-3
+MP,EX,16,2390,	! tonne s^-2 mm^-1
+MP,NUXY,16,0.399,
+MP,KXX,16,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,16,9.54e-05,	! C^-1
+MP,C,16,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,16,9.95e+16,	! ohm mm
+
+MP,DENS,17,1.04e-09,	! tonne mm^-3
+MP,EX,17,2390,	! tonne s^-2 mm^-1
+MP,NUXY,17,0.399,
+MP,KXX,17,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,17,9.54e-05,	! C^-1
+MP,C,17,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,17,9.95e+16,	! ohm mm
+
+MP,DENS,18,1.04e-09,	! tonne mm^-3
+MP,EX,18,2390,	! tonne s^-2 mm^-1
+MP,NUXY,18,0.399,
+MP,KXX,18,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,18,9.54e-05,	! C^-1
+MP,C,18,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,18,9.95e+16,	! ohm mm
+
+Temperature = 'TEMP' ! Temperature
+MP,DENS,19,7.85e-09,	! tonne mm^-3
+MP,ALPX,19,1.2e-05,	! C^-1
+MP,C,19,434000000,	! mm^2 s^-2 C^-1
+MP,KXX,19,60.5,	! tonne mm s^-3 C^-1
+MP,RSVX,19,0.00017,	! ohm mm
+MP,EX,19,200000,	! tonne s^-2 mm^-1
+MP,NUXY,19,0.3,
+MP,MURX,19,10000,
+
+MP,DENS,20,1.04e-09,	! tonne mm^-3
+MP,EX,20,2390,	! tonne s^-2 mm^-1
+MP,NUXY,20,0.399,
+MP,KXX,20,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,20,9.54e-05,	! C^-1
+MP,C,20,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,20,9.95e+16,	! ohm mm
+
+MP,DENS,21,1.04e-09,	! tonne mm^-3
+MP,EX,21,2390,	! tonne s^-2 mm^-1
+MP,NUXY,21,0.399,
+MP,KXX,21,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,21,9.54e-05,	! C^-1
+MP,C,21,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,21,9.95e+16,	! ohm mm
+
+MP,DENS,22,1.04e-09,	! tonne mm^-3
+MP,EX,22,2390,	! tonne s^-2 mm^-1
+MP,NUXY,22,0.399,
+MP,KXX,22,0.258,	! tonne mm s^-3 C^-1
+MP,ALPX,22,9.54e-05,	! C^-1
+MP,C,22,1720000000,	! mm^2 s^-2 C^-1
+MP,RSVX,22,9.95e+16,	! ohm mm
+
+Temperature = 'TEMP' ! Temperature
+MP,DENS,23,7.85e-09,	! tonne mm^-3
+MP,ALPX,23,1.2e-05,	! C^-1
+MP,C,23,434000000,	! mm^2 s^-2 C^-1
+MP,KXX,23,60.5,	! tonne mm s^-3 C^-1
+MP,RSVX,23,0.00017,	! ohm mm
+MP,EX,23,200000,	! tonne s^-2 mm^-1
+MP,NUXY,23,0.3,
+MP,MURX,23,10000,
+
+Temperature = 'TEMP' ! Temperature
+MP,DENS,24,7.85e-09,	! tonne mm^-3
+MP,ALPX,24,1.2e-05,	! C^-1
+MP,C,24,434000000,	! mm^2 s^-2 C^-1
+MP,KXX,24,60.5,	! tonne mm s^-3 C^-1
+MP,RSVX,24,0.00017,	! ohm mm
+MP,EX,24,200000,	! tonne s^-2 mm^-1
+MP,NUXY,24,0.3,
+MP,MURX,24,10000,
+
+Temperature = 'TEMP' ! Temperature
+MP,DENS,25,7.85e-09,	! tonne mm^-3
+MP,ALPX,25,1.2e-05,	! C^-1
+MP,C,25,434000000,	! mm^2 s^-2 C^-1
+MP,KXX,25,60.5,	! tonne mm s^-3 C^-1
+MP,RSVX,25,0.00017,	! ohm mm
+MP,EX,25,200000,	! tonne s^-2 mm^-1
+MP,NUXY,25,0.3,
+MP,MURX,25,10000,
+
+Temperature = 'TEMP' ! Temperature
+MP,DENS,26,7.85e-09,	! tonne mm^-3
+MP,ALPX,26,1.2e-05,	! C^-1
+MP,C,26,434000000,	! mm^2 s^-2 C^-1
+MP,KXX,26,60.5,	! tonne mm s^-3 C^-1
+MP,RSVX,26,0.00017,	! ohm mm
+MP,EX,26,200000,	! tonne s^-2 mm^-1
+MP,NUXY,26,0.3,
+MP,MURX,26,10000,
+
+/wb,mat,end                !  done sending materials
+!************************* Model Summary ********************
+!MODULE_6_TSLOT[72],	Aluminum alloy, high strength, wrought,	matid,	1
+!MODULE_7_UNIVERSAL_BLINK[73],	ABS plastic,	matid,	2
+!MODULE_7_UNIVERSAL_SPIDER[78],	ABS plastic,	matid,	3
+!MODULE_7_UNIVERSAL_ALINK[80],	ABS plastic,	matid,	4
+!MODULE_7_FOOT[81],	ABS plastic,	matid,	5
+!MODULE_7_LINK1_2[100],	ABS plastic,	matid,	6
+!MODULE_7_LINK2_2[105],	ABS plastic,	matid,	7
+!MODULE_7_LINK4[109],	ABS plastic,	matid,	8
+!MODULE_7_LINK5[121],	ABS plastic,	matid,	9
+!MODULE_7_LINK4[114],	ABS plastic,	matid,	10
+!MODULE_7_LINK6[122],	ABS plastic,	matid,	11
+!MODULE_7_LEADSCREWNUT[128],	Structural Steel,	matid,	12
+!MODULE_7_LINK2_2[137],	ABS plastic,	matid,	13
+!MODULE_7_LINK3_2[138],	ABS plastic,	matid,	14
+!MODULE_7_LINK4[143],	ABS plastic,	matid,	15
+!MODULE_7_LINK5[144],	ABS plastic,	matid,	16
+!MODULE_7_LINK4[145],	ABS plastic,	matid,	17
+!MODULE_7_LINK6[146],	ABS plastic,	matid,	18
+!MODULE_7_LEADSCREWNUT[147],	Structural Steel,	matid,	19
+!MODULE_7_LINK3_2[166],	ABS plastic,	matid,	20
+!MODULE_7_LINK3_3[167],	ABS plastic,	matid,	21
+!MODULE_7_LINK3_3[168],	ABS plastic,	matid,	22
+!KNEE_1_MOTOR_1[169],	Structural Steel,	matid,	23
+!KNEE_1_MOTOR_1[170],	Structural Steel,	matid,	24
+!MODULE_7_LEADSCREW[174],	Structural Steel,	matid,	25
+!MODULE_7_LEADSCREW[175],	Structural Steel,	matid,	26
+!************************* End Model Summary ********************
+! get the diagonal of the bounding box. Needed later for other things
+*get,_xmin,node,,mnloc,x
+*get,_ymin,node,,mnloc,y
+*get,_zmin,node,,mnloc,z
+*get,_xmax,node,,mxloc,x
+*get,_ymax,node,,mxloc,y
+*get,_zmax,node,,mxloc,z
+_ASMDIAG=(_xmax-_xmin)*(_xmax-_xmin)+(_ymax-_ymin)*(_ymax-_ymin)+(_zmax-_zmin)*(_zmax-_zmin)
+_ASMDIAG=SQRT(_ASMDIAG)
+/wb,contact,start          !  starting to send contact
+/wb,contact,end            !  done creating contacts
+/golist
+/wb,load,start             !  starting to send loads
+/com,*********** Create Remote Point "Internal Remote Point" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK1_2[100] To MODULE_7_LINK2_2[105]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,27
+*set,cid,27
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133323,16
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,267006
+_npilot242=_npilot
+mat,27
+real,27
+type,27
+en,133324,16,267006
+csys,12
+nrot,267006
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 2" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK1_2[100] To MODULE_7_LINK2_2[105]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,28
+*set,cid,28
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133325,4
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,267007
+_npilot243=_npilot
+mat,28
+real,28
+type,28
+en,133326,4,267007
+csys,12
+nrot,267007
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 3" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK1_2[100] To MODULE_7_LINK2_2[137]" --------
+*set,_npilot,267008
+_npilot250=_npilot
+mat,27
+real,27
+type,27
+en,133327,16,267008
+csys,13
+nrot,267008
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 4" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK1_2[100] To MODULE_7_LINK2_2[137]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,29
+*set,cid,29
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133328,10
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,267009
+_npilot251=_npilot
+mat,29
+real,29
+type,29
+en,133329,10,267009
+csys,13
+nrot,267009
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 5" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_LINK6[122] To MODULE_7_LEADSCREWNUT[128]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,30
+*set,cid,30
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133330,19
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,267010
+_npilot258=_npilot
+mat,30
+real,30
+type,30
+en,133331,19,267010
+csys,14
+nrot,267010
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 6" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_LINK6[122] To MODULE_7_LEADSCREWNUT[128]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,31
+*set,cid,31
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133332,14
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,267011
+_npilot259=_npilot
+mat,31
+real,31
+type,31
+en,133333,14,267011
+csys,14
+nrot,267011
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 7" ***********
+! -------- Remote Point Used by "Translational - MODULE_7_LINK6[122] To MODULE_7_LEADSCREW[174]" --------
+*set,_npilot,267012
+_npilot266=_npilot
+mat,30
+real,30
+type,30
+en,133334,19,267012
+csys,15
+nrot,267012
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 8" ***********
+! -------- Remote Point Used by "Translational - MODULE_7_LINK6[122] To MODULE_7_LEADSCREW[174]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,32
+*set,cid,32
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133335,25
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,267013
+_npilot267=_npilot
+mat,32
+real,32
+type,32
+en,133336,25,267013
+csys,15
+nrot,267013
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 11" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_LINK3_2[138] To KNEE_1_MOTOR_1[170]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,33
+*set,cid,33
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133337,20
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,267016
+_npilot282=_npilot
+mat,33
+real,33
+type,33
+en,133338,20,267016
+csys,16
+nrot,267016
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 12" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_LINK3_2[138] To KNEE_1_MOTOR_1[170]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,34
+*set,cid,34
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133339,12
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266945
+_npilot283=_npilot
+mat,34
+real,34
+type,34
+en,133340,12,266945
+csys,16
+nrot,266945
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 13" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_LINK6[146] To MODULE_7_LEADSCREWNUT[147]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,35
+*set,cid,35
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133341,21
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266946
+_npilot290=_npilot
+mat,35
+real,35
+type,35
+en,133342,21,266946
+csys,17
+nrot,266946
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 14" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_LINK6[146] To MODULE_7_LEADSCREWNUT[147]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,36
+*set,cid,36
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133343,17
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266947
+_npilot291=_npilot
+mat,36
+real,36
+type,36
+en,133344,17,266947
+csys,17
+nrot,266947
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 15" ***********
+! -------- Remote Point Used by "Translational - MODULE_7_LINK6[146] To MODULE_7_LEADSCREW[175]" --------
+*set,_npilot,266948
+_npilot298=_npilot
+mat,35
+real,35
+type,35
+en,133345,21,266948
+csys,18
+nrot,266948
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 16" ***********
+! -------- Remote Point Used by "Translational - MODULE_7_LINK6[146] To MODULE_7_LEADSCREW[175]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,37
+*set,cid,37
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133346,26
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266949
+_npilot299=_npilot
+mat,37
+real,37
+type,37
+en,133347,26,266949
+csys,18
+nrot,266949
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 19" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_LINK3_2[166] To KNEE_1_MOTOR_1[169]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,38
+*set,cid,38
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133348,22
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266952
+_npilot314=_npilot
+mat,38
+real,38
+type,38
+en,133349,22,266952
+csys,19
+nrot,266952
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 20" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_LINK3_2[166] To KNEE_1_MOTOR_1[169]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,39
+*set,cid,39
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133350,9
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266953
+_npilot315=_npilot
+mat,39
+real,39
+type,39
+en,133351,9,266953
+csys,19
+nrot,266953
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 25" ***********
+! -------- Remote Point Used by "Fixed - MODULE_6_TSLOT[72] To MODULE_7_UNIVERSAL_BLINK[73]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,40
+*set,cid,40
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133352,1
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266958
+_npilot337=_npilot
+mat,40
+real,40
+type,40
+en,133353,1,266958
+/com,*********** Create Remote Point "Internal Remote Point 26" ***********
+! -------- Remote Point Used by "Fixed - MODULE_6_TSLOT[72] To MODULE_7_UNIVERSAL_BLINK[73]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,41
+*set,cid,41
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133354,18
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266959
+_npilot338=_npilot
+mat,41
+real,41
+type,41
+en,133355,18,266959
+/com,*********** Create Remote Point "Internal Remote Point 27" ***********
+! -------- Remote Point Used by "Fixed - MODULE_6_TSLOT[72] To MODULE_7_LINK1_2[100]" --------
+*set,_npilot,266960
+_npilot344=_npilot
+mat,40
+real,40
+type,40
+en,133356,1,266960
+/com,*********** Create Remote Point "Internal Remote Point 28" ***********
+! -------- Remote Point Used by "Fixed - MODULE_6_TSLOT[72] To MODULE_7_LINK1_2[100]" --------
+*set,_npilot,266961
+_npilot345=_npilot
+mat,27
+real,27
+type,27
+en,133357,16,266961
+/com,*********** Create Remote Point "Internal Remote Point 29" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_UNIVERSAL_BLINK[73] To MODULE_7_UNIVERSAL_SPIDER[78]" --------
+*set,_npilot,266962
+_npilot351=_npilot
+mat,41
+real,41
+type,41
+en,133358,18,266962
+csys,22
+nrot,266962
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 30" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_UNIVERSAL_BLINK[73] To MODULE_7_UNIVERSAL_SPIDER[78]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,42
+*set,cid,42
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133359,2
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266963
+_npilot352=_npilot
+mat,42
+real,42
+type,42
+en,133360,2,266963
+csys,22
+nrot,266963
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 31" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_UNIVERSAL_SPIDER[78] To MODULE_7_UNIVERSAL_ALINK[80]" --------
+*set,_npilot,266964
+_npilot358=_npilot
+mat,42
+real,42
+type,42
+en,133361,2,266964
+csys,23
+nrot,266964
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 32" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_UNIVERSAL_SPIDER[78] To MODULE_7_UNIVERSAL_ALINK[80]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,43
+*set,cid,43
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133362,7
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266965
+_npilot359=_npilot
+mat,43
+real,43
+type,43
+en,133363,7,266965
+csys,23
+nrot,266965
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 33" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_UNIVERSAL_ALINK[80] To MODULE_7_FOOT[81]" --------
+*set,_npilot,266966
+_npilot365=_npilot
+mat,43
+real,43
+type,43
+en,133364,7,266966
+/com,*********** Create Remote Point "Internal Remote Point 34" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_UNIVERSAL_ALINK[80] To MODULE_7_FOOT[81]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,44
+*set,cid,44
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133365,5
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266967
+_npilot366=_npilot
+mat,44
+real,44
+type,44
+en,133366,5,266967
+/com,*********** Create Remote Point "Internal Remote Point 35" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[109]" --------
+*set,_npilot,266968
+_npilot372=_npilot
+mat,44
+real,44
+type,44
+en,133367,5,266968
+/com,*********** Create Remote Point "Internal Remote Point 36" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[109]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,45
+*set,cid,45
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133368,6
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266969
+_npilot373=_npilot
+mat,45
+real,45
+type,45
+en,133369,6,266969
+/com,*********** Create Remote Point "Internal Remote Point 37" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[114]" --------
+*set,_npilot,266970
+_npilot379=_npilot
+mat,44
+real,44
+type,44
+en,133370,5,266970
+/com,*********** Create Remote Point "Internal Remote Point 38" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[114]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,46
+*set,cid,46
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133371,8
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266971
+_npilot380=_npilot
+mat,46
+real,46
+type,46
+en,133372,8,266971
+/com,*********** Create Remote Point "Internal Remote Point 39" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[143]" --------
+*set,_npilot,266972
+_npilot386=_npilot
+mat,44
+real,44
+type,44
+en,133373,5,266972
+/com,*********** Create Remote Point "Internal Remote Point 40" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[143]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,47
+*set,cid,47
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133374,11
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266973
+_npilot387=_npilot
+mat,47
+real,47
+type,47
+en,133375,11,266973
+/com,*********** Create Remote Point "Internal Remote Point 41" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[145]" --------
+*set,_npilot,266974
+_npilot393=_npilot
+mat,44
+real,44
+type,44
+en,133376,5,266974
+/com,*********** Create Remote Point "Internal Remote Point 42" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[145]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,48
+*set,cid,48
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133377,15
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266975
+_npilot394=_npilot
+mat,48
+real,48
+type,48
+en,133378,15,266975
+/com,*********** Create Remote Point "Internal Remote Point 43" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK2_2[105] To MODULE_7_LINK3_2[166]" --------
+*set,_npilot,266976
+_npilot400=_npilot
+mat,28
+real,28
+type,28
+en,133379,4,266976
+csys,29
+nrot,266976
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 44" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK2_2[105] To MODULE_7_LINK3_2[166]" --------
+*set,_npilot,266977
+_npilot401=_npilot
+mat,38
+real,38
+type,38
+en,133380,22,266977
+csys,29
+nrot,266977
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 45" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK2_2[105] To MODULE_7_LINK3_3[167]" --------
+*set,_npilot,266978
+_npilot407=_npilot
+mat,28
+real,28
+type,28
+en,133381,4,266978
+csys,30
+nrot,266978
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 46" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK2_2[105] To MODULE_7_LINK3_3[167]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,49
+*set,cid,49
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133382,23
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266979
+_npilot408=_npilot
+mat,49
+real,49
+type,49
+en,133383,23,266979
+csys,30
+nrot,266979
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 47" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK4[109] To MODULE_7_LINK5[121]" --------
+*set,_npilot,266980
+_npilot414=_npilot
+mat,45
+real,45
+type,45
+en,133384,6,266980
+csys,31
+nrot,266980
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 48" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK4[109] To MODULE_7_LINK5[121]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,50
+*set,cid,50
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133385,3
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266981
+_npilot415=_npilot
+mat,50
+real,50
+type,50
+en,133386,3,266981
+csys,31
+nrot,266981
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 49" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK5[121] To MODULE_7_LINK4[114]" --------
+*set,_npilot,266982
+_npilot421=_npilot
+mat,50
+real,50
+type,50
+en,133387,3,266982
+csys,32
+nrot,266982
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 50" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK5[121] To MODULE_7_LINK4[114]" --------
+*set,_npilot,266983
+_npilot422=_npilot
+mat,46
+real,46
+type,46
+en,133388,8,266983
+csys,32
+nrot,266983
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 51" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK5[121] To MODULE_7_LINK6[122]" --------
+*set,_npilot,266984
+_npilot428=_npilot
+mat,50
+real,50
+type,50
+en,133389,3,266984
+csys,33
+nrot,266984
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 52" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK5[121] To MODULE_7_LINK6[122]" --------
+*set,_npilot,266985
+_npilot429=_npilot
+mat,30
+real,30
+type,30
+en,133390,19,266985
+csys,33
+nrot,266985
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 53" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK2_2[137] To MODULE_7_LINK3_2[138]" --------
+*set,_npilot,266986
+_npilot435=_npilot
+mat,29
+real,29
+type,29
+en,133391,10,266986
+csys,34
+nrot,266986
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 54" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK2_2[137] To MODULE_7_LINK3_2[138]" --------
+*set,_npilot,266987
+_npilot436=_npilot
+mat,33
+real,33
+type,33
+en,133392,20,266987
+csys,34
+nrot,266987
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 55" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK2_2[137] To MODULE_7_LINK3_3[168]" --------
+*set,_npilot,266988
+_npilot442=_npilot
+mat,29
+real,29
+type,29
+en,133393,10,266988
+csys,35
+nrot,266988
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 56" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK2_2[137] To MODULE_7_LINK3_3[168]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,51
+*set,cid,51
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133394,24
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266989
+_npilot443=_npilot
+mat,51
+real,51
+type,51
+en,133395,24,266989
+csys,35
+nrot,266989
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 57" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_LINK3_2[138] To MODULE_7_LINK3_3[168]" --------
+*set,_npilot,266990
+_npilot449=_npilot
+mat,33
+real,33
+type,33
+en,133396,20,266990
+/com,*********** Create Remote Point "Internal Remote Point 58" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_LINK3_2[138] To MODULE_7_LINK3_3[168]" --------
+*set,_npilot,266991
+_npilot450=_npilot
+mat,51
+real,51
+type,51
+en,133397,24,266991
+/com,*********** Create Remote Point "Internal Remote Point 59" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK4[143] To MODULE_7_LINK5[144]" --------
+*set,_npilot,266992
+_npilot456=_npilot
+mat,47
+real,47
+type,47
+en,133398,11,266992
+csys,37
+nrot,266992
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 60" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK4[143] To MODULE_7_LINK5[144]" --------
+! ********* Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,tid,52
+*set,cid,52
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+type,tid
+mat ,cid
+real,cid
+tshape,pilo
+en,133399,13
+tshape
+! ********* End of Create Contact to Connect To Rigid Body Mass Node *********** 
+*set,_npilot,266993
+_npilot457=_npilot
+mat,52
+real,52
+type,52
+en,133400,13,266993
+csys,37
+nrot,266993
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 61" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK5[144] To MODULE_7_LINK4[145]" --------
+*set,_npilot,266994
+_npilot463=_npilot
+mat,52
+real,52
+type,52
+en,133401,13,266994
+csys,38
+nrot,266994
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 62" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK5[144] To MODULE_7_LINK4[145]" --------
+*set,_npilot,266995
+_npilot464=_npilot
+mat,48
+real,48
+type,48
+en,133402,15,266995
+csys,38
+nrot,266995
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 63" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK5[144] To MODULE_7_LINK6[146]" --------
+*set,_npilot,266996
+_npilot470=_npilot
+mat,52
+real,52
+type,52
+en,133403,13,266996
+csys,39
+nrot,266996
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 64" ***********
+! -------- Remote Point Used by "Revolute - MODULE_7_LINK5[144] To MODULE_7_LINK6[146]" --------
+*set,_npilot,266997
+_npilot471=_npilot
+mat,35
+real,35
+type,35
+en,133404,21,266997
+csys,39
+nrot,266997
+csys,0
+/com,*********** Create Remote Point "Internal Remote Point 65" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_LINK3_2[166] To MODULE_7_LINK3_3[167]" --------
+*set,_npilot,266998
+_npilot477=_npilot
+mat,38
+real,38
+type,38
+en,133405,22,266998
+/com,*********** Create Remote Point "Internal Remote Point 66" ***********
+! -------- Remote Point Used by "Fixed - MODULE_7_LINK3_2[166] To MODULE_7_LINK3_3[167]" --------
+*set,_npilot,266999
+_npilot478=_npilot
+mat,49
+real,49
+type,49
+en,133406,23,266999
+/com,*********** Create Remote Point "Internal Remote Point 67" ***********
+! -------- Remote Point Used by "Fixed - KNEE_1_MOTOR_1[169] To MODULE_7_LEADSCREW[174]" --------
+*set,_npilot,267000
+_npilot484=_npilot
+mat,39
+real,39
+type,39
+en,133407,9,267000
+/com,*********** Create Remote Point "Internal Remote Point 68" ***********
+! -------- Remote Point Used by "Fixed - KNEE_1_MOTOR_1[169] To MODULE_7_LEADSCREW[174]" --------
+*set,_npilot,267001
+_npilot485=_npilot
+mat,32
+real,32
+type,32
+en,133408,25,267001
+/com,*********** Create Remote Point "Internal Remote Point 69" ***********
+! -------- Remote Point Used by "Fixed - KNEE_1_MOTOR_1[170] To MODULE_7_LEADSCREW[175]" --------
+*set,_npilot,267002
+_npilot491=_npilot
+mat,34
+real,34
+type,34
+en,133409,12,267002
+/com,*********** Create Remote Point "Internal Remote Point 70" ***********
+! -------- Remote Point Used by "Fixed - KNEE_1_MOTOR_1[170] To MODULE_7_LEADSCREW[175]" --------
+*set,_npilot,267003
+_npilot492=_npilot
+mat,37
+real,37
+type,37
+en,133410,26,267003
+/com,*********** Create Remote Point "Internal Remote Point 72" ***********
+! -------- Remote Point Used by "Fixed - Ground To MODULE_6_TSLOT[72]" --------
+*set,_npilot,267005
+_npilot497=_npilot
+mat,40
+real,40
+type,40
+en,133411,1,267005
+/com,*********** Create Joint "Revolute - MODULE_7_LINK1_2[100] To MODULE_7_LINK2_2[105]" ***********
+/com,            Real Constant Set For Above Joint Is 53
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,53
+et,_jid,184
+keyo,_jid,1,6           ! Revolute Joint
+keyo,_jid,4,1           ! Z Axis is revolute axis
+sectype,_jid, joint, revo, _wbjoint
+secjoint,,12,12
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133276,267006,267007      ! body to body joint
+/com,*********** Create Joint "Revolute - MODULE_7_LINK1_2[100] To MODULE_7_LINK2_2[137]" ***********
+/com,            Real Constant Set For Above Joint Is 54
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,54
+et,_jid,184
+keyo,_jid,1,6           ! Revolute Joint
+keyo,_jid,4,1           ! Z Axis is revolute axis
+sectype,_jid, joint, revo, _wbjoint
+secjoint,,13,13
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133277,267008,267009      ! body to body joint
+/com,*********** Create Joint "Fixed - MODULE_7_LINK6[122] To MODULE_7_LEADSCREWNUT[128]" ***********
+! Joint Element Type Declaration and Definition using CONTACT
+*set,tid,55
+*set,cid,55
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+mat,cid
+real,cid
+type,tid
+tshape,pilo
+en,133278,267010        ! create pilot node for rigid link
+tshape
+type,cid
+en,133412,267010,267011      ! body to body joint
+csys,0
+/com,*********** Create Joint "Translational - MODULE_7_LINK6[122] To MODULE_7_LEADSCREW[174]" ***********
+/com,            Real Constant Set For Above Joint Is 56
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,56
+et,_jid,184
+keyo,_jid,1,10          ! Prismatic Joint
+sectype,_jid, joint, pris, _wbjoint
+secjoint,,15,15
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133279,267012,267013      ! body to body joint
+/com,*********** Create Joint "Fixed - MODULE_7_LINK3_2[138] To KNEE_1_MOTOR_1[170]" ***********
+! Joint Element Type Declaration and Definition using CONTACT
+*set,tid,57
+*set,cid,57
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+mat,cid
+real,cid
+type,tid
+tshape,pilo
+en,133281,267016        ! create pilot node for rigid link
+tshape
+type,cid
+en,133413,267016,266945      ! body to body joint
+csys,0
+/com,*********** Create Joint "Fixed - MODULE_7_LINK6[146] To MODULE_7_LEADSCREWNUT[147]" ***********
+! Joint Element Type Declaration and Definition using CONTACT
+*set,tid,58
+*set,cid,58
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+mat,cid
+real,cid
+type,tid
+tshape,pilo
+en,133282,266946        ! create pilot node for rigid link
+tshape
+type,cid
+en,133414,266946,266947      ! body to body joint
+csys,0
+/com,*********** Create Joint "Translational - MODULE_7_LINK6[146] To MODULE_7_LEADSCREW[175]" ***********
+/com,            Real Constant Set For Above Joint Is 59
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,59
+et,_jid,184
+keyo,_jid,1,10          ! Prismatic Joint
+sectype,_jid, joint, pris, _wbjoint
+secjoint,,18,18
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133283,266948,266949      ! body to body joint
+/com,*********** Create Joint "Fixed - MODULE_7_LINK3_2[166] To KNEE_1_MOTOR_1[169]" ***********
+! Joint Element Type Declaration and Definition using CONTACT
+*set,tid,60
+*set,cid,60
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+mat,cid
+real,cid
+type,tid
+tshape,pilo
+en,133285,266952        ! create pilot node for rigid link
+tshape
+type,cid
+en,133415,266952,266953      ! body to body joint
+csys,0
+/com,*********** Create Joint "Fixed - MODULE_6_TSLOT[72] To MODULE_7_UNIVERSAL_BLINK[73]" ***********
+! Joint Element Type Declaration and Definition using CONTACT
+*set,tid,61
+*set,cid,61
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+mat,cid
+real,cid
+type,tid
+tshape,pilo
+en,133288,266958        ! create pilot node for rigid link
+tshape
+type,cid
+en,133416,266958,266959      ! body to body joint
+csys,0
+/com,*********** Create Joint "Fixed - MODULE_6_TSLOT[72] To MODULE_7_LINK1_2[100]" ***********
+! Joint Element Type Declaration and Definition using CONTACT
+*set,tid,62
+*set,cid,62
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+mat,cid
+real,cid
+type,tid
+tshape,pilo
+en,133289,266960        ! create pilot node for rigid link
+tshape
+type,cid
+en,133417,266960,266961      ! body to body joint
+csys,0
+/com,*********** Create Joint "Revolute - MODULE_7_UNIVERSAL_BLINK[73] To MODULE_7_UNIVERSAL_SPIDER[78]" ***********
+/com,            Real Constant Set For Above Joint Is 63
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,63
+et,_jid,184
+keyo,_jid,1,6           ! Revolute Joint
+keyo,_jid,4,1           ! Z Axis is revolute axis
+sectype,_jid, joint, revo, _wbjoint
+secjoint,,22,22
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133290,266962,266963      ! body to body joint
+/com,*********** Create Joint "Revolute - MODULE_7_UNIVERSAL_SPIDER[78] To MODULE_7_UNIVERSAL_ALINK[80]" ***********
+/com,            Real Constant Set For Above Joint Is 64
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,64
+et,_jid,184
+keyo,_jid,1,6           ! Revolute Joint
+keyo,_jid,4,1           ! Z Axis is revolute axis
+sectype,_jid, joint, revo, _wbjoint
+secjoint,,23,23
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133291,266964,266965      ! body to body joint
+/com,*********** Create Joint "Fixed - MODULE_7_UNIVERSAL_ALINK[80] To MODULE_7_FOOT[81]" ***********
+! Joint Element Type Declaration and Definition using CONTACT
+*set,tid,65
+*set,cid,65
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+mat,cid
+real,cid
+type,tid
+tshape,pilo
+en,133292,266966        ! create pilot node for rigid link
+tshape
+type,cid
+en,133418,266966,266967      ! body to body joint
+csys,0
+/com,*********** Create Joint "Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[109]" ***********
+! Joint Element Type Declaration and Definition using CONTACT
+*set,tid,66
+*set,cid,66
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+mat,cid
+real,cid
+type,tid
+tshape,pilo
+en,133293,266968        ! create pilot node for rigid link
+tshape
+type,cid
+en,133419,266968,266969      ! body to body joint
+csys,0
+/com,*********** Create Joint "Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[114]" ***********
+! Joint Element Type Declaration and Definition using CONTACT
+*set,tid,67
+*set,cid,67
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+mat,cid
+real,cid
+type,tid
+tshape,pilo
+en,133294,266970        ! create pilot node for rigid link
+tshape
+type,cid
+en,133420,266970,266971      ! body to body joint
+csys,0
+/com,*********** Create Joint "Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[143]" ***********
+! Joint Element Type Declaration and Definition using CONTACT
+*set,tid,68
+*set,cid,68
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+mat,cid
+real,cid
+type,tid
+tshape,pilo
+en,133295,266972        ! create pilot node for rigid link
+tshape
+type,cid
+en,133421,266972,266973      ! body to body joint
+csys,0
+/com,*********** Create Joint "Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[145]" ***********
+! Joint Element Type Declaration and Definition using CONTACT
+*set,tid,69
+*set,cid,69
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+mat,cid
+real,cid
+type,tid
+tshape,pilo
+en,133296,266974        ! create pilot node for rigid link
+tshape
+type,cid
+en,133422,266974,266975      ! body to body joint
+csys,0
+/com,*********** Create Joint "Revolute - MODULE_7_LINK2_2[105] To MODULE_7_LINK3_2[166]" ***********
+/com,            Real Constant Set For Above Joint Is 70
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,70
+et,_jid,184
+keyo,_jid,1,6           ! Revolute Joint
+keyo,_jid,4,1           ! Z Axis is revolute axis
+sectype,_jid, joint, revo, _wbjoint
+secjoint,,29,29
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133297,266976,266977      ! body to body joint
+/com,*********** Create Joint "Revolute - MODULE_7_LINK2_2[105] To MODULE_7_LINK3_3[167]" ***********
+/com,            Real Constant Set For Above Joint Is 71
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,71
+et,_jid,184
+keyo,_jid,1,6           ! Revolute Joint
+keyo,_jid,4,1           ! Z Axis is revolute axis
+sectype,_jid, joint, revo, _wbjoint
+secjoint,,30,30
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133298,266978,266979      ! body to body joint
+/com,*********** Create Joint "Revolute - MODULE_7_LINK4[109] To MODULE_7_LINK5[121]" ***********
+/com,            Real Constant Set For Above Joint Is 72
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,72
+et,_jid,184
+keyo,_jid,1,6           ! Revolute Joint
+keyo,_jid,4,1           ! Z Axis is revolute axis
+sectype,_jid, joint, revo, _wbjoint
+secjoint,,31,31
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133299,266980,266981      ! body to body joint
+/com,*********** Create Joint "Revolute - MODULE_7_LINK5[121] To MODULE_7_LINK4[114]" ***********
+/com,            Real Constant Set For Above Joint Is 73
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,73
+et,_jid,184
+keyo,_jid,1,6           ! Revolute Joint
+keyo,_jid,4,1           ! Z Axis is revolute axis
+sectype,_jid, joint, revo, _wbjoint
+secjoint,,32,32
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133300,266982,266983      ! body to body joint
+/com,*********** Create Joint "Revolute - MODULE_7_LINK5[121] To MODULE_7_LINK6[122]" ***********
+/com,            Real Constant Set For Above Joint Is 74
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,74
+et,_jid,184
+keyo,_jid,1,6           ! Revolute Joint
+keyo,_jid,4,1           ! Z Axis is revolute axis
+sectype,_jid, joint, revo, _wbjoint
+secjoint,,33,33
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133301,266984,266985      ! body to body joint
+/com,*********** Create Joint "Revolute - MODULE_7_LINK2_2[137] To MODULE_7_LINK3_2[138]" ***********
+/com,            Real Constant Set For Above Joint Is 75
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,75
+et,_jid,184
+keyo,_jid,1,6           ! Revolute Joint
+keyo,_jid,4,1           ! Z Axis is revolute axis
+sectype,_jid, joint, revo, _wbjoint
+secjoint,,34,34
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133302,266986,266987      ! body to body joint
+/com,*********** Create Joint "Revolute - MODULE_7_LINK2_2[137] To MODULE_7_LINK3_3[168]" ***********
+/com,            Real Constant Set For Above Joint Is 76
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,76
+et,_jid,184
+keyo,_jid,1,6           ! Revolute Joint
+keyo,_jid,4,1           ! Z Axis is revolute axis
+sectype,_jid, joint, revo, _wbjoint
+secjoint,,35,35
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133303,266988,266989      ! body to body joint
+/com,*********** Create Joint "Fixed - MODULE_7_LINK3_2[138] To MODULE_7_LINK3_3[168]" ***********
+! Joint Element Type Declaration and Definition using CONTACT
+*set,tid,77
+*set,cid,77
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+mat,cid
+real,cid
+type,tid
+tshape,pilo
+en,133304,266990        ! create pilot node for rigid link
+tshape
+type,cid
+en,133423,266990,266991      ! body to body joint
+csys,0
+/com,*********** Create Joint "Revolute - MODULE_7_LINK4[143] To MODULE_7_LINK5[144]" ***********
+/com,            Real Constant Set For Above Joint Is 78
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,78
+et,_jid,184
+keyo,_jid,1,6           ! Revolute Joint
+keyo,_jid,4,1           ! Z Axis is revolute axis
+sectype,_jid, joint, revo, _wbjoint
+secjoint,,37,37
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133305,266992,266993      ! body to body joint
+/com,*********** Create Joint "Revolute - MODULE_7_LINK5[144] To MODULE_7_LINK4[145]" ***********
+/com,            Real Constant Set For Above Joint Is 79
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,79
+et,_jid,184
+keyo,_jid,1,6           ! Revolute Joint
+keyo,_jid,4,1           ! Z Axis is revolute axis
+sectype,_jid, joint, revo, _wbjoint
+secjoint,,38,38
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133306,266994,266995      ! body to body joint
+/com,*********** Create Joint "Revolute - MODULE_7_LINK5[144] To MODULE_7_LINK6[146]" ***********
+/com,            Real Constant Set For Above Joint Is 80
+! Joint Element Type Declaration and Definition using MPC184
+*set,_jid,80
+et,_jid,184
+keyo,_jid,1,6           ! Revolute Joint
+keyo,_jid,4,1           ! Z Axis is revolute axis
+sectype,_jid, joint, revo, _wbjoint
+secjoint,,39,39
+mat,_jid
+real,_jid
+type,_jid
+secnum,_jid
+en,133307,266996,266997      ! body to body joint
+/com,*********** Create Joint "Fixed - MODULE_7_LINK3_2[166] To MODULE_7_LINK3_3[167]" ***********
+! Joint Element Type Declaration and Definition using CONTACT
+*set,tid,81
+*set,cid,81
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+mat,cid
+real,cid
+type,tid
+tshape,pilo
+en,133308,266998        ! create pilot node for rigid link
+tshape
+type,cid
+en,133424,266998,266999      ! body to body joint
+csys,0
+/com,*********** Create Joint "Fixed - KNEE_1_MOTOR_1[169] To MODULE_7_LEADSCREW[174]" ***********
+! Joint Element Type Declaration and Definition using CONTACT
+*set,tid,82
+*set,cid,82
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+mat,cid
+real,cid
+type,tid
+tshape,pilo
+en,133309,267000        ! create pilot node for rigid link
+tshape
+type,cid
+en,133425,267000,267001      ! body to body joint
+csys,0
+/com,*********** Create Joint "Fixed - KNEE_1_MOTOR_1[170] To MODULE_7_LEADSCREW[175]" ***********
+! Joint Element Type Declaration and Definition using CONTACT
+*set,tid,83
+*set,cid,83
+et,tid,170
+keyo,tid,2,1           ! Set MPC target element and not fix pilot
+keyo,tid,4,0           ! Create CE's for all DOFs
+mat,cid
+real,cid
+type,tid
+tshape,pilo
+en,133310,267002        ! create pilot node for rigid link
+tshape
+type,cid
+en,133426,267002,267003      ! body to body joint
+csys,0
+/com,*********** Create Joint "Fixed - Ground To MODULE_6_TSLOT[72]" ***********
+d,267005,all                   ! body to ground Direct D
+/gst,on,on
+fini
+*get,_numnode,node,0,count
+*get,_numelem,elem,0,count
+*get, _MAXELEMNUM, elem, 0, NUM, MAX
+*get, _MAXNODENUM, node, 0, NUM, MAX
+*get, _MAXELEMTYPE, etyp, 0, NUM, MAX
+*get, _MAXREALCONST, real, 0, NUM, MAX
+/go
+/wb,load,end               !  done creating loads
+/com,--- Number of total nodes = %_numnode%
+/com,--- Number of contact elements = 0
+/com,--- Number of spring elements = 0
+/com,--- Number of bearing elements = 0
+/com,--- Number of solid elements = 26
+/com,--- Number of condensed parts = 0
+/com,--- Number of total elements = %_numelem%
+*get,_wallbsol,active,,time,wall
+/com,****************************************************************************
+/com,*************************    SOLUTION       ********************************
+/com,****************************************************************************
+/solu
+antype,4                   ! transient analysis
+nlgeom,on                  ! Turn on Large Deformation Effects
+kbc,1                      ! stepped BC's
+eqsl,sparse,,,,,1
+cntr,print,1               ! print out contact info and also make no initial contact an error
+dmpoption,emat,no             ! Don't combine emat file for DANSYS
+dmpoption,esav,no             ! Don't combine esav file for DANSYS
+trnopt,full,,,,,hht        ! HHT time integration method
+tintp,0.1 ! Numerical Damping
+nldiag,cont,iter           ! print out contact info each equilibrium iteration
+rescontrol,define,last,last,,dele	   ! Program Controlled
+/com,****************************************************
+/com,******************* SOLVE FOR LS 1 OF 4 ****************
+acel,0.,0.,9806.65
+/nopr
+/gopr
+autots,on                   ! User turned on automatic time stepping
+deltim,0.2,0.1,0.3,OFF
+time,1.
+timint,on                  ! Turn on time integration effects
+outres,erase
+outres,all,none
+outres,nsol,all,
+outres,rsol,all
+outres,strs,all,
+outres,epel,all,
+outres,eppl,all,
+outres,v,all,
+outres,a,all,
+/nopr
+esel,s,type,,1
+esel,a,type,,2,26
+esel,a,type,,53,54
+esel,a,type,,56
+esel,a,type,,59
+esel,a,type,,63,64
+esel,a,type,,70,76
+esel,a,type,,78,80
+cm,_elmisc,elem
+esel,all
+/gopr
+outres,misc,all,_elmisc
+stabilize,off                   ! Stabilization turned OFF by user
+! *********** WB SOLVE COMMAND ***********
+! check interactive state
+*get,ANSINTER_,active,,int
+*if,ANSINTER_,ne,0,then
+/eof
+*endif
+solve
+/com *************** Write FE CONNECTORS ********* 
+CEWRITE,file,ce,,INTE
+/com,****************************************************
+/com,*************** FINISHED SOLVE FOR LS 1 *************
+/com,****************************************************
+/com,******************* SOLVE FOR LS 2 OF 4 ****************
+/nopr
+/gopr
+autots,on                   ! User turned on automatic time stepping
+deltim,0.1,0.1,0.3,ON
+time,2.
+timint,on                  ! Turn on time integration effects
+outres,erase
+outres,all,none
+outres,nsol,all,
+outres,rsol,all
+outres,strs,all,
+outres,epel,all,
+outres,eppl,all,
+outres,v,all,
+outres,a,all,
+outres,misc,all,_elmisc
+stabilize,off                   ! Stabilization turned OFF by user
+solve
+/com,****************************************************
+/com,*************** FINISHED SOLVE FOR LS 2 *************
+/com,****************************************************
+/com,******************* SOLVE FOR LS 3 OF 4 ****************
+/nopr
+/gopr
+autots,on                   ! User turned on automatic time stepping
+deltim,0.1,0.1,0.3,ON
+time,3.
+timint,on                  ! Turn on time integration effects
+outres,erase
+outres,all,none
+outres,nsol,all,
+outres,rsol,all
+outres,strs,all,
+outres,epel,all,
+outres,eppl,all,
+outres,v,all,
+outres,a,all,
+outres,misc,all,_elmisc
+stabilize,off                   ! Stabilization turned OFF by user
+solve
+/com,****************************************************
+/com,*************** FINISHED SOLVE FOR LS 3 *************
+/com,****************************************************
+/com,******************* SOLVE FOR LS 4 OF 4 ****************
+/nopr
+/gopr
+autots,on                   ! User turned on automatic time stepping
+deltim,0.1,0.1,0.3,ON
+time,4.
+timint,on                  ! Turn on time integration effects
+outres,erase
+outres,all,none
+outres,nsol,all,
+outres,rsol,all
+outres,strs,all,
+outres,epel,all,
+outres,eppl,all,
+outres,v,all,
+outres,a,all,
+outres,misc,all,_elmisc
+stabilize,off                   ! Stabilization turned OFF by user
+solve
+/com,****************************************************
+/com,*************** FINISHED SOLVE FOR LS 4 *************
+*get,_wallasol,active,,time,wall
+/nopr
+*get,_numnode,node,0,count
+*get,_numelem,elem,0,count
+*get, _MAXELEMNUM, elem, 0, NUM, MAX
+*get, _MAXNODENUM, node, 0, NUM, MAX,,,INTERNAL
+*get, _MAXELEMTYPE, etyp, 0, NUM, MAX
+*get, _MAXREALCONST, real, 0, NUM, MAX
+/gopr
+/post1
+xmlo,ENCODING,ISO-8859-1
+xmlo,parm
+/xml,parm,xml
+fini
+/gopr
+*get,_walldone,active,,time,wall
+_preptime=(_wallbsol-_wallstrt)*3600
+_solvtime=(_wallasol-_wallbsol)*3600
+_posttime=(_walldone-_wallasol)*3600
+_totaltim=(_walldone-_wallstrt)*3600
+/wb,file,end               ! done with WB generated input

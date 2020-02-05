@@ -1,0 +1,21 @@
+nal_checksum=None,download_restricted=False,down_sample_status=HQDownSampleStatus.NA,last_changed_locally=False,from_tombstone=False)], mapped_path=MappedCloudPath(mapped=\\?\S:\FILES(imp)\Drive, is_complete=False), doc_id=u'1Zv30riog_sJ1KhFr6dkkUYZRd_tv2dkY', parent_local_id=LocalID(inode=1125899906886168L, volume='serial:1350362267'), is_folder=False, size=650183, generator_module=Generator.INITIAL_CLOUD_DIFF, doc_type=DocType.BLOB, hash=1488743153)
+2018-10-19 13:57:13,263 +0530 INFO pid=11716 10464:Worker-2        drive_request.py:311 Drive request: DownloadBlob(require_modtime=True, file_path=u'\\\\?\\S:\\FILES(imp)\\Drive\\.tmp.drivedownload\\tmpsfxt6u.drivedownload', accept_blob_download_gzip_encoding=True, tags=Reason.UNKNOWN_REASON(SyncType.UNKNOWN_SYNC_TYPE), doc_id=u'1Z4Tm_oGlP8P5v4-B6qxSCMllzou9yl7B', url_template=u'https://www.googleapis.com/drive/v2internal/files/{doc_id}?alt=media') - Read request - psvssaikumar1998@gmail.com
+2018-10-19 13:57:13,270 +0530 INFO pid=11716 1288:Worker-1        drive_request.py:318 Drive response:
+Request (psvssaikumar1998@gmail.com):
+DownloadBlob(require_modtime=True, file_path=u'\\\\?\\S:\\FILES(imp)\\Drive\\.tmp.drivedownload\\tmpgwsqzh.drivedownload', accept_blob_download_gzip_encoding=True, tags=Reason.UNKNOWN_REASON(SyncType.UNKNOWN_SYNC_TYPE), doc_id=u'1DnU_4XGZuuKZT9RPu3B2M6iOvA_1h1Ap', url_template=u'https://www.googleapis.com/drive/v2internal/files/{doc_id}?alt=media')
+Response:
+DownloadResponse(checksum='b7cb25840cc1a60aa878eb54b7474b09', modified=1539711479)
+2018-10-19 13:57:13,272 +0530 INFO pid=11716 10464:Worker-2        download.py:134 Downloading https://www.googleapis.com/drive/v2internal/files/1Z4Tm_oGlP8P5v4-B6qxSCMllzou9yl7B?alt=media to \\?\S:\FILES(imp)\Drive\.tmp.drivedownload\tmpsfxt6u.drivedownload
+2018-10-19 13:57:13,305 +0530 INFO pid=11716 10464:Worker-2        http.py:288 Request user-agent: googledrivesync-3.43.1584.4446 (64-bit) google-api-python-client/1.6.5 (gzip) (Windows/10.0 [64-bit])
+2018-10-19 13:57:13,312 +0530 INFO pid=11716 3340:Worker-0        http.py:308 Response: bytes 0-426420/426421 - application/octet-stream (encoding:None)
+2018-10-19 13:57:13,319 +0530 INFO pid=11716 3340:Worker-0        http.py:311 Google Uploader upload-id: AEnB2UqX7oT6s_vCS284Gr2fTc66hkZreKljhU0Of5rMKzloyxv2jl9dnhPv2ck34EeEwpkjw_0PNaRFSAf44I_X3wol-T-5wQ
+2018-10-19 13:57:13,338 +0530 INFO pid=11716 3340:Worker-0        drive_request.py:318 Drive response:
+Request (psvssaikumar1998@gmail.com):
+DownloadBlob(require_modtime=True, file_path=u'\\\\?\\S:\\FILES(imp)\\Drive\\.tmp.drivedownload\\tmpsawnmk.drivedownload', accept_blob_download_gzip_encoding=True, tags=Reason.UNKNOWN_REASON(SyncType.UNKNOWN_SYNC_TYPE), doc_id=u'1ra_Z-FeQbslMMnt85qm8SEHsiuM3pfY0', url_template=u'https://www.googleapis.com/drive/v2internal/files/{doc_id}?alt=media')
+Response:
+DownloadResponse(checksum='5eb9bbb6b3dfeabebd7c704b21acf66e', modified=1539711483)
+2018-10-19 13:57:13,355 +0530 INFO pid=11716 1288:Worker-1        snapshot_sqlite.py:652 Removing pre_mapping local_id=LocalID(inode=281474976756283L, volume='serial:1350362267')
+2018-10-19 13:57:13,361 +0530 INFO pid=11716 1288:Worker-1        snapshot_sqlite.py:111 Adding local entry local_id=LocalID(inode=281474976756283L, volume='serial:1350362267'), filename=None
+2018-10-19 13:57:13,378 +0530 INFO pid=11716 1288:Worker-1        snapshot_sqlite.py:156 Adding cloud entry doc_id=1DnU_4XGZuuKZT9RPu3B2M6iOvA_1h1Ap, filename=None
+2018-10-19 13:57:13,381 +0530 INFO pid=11716 1288:Worker-1        snapshot_sqlite.py:245 Updating cloud entry doc_id=1DnU_4XGZuuKZT9RPu3B2M6iOvA_1h1Ap, filename=module_1.asm.3
+2018-10-19 13:57:13,381 +0530 INFO pid=11716 1288:Worker-1        snapshot_sqlite.py:219 Updating local entry local_id

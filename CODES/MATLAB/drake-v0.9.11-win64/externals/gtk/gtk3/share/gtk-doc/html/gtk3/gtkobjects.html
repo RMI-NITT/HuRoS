@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Part IV. GTK+ Widgets and Objects</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.0">
+<link rel="home" href="index.html" title="GTK+ 3 Reference Manual">
+<link rel="up" href="index.html" title="GTK+ 3 Reference Manual">
+<link rel="prev" href="GtkStyle.html" title="GtkStyle">
+<link rel="next" href="ch02.html" title="Object Hierarchy">
+<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="GtkStyle.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td> </td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 3 Reference Manual</th>
+<td><a accesskey="n" href="ch02.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="part">
+<div class="titlepage"><div><div><h1 class="title">
+<a name="gtkobjects"></a>Part IV. GTK+ Widgets and Objects</h1></div></div></div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl class="toc">
+<dt><span class="chapter"><a href="ch02.html">Object Hierarchy</a></span></dt>
+<dt><span class="chapter"><a href="ch03.html">Widget Gallery</a></span></dt>
+<dt><span class="chapter"><a href="WindowWidgets.html">Windows</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="GtkDialog.html">GtkDialog</a></span><span class="refpurpose"> — Create popup windows</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkInvisible.html">GtkInvisible</a></span><span class="refpurpose"> — A widget which is not displayed</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkMessageDialog.html">GtkMessageDialog</a></span><span class="refpurpose"> — A convenient message window</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkWindow.html">GtkWindow</a></span><span class="refpurpose"> — Toplevel which can contain other widgets</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkWindowGroup.html">GtkWindowGroup</a></span><span class="refpurpose"> — Limit the effect of grabs</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkAboutDialog.html">GtkAboutDialog</a></span><span class="refpurpose"> — Display information about an application</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkAssistant.html">GtkAssistant</a></span><span class="refpurpose"> — A widget used to guide users through multi-step operations</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkOffscreenWindow.html">GtkOffscreenWindow</a></span><span class="refpurpose"> — A toplevel to manage offscreen rendering of child widgets</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="DisplayWidgets.html">Display Widgets</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="GtkAccelLabel.html">GtkAccelLabel</a></span><span class="refpurpose"> — A label which displays an accelerator key on the right of the text</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkImage.html">GtkImage</a></span><span class="refpurpose"> — A widget displaying an image</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkLabel.html">GtkLabel</a></span><span class="refpurpose"> — A widget that displays a small to medium amount of text</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkProgressBar.html">GtkProgressBar</a></span><span class="refpurpose"> — A widget which indicates progress visually</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkStatusbar.html">GtkStatusbar</a></span><span class="refpurpose"> — Report messages of minor importance to the user</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkLevelBar.html">GtkLevelBar</a></span><span class="refpurpose"> — A bar that can used as a level indicator</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkInfoBar.html">GtkInfoBar</a></span><span class="refpurpose"> — Report important messages to the user</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkStatusIcon.html">GtkStatusIcon</a></span><span class="refpurpose"> — Display an icon in the system tray</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkSpinner.html">GtkSpinner</a></span><span class="refpurpose"> — Show a spinner animation</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="ButtonWidgets.html">Buttons and Toggles</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="GtkButton.html">GtkButton</a></span><span class="refpurpose"> — A widget that emits a signal when clicked on</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCheckButton.html">GtkCheckButton</a></span><span class="refpurpose"> — Create widgets with a discrete toggle button</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkRadioButton.html">GtkRadioButton</a></span><span class="refpurpose"> — A choice from multiple check buttons</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkToggleButton.html">GtkToggleButton</a></span><span class="refpurpose"> — Create buttons which retain their state</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkLinkButton.html">GtkLinkButton</a></span><span class="refpurpose"> — Create buttons bound to a URL</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkScaleButton.html">GtkScaleButton</a></span><span class="refpurpose"> — A button which pops up a scale</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkVolumeButton.html">GtkVolumeButton</a></span><span class="refpurpose"> — A button which pops up a volume control</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkSwitch.html">GtkSwitch</a></span><span class="refpurpose"> — A "light switch" style toggle</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkLockButton.html">GtkLockButton</a></span><span class="refpurpose"> — A widget to unlock or lock privileged operations</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkMenuButton.html">GtkMenuButton</a></span><span class="refpurpose"> — A widget that shows a menu when clicked on</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="NumericEntry.html">Numeric/Text Data Entry</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="GtkEntry.html">GtkEntry</a></span><span class="refpurpose"> — A single line text entry field</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkEntryBuffer.html">GtkEntryBuffer</a></span><span class="refpurpose"> — Text buffer for GtkEntry</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkEntryCompletion.html">GtkEntryCompletion</a></span><span class="refpurpose"> — Completion functionality for GtkEntry</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkScale.html">GtkScale</a></span><span class="refpurpose"> — A slider widget for selecting a value from a range</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkHScale.html">GtkHScale</a></span><span class="refpurpose"> — A horizontal slider widget for selecting a value from a range</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkVScale.html">GtkVScale</a></span><span class="refpurpose"> — A vertical slider widget for selecting a value from a range</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkSpinButton.html">GtkSpinButton</a></span><span class="refpurpose"> — Retrieve an integer or floating-point number from
+    the user</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkSearchEntry.html">GtkSearchEntry</a></span><span class="refpurpose"> — An entry which shows a search icon</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkEditable.html">GtkEditable</a></span><span class="refpurpose"> — Interface for text-editing widgets</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="TextWidgetObjects.html">Multiline Text Editor</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="TextWidget.html">Text Widget Overview</a></span><span class="refpurpose"> — Overview of GtkTextBuffer, GtkTextView, and friends</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkTextIter.html">GtkTextIter</a></span><span class="refpurpose"> — Text buffer iterator</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkTextMark.html">GtkTextMark</a></span><span class="refpurpose"> — A position in the buffer preserved across buffer modifications</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkTextBuffer.html">GtkTextBuffer</a></span><span class="refpurpose"> — Stores attributed text for display in a GtkTextView</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkTextTag.html">GtkTextTag</a></span><span class="refpurpose"> — A tag that can be applied to text in a GtkTextBuffer</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkTextTagTable.html">GtkTextTagTable</a></span><span class="refpurpose"> — Collection of tags that can be used together</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkTextView.html">GtkTextView</a></span><span class="refpurpose"> — Widget that displays a GtkTextBuffer</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="TreeWidgetObjects.html">Tree, List and Icon Grid Widgets</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="TreeWidget.html">Tree and List Widget Overview</a></span><span class="refpurpose"> — Overview of GtkTreeModel, GtkTreeView, and friends</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkTreeModel.html">GtkTreeModel</a></span><span class="refpurpose"> — The tree interface used by GtkTreeView</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkTreeSelection.html">GtkTreeSelection</a></span><span class="refpurpose"> — The selection object for GtkTreeView</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkTreeViewColumn.html">GtkTreeViewColumn</a></span><span class="refpurpose"> — A visible column in a GtkTreeView widget</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkTreeView.html">GtkTreeView</a></span><span class="refpurpose"> — A widget for displaying both trees and lists</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gtk3-GtkTreeView-drag-and-drop.html">GtkTreeView drag-and-drop</a></span><span class="refpurpose"> — Interfaces for drag-and-drop support in GtkTreeView</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCellView.html">GtkCellView</a></span><span class="refpurpose"> — A widget displaying a single row of a GtkTreeModel</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkIconView.html">GtkIconView</a></span><span class="refpurpose"> — A widget which displays a list of icons in a grid</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkTreeSortable.html">GtkTreeSortable</a></span><span class="refpurpose"> — The interface for sortable models used by GtkTreeView</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkTreeModelSort.html">GtkTreeModelSort</a></span><span class="refpurpose"> — A GtkTreeModel which makes an underlying tree model sortable</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkTreeModelFilter.html">GtkTreeModelFilter</a></span><span class="refpurpose"> — A GtkTreeModel which hides parts of an underlying tree model</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCellLayout.html">GtkCellLayout</a></span><span class="refpurpose"> — An interface for packing cells</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCellArea.html">GtkCellArea</a></span><span class="refpurpose"> — An abstract class for laying out GtkCellRenderers</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCellAreaBox.html">GtkCellAreaBox</a></span><span class="refpurpose"> — A cell area that renders GtkCellRenderers
+    into a row or a column</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCellAreaContext.html">GtkCellAreaContext</a></span><span class="refpurpose"> — Stores geometrical information for a series of rows in a GtkCellArea</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCellRenderer.html">GtkCellRenderer</a></span><span class="refpurpose"> — An object for rendering a single cell</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCellEditable.html">GtkCellEditable</a></span><span class="refpurpose"> — Interface for widgets which can are used for editing
+ cells</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCellRendererAccel.html">GtkCellRendererAccel</a></span><span class="refpurpose"> — Renders a keyboard accelerator in a cell</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCellRendererCombo.html">GtkCellRendererCombo</a></span><span class="refpurpose"> — Renders a combobox in a cell</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCellRendererPixbuf.html">GtkCellRendererPixbuf</a></span><span class="refpurpose"> — Renders a pixbuf in a cell</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCellRendererProgress.html">GtkCellRendererProgress</a></span><span class="refpurpose"> — Renders numbers as progress bars</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCellRendererSpin.html">GtkCellRendererSpin</a></span><span class="refpurpose"> — Renders a spin button in a cell</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCellRendererText.html">GtkCellRendererText</a></span><span class="refpurpose"> — Renders text in a cell</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCellRendererToggle.html">GtkCellRendererToggle</a></span><span class="refpurpose"> — Renders a toggle button in a cell</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCellRendererSpinner.html">GtkCellRendererSpinner</a></span><span class="refpurpose"> — Renders a spinning animation in a cell</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkListStore.html">GtkListStore</a></span><span class="refpurpose"> — A list-like data structure that can be used with the GtkTreeView</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkTreeStore.html">GtkTreeStore</a></span><span class="refpurpose"> — A tree-like data structure that can be used with the GtkTreeView</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="MenusAndCombos.html">Menus, Combo Box, Toolbar</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="GtkComboBox.html">GtkComboBox</a></span><span class="refpurpose"> — A widget used to choose from a list of items</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkComboBoxText.html">GtkComboBoxText</a></span><span class="refpurpose"> — A simple, text-only combo box</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkMenu.html">GtkMenu</a></span><span class="refpurpose"> — A menu widget</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkMenuBar.html">GtkMenuBar</a></span><span class="refpurpose"> — A subclass of GtkMenuShell which holds GtkMenuItem widgets</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkMenuItem.html">GtkMenuItem</a></span><span class="refpurpose"> — The widget used for item in menus</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkImageMenuItem.html">GtkImageMenuItem</a></span><span class="refpurpose"> — A menu item with an icon</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkRadioMenuItem.html">GtkRadioMenuItem</a></span><span class="refpurpose"> — A choice from multiple check menu items</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkCheckMenuItem.html">GtkCheckMenuItem</a></span><span class="refpurpose"> — A menu item with a check box</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkSeparatorMenuItem.html">GtkSeparatorMenuItem</a></span><span class="refpurpose"> — A separator used in menus</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkTearoffMenuItem.html">GtkTearoffMenuItem</a></span><span class="refpurpose"> — A menu item used to tear off and reattach its menu</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GtkToolShell.html">GtkToolShell</a                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          

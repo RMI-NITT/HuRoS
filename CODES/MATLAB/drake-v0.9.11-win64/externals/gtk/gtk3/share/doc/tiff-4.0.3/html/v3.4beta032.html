@@ -1,0 +1,64 @@
+eView"
+      }, {
+        "itemsOnScreen": [{
+          "type": "HIGHLIGHT",
+          "targetElement": ".overflowtBody"
+        }, {
+          "type": "TOOLTIP",
+          "targetID": ".overflowtBody",
+          "position": "top",
+          "title": "Columns",
+          "html": "You can add extra columns to customize the Pipeline to best suit your needs."
+        }],
+        "onEnter": "loadPipelineView"
+      }, {
+        "itemsOnScreen": [{
+          "type": "HIGHLIGHT",
+          "targetElement": ".streak__pipelineToolbar_sharing"
+        }, {
+          "type": "TOOLTIP",
+          "targetID": ".streak__pipelineToolbar_sharing",
+          "position": "bottom",
+          "title": "Share Button",
+          "html": "You can share Pipelines with your colleagues so you can collaborate and manage the same collection of Boxes."
+        }],
+        "onEnter": "loadPipelineView"
+      }, {
+        "itemsOnScreen": [{
+          "type": "HIGHLIGHT",
+          "targetElement": ".inboxsdk__navMenu > .TK > .inboxsdk__navItem[data-group-order-hint*=streak]:eq(1)"
+        }, {
+          "type": "TOOLTIP",
+          "targetID": ".inboxsdk__navMenu > .TK > .inboxsdk__navItem[data-group-order-hint*=streak]:eq(1)",
+          "position": "right",
+          "title": "Pipeline Access",
+          "html": "Access your Pipelines from Gmail's left bar. You can also add new Pipelines or manage your existing ones."
+        }],
+        "onEnter": "loadInbox"
+      }, {
+        "itemsOnScreen": [{
+          "type": "MODAL",
+          "title": "Streaking your Inbox",
+          "html": "Thanks for taking the tour! Now that you've learned about Pipelines and Boxes you can use Streak to manage your email and workflows without ever leaving your Inbox.",
+          "showRightButton": true,
+          "showLeftButton": true,
+          "rightButtonText": "Finish Tour",
+          "leftButtonText": "%tour_previous%",
+          "rightButtonFunction": "finish",
+          "leftButtonFunction": "previous",
+          "leftButtonColor": "blue",
+          "showLink": false
+        }],
+        "onEnter": "loadInbox"
+      }]
+    },
+
+    "noPipelineChosen": {
+      "pages": [{
+        "itemsOnScreen": [{
+          "type": "MODAL",
+          "title": "No Options Selected",
+          "html": "The system needs to have some idea of what you'll be using Streak for so it can configure itself properly. You can always change your choice after the fact, so if you're not sure right now you can choose the generic Task List. Also, you can still use the Send Later and Snippets features without choosing an area.",
+          "showLeftButton": true,
+          "showRightButton": true,
+          "rightButtonTex

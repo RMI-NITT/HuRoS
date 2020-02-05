@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SimscapeMultibodyImportXML version="2.0" xmlns="urn:mathworks:SimscapeMultibody:import" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Created by="psvss" on="02/27/18||19:39:32" using="Simscape Multibody Link Version 5.1" from="Pro/Engineer Creo 4.0 - 2016390"/>
+<ModelUnits mass="kg" length="mm"/>
+<RootAssembly name="BIPEDTRIAL1" uid="BIPEDTRIAL1_asm" version="3778">
+<AssemblyFile name="BIPEDTRIAL1.asm" type="ProEngineer Assembly"/>
+<InstanceTree>
+<Instance name="BASE" uid="40" entityUid="BASE_prt">
+<Transform>
+<Rotation>1 0 0 0 0 -1 0 1 0</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+<Instance name="JI" uid="43" entityUid="JI_prt">
+<Transform>
+<Rotation>0 0 -1 -1 4.8028248045284272e-012 0 4.8028248045284272e-012 1 0</Rotation>
+<Translation>-3.9405093058591052 -159.4847886538027 -355.47761155467134</Translation>
+</Transform>
+</Instance>
+<Instance name="JI" uid="46" entityUid="JI_prt">
+<Transform>
+<Rotation>0 0 -1 -1 -3.0000579798183935e-010 0 -3.0000579798183935e-010 1 0</Rotation>
+<Translation>1.1594906941410588 6.4992639319202326 -355.47761154822365</Translation>
+</Transform>
+</Instance>
+<Instance name="LLG" uid="49" entityUid="LLG_prt">
+<Transform>
+<Rotation>0 -0.024955617255639551 -0.99968856008628515 -1 4.8008264030841019e-012 -1.1984637504735487e-013 4.802322074388523e-012 0.99968856008628515 -0.024955617255639551</Rotation>
+<Translation>34.223216782852248 -200.38478865311819 -212.96034297255048</Translation>
+</Transform>
+</Instance>
+<Instance name="LLG" uid="50" entityUid="LLG_prt">
+<Transform>
+<Rotation>-6.6613381477509392e-016 2.5202062658991053e-013 1 1 -3.000044657142098e-010 6.6613389038240735e-016 3.000044657142098e-010 1 -2.5202062658971071e-013</Rotation>
+<Translation>34.241190094018023 6.4992638891830623 -213.0237653989021</Translation>
+</Transform>
+</Instance>
+<Instance name="LLG" uid="51" entityUid="LLG_prt">
+<Transform>
+<Rotation>0 0 1 1 4.8028248045284272e-012 0 -4.8028248045284272e-012 1 0</Rotation>
+<Translation>33.374476239988027 -229.98478865393292 -382.60353128677934</Translation>
+</Transform>
+</Instance>
+<Instance name="LLG" uid="52" entityUid="LLG_prt">
+<Transform>
+<Rotation>-1.1102230246251565e-015 3.3772984409097262e-013 1 1 -3.000044657142098e-010 1.110223125945618e-015 3.000044657142098e-010 1 -3.3772984409063956e-013</Rotation>
+<Translation>34.241190093957762 21.299263940073718 -382.65636163736747</Translation>
+</Transform>
+</Instance>
+<Instance name="JIL" uid="56" entityUid="JIL_prt">
+<Transform>
+<Rotation>0 0 1 1 4.8030468491333522e-012 0 -4.8030468491333522e-012 1 0</Rotation>
+<Translation>21.334476239987943 -207.41478865387512 -370.57353128688766</Translation>
+</Transform>
+</Instance>
+<Instance name="JIL" uid="59" entityUid="JIL_prt">
+<Transform>
+<Rotation>1.7763568394002505e-015 1.4319656571615269e-012 -1 -1 -3.0000379958039503e-010 -1.7763572689953884e-015 -3.0000379958039503e-010 1 1.431965657160994e-012</Rotation>
+<Translation>46.281190093937852 13.729263936464639 -370.62636163965578</Translation>
+</Transform>
+</Instance>
+<Instance name="FT" uid="62" entityUid="FT_prt">
+<Transform>
+<Rotation>-5.5511151231257827e-016 -1 0 0 0 -1 1 -5.5511151231257827e-016 0</Rotation>
+<Translation>11.634476239987826 -195.15721530764247 -382.99006340639784</Translation>
+</Transform>
+</Instance>
+<Instance name="FT" uid="65" entityUid="FT_prt">
+<Transform>
+<Rotation>1.4320766794643216e-012 -1 1.1102225950776382e-015 -2.9994728922844145e-010 -1.1102230246251561e-015 -1 1 1.4320766794639886e-012 -2.9994728922844145e-010</Rotation>
+<Translation>11.981190093919984 54.711258509101285 -383.04289374669486</Translation>
+</Transform>
+</Instance>
+</InstanceTree>
+<Constraints>
+<Rigid name="Rigid_40_0">
+<InstancePath>
+<Uid>40</Uid>
+</InstancePath>
+</Rigid>
+<Coincident name="Coincident_43_0">
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>40</Uid>
+</InstancePath>
+<Position>0 24.652114052224331 180.63750206021169</Position>
+<Axis>63.310000000000002 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>43</Uid>
+</InstancePath>
+<Position>21.1527134082346 380.12972560679384 -14.850509305859013</Position>
+<Axis>0 0 -36.100000000000009</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Distance name="Distance_43_1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>40</Uid>
+</InstancePath>
+<Position>63.310000000000002 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>43</Uid>
+</InstancePath>
+<Position>0 327.92372897677933 -50.950509305859022</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+</Distance>
+<Coincident name="Coincident_46_0">
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>40</Uid>
+</InstancePath>
+<Position>0 24.652114052224331 14.653449590355589</Position>
+<Axis>63.310000000000002 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>46</Uid>
+</InstancePath>
+<Position>21.1527134082346 380.12972560679384 -14.850509305859013</Position>
+<Axis>0 0 -36.100000000000009</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Distance name="Distance_46_1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>40</Uid>
+</InstancePath>
+<Position>63.310000000000002 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>46</Uid>
+</InstancePath>
+<Position>0 327.92372897677933 -50.950509305859022</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+</Distance>
+<Coincident name="Coincident_49_0">
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>43</Uid>
+</InstancePath>
+<Position>0 346.09644239222695 -33.081699399928496</Position>
+<Axis>40.899999999999999 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>49</Uid>
+</InstancePath>
+<Position>0 203.64259624290531 0</Position>
+<Axis>14.799999999999999 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident_49_1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>43</Uid>
+</InstancePath>
+<Position>40.899999999999999 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>49</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident_50_0">
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>46</Uid>
+</InstancePath>
+<Position>0 346.09644239222695 -33.081699399928496</Position>
+<Axis>40.899999999999999 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>50</Uid>
+</InstancePath>
+<Position>0 203.64259624290531 0</Position>
+<Axis>14.799999999999999 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident_50_1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>46</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>50</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident_51_0">
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>49</Uid>
+</InstancePath>
+<Position>0 34.009999999999998 0</Position>
+<Axis>14.799999999999999 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>51</Uid>
+</InstancePath>
+<Position>0 203.64259624290531 0</Position>
+<Axis>14.799999999999999 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident_51_1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>49</Uid>
+</InstancePath>
+<Position>14.799999999999999 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>51</Uid>
+</InstancePath>
+<Position>14.799999999999999 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident_52_0">
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>50</Uid>
+</InstancePath>
+<Position>0 34.009999999999998 0</Position>
+<Axis>14.799999999999999 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>52</Uid>
+</InstancePath>
+<Position>0 203.64259624290531 0</Position>
+<Axis>14.799999999999999 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident_52_1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>50</Uid>
+</InstancePath>
+<Position>14.799999999999999 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>52</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident_56_0">
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>51</Uid>
+</InstancePath>
+<Position>0 34.009999999999998 0</Position>
+<Axis>14.799999999999999 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>56</Uid>
+</InstancePath>
+<Position>-29.100000000000001 21.98 12.039999999999999</Position>
+<Axis>29.100000000000001 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Distance name="Distance_56_1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>51</Uid>
+</InstancePath>
+<Position>14.799999999999999 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>56</Uid>
+</InstancePath>
+<Position>-5.4699999999999989 29.100000000000001 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Distance>
+<Coincident name="Coincident_59_0">
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>52</Uid>
+</InstancePath>
+<Position>0 34.009999999999998 0</Position>
+<Axis>14.799999999999999 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>59</Uid>
+</InstancePath>
+<Position>-29.100000000000001 21.98 12.039999999999999</Position>
+<Axis>29.100000000000001 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Distance name="Distance_59_1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>52</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>59</Uid>
+</InstancePath>
+<Position>-5.4699999999999989 29.100000000000001 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Distance>
+<Coincident name="Coincident_62_0">
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>56</Uid>
+</InstancePath>
+<Position>-14.36221061228912 6.6273508519802196 0</Position>
+<Axis>0 0 22.899999999999999</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>62</Uid>
+</InstancePath>
+<Position>19.043882971361761 -41.100000000000001 26.619783956623657</Position>
+<Axis>0 41.100000000000001 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Distance name="Distance_62_1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>56</Uid>
+</InstancePath>
+<Position>0 0 22.899999999999999</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>62</Uid>
+</InstancePath>
+<Position>0 -41.100000000000001 0</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Distance>
+<Coincident name="Coincident_65_0">
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>59</Uid>
+</InstancePath>
+<Position>-14.36221061228912 6.6273508519802196 0</Position>
+<Axis>0 0 22.899999999999999</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>65</Uid>
+</InstancePath>
+<Position>19.043882971361761 -41.100000000000001 26.619783956623657</Position>
+<Axis>0 41.100000000000001 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Distance name="Distance_65_1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>59</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>65</Uid>
+</InstancePath>
+<Position>0 -41.100000000000001 0</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Distance>
+</Constraints>
+</RootAssembly>
+<Assemblies>
+</Assemblies>
+<Parts>
+<Part name="BASE" uid="BASE_prt" version="495">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="BASE.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>375010669.64928871</Mass>
+<CenterOfMass>30.88877157156405 57.985544058211076 98.89535558309835</CenterOfMass>
+<Inertia>1317013204515.6453 1363240868391.8538 288615895321.46252 114308993.41344833 10052643.030881882 -8654684461.9441032</Inertia>
+</MassProperties>
+<GeometryFile name="base_prt.step" type="STEP"/>
+</Part>
+<Part name="FT" uid="FT_prt" version="378">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="FT.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>31647421.313662473</Mass>
+<CenterOfMass>-0.017169501823307343 -27.953411219135361 26.180560468713292</CenterOfMass>
+<Inertia>29014715566.021244 5418992500.8633747 25691691932.54282 10398722.979255021 12124689.041195925 -572351641.79030311</Inertia>
+</MassProperties>
+<GeometryFile name="ft_prt.step" type="STEP"/>
+</Part>
+<Part name="JIL" uid="JIL_prt" version="300">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="JIL.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>10940150.980911646</Mass>
+<CenterOfMass>-14.437070673683385 10.770192764685991 11.399267282263116</CenterOfMass>
+<Inertia>1125640948.7555838 1555194885.8390794 1656879491.941972 6221696.7793053482 289464.64770752937 -18103306.347619042</Inertia>
+</MassProperties>
+<GeometryFile name="jil_prt.step" type="STEP"/>
+</Part>
+<Part name="JI" uid="JI_prt" version="340">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="JI.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>71136611.42443338</Mass>
+<CenterOfMass>20.412230737387031 360.43682028329647 -32.840169628330806</CenterOfMass>
+<Inertia>32547781289.839565 19319644598.55928 33884289908.710556 61684480.402350426 0 51305138.525485992</Inertia>
+</MassProperties>
+<GeometryFile name="ji_prt.step" type="STEP"/>
+</Part>
+<Part name="LLG" uid="LLG_prt" version="270">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="LLG.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>119348398.17726563</Mass>
+<CenterOfMass>7.3999999999999995 125.06446351437961 0.98713615175423097</CenterOfMass>
+<Inertia>350924133734.09869 23268425432.517128 332012720484.3653 3924567180.6825066 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="llg_prt.step" type="STEP"/>
+</Part>
+</Parts>
+</SimscapeMultibodyImportXML>

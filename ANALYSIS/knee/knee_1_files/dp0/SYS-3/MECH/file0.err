@@ -1,0 +1,85 @@
+/COM,ANSYS RELEASE Release 19.2      BUILD 19.2      UP20180808       17:51:52
+
+ *** WARNING ***                         CP =       1.141   TIME= 17:51:54
+ Element shape checking is currently inactive.  Issue SHPP,ON or         
+ SHPP,WARN to reactivate, if desired.                                    
+
+ *** WARNING ***                         CP =       1.266   TIME= 17:51:54
+ Material number 59 (used by element 36584) should normally have at      
+ least one MP or one TB type command associated with it.  Output of      
+ energy by material may not be available.                                
+
+ *** WARNING ***                         CP =       1.828   TIME= 17:51:54
+ It is highly recommended to set KEYOPT(10)=0 (update contact stiffness  
+ at each iteration) in order to achieve better convergence.              
+
+ *** WARNING ***                         CP =       1.828   TIME= 17:51:54
+ Overconstraint may occur for Lagrange multiplier or MPC based contact   
+ algorithm.                                                              
+
+ *** WARNING ***                         CP =       1.828   TIME= 17:51:54
+ Boundary conditions, coupling, and/or constraint equations have been    
+ applied on certain contact nodes (for example 70212).                   
+
+ *** WARNING ***                         CP =       1.828   TIME= 17:51:54
+ Certain contact elements (for example 43192 & 43115) overlap with       
+ other.                                                                  
+
+ *** WARNING ***                         CP =       4.359   TIME= 17:51:57
+ An internal boundary condition has been imposed on node 70215, degree   
+ of freedom 1 of the element 36584.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       4.359   TIME= 17:51:57
+ An internal boundary condition has been imposed on node 70215, degree   
+ of freedom 2 of the element 36584.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       4.359   TIME= 17:51:57
+ An internal boundary condition has been imposed on node 70215, degree   
+ of freedom 3 of the element 36584.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       4.359   TIME= 17:51:57
+ An internal boundary condition has been imposed on node 70215, degree   
+ of freedom 4 of the element 36584.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       4.359   TIME= 17:51:57
+ An internal boundary condition has been imposed on node 70215, degree   
+ of freedom 5 of the element 36584.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       4.359   TIME= 17:51:57
+ An internal boundary condition has been imposed on node 70215, degree   
+ of freedom 6 of the element 36584.  This may cause an ill-condition     
+ for the solver.  Please check all MPC based elements having boundary    
+ conditions.                                                             
+
+ *** WARNING ***                         CP =       6.156   TIME= 17:51:59
+ Pivoting has been activated for the Distributed Sparse Matrix Solver .  
+ The memory required may greatly exceed the predicted amount.  In that   
+ event, use the DSPOPTION command to change the memory mode and/or       
+ memory size used by the Distributed Sparse Matrix Solver.               
+
+ *** ERROR ***                           CP =       8.078   TIME= 17:52:01
+ Element 22125 (type = 15, SOLID187) (and maybe other elements) has      
+ become highly distorted.  Excessive distortion of elements is usually   
+ a symptom indicating the need for corrective action elsewhere.  Try     
+ ramping the load up instead of step applying the load (KBC,1).  You     
+ may need to improve your mesh to obtain elements with better aspect     
+ ratios.  Also consider the behavior of materials, contact pairs,        
+ and/or constraint equations.  Please rule out other root causes of      
+ this failure before attempting rezoning or nonlinear adaptive           
+ solutions.  If this message appears in the first iteration of first     
+ substep, be sure to run shape checking of elements.                     
+
+ *** WARNING ***                         CP =       8.078   TIME= 17:52:01
+ The unconverged solution (identified as time 1 substep 999999) is       
+ output for analysis debug purposes.  Results should not be used for     
+ any other purpose.                                                      

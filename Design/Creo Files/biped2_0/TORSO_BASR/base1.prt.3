@@ -1,0 +1,3159 @@
+dd(notif.id);
+        return set;
+      }, new Set());
+
+      const remaining = notifications.filter((notif) => displayedKeys.has(notif.id));
+
+      const added = notifications.filter((notif) => !displayedKeys.has(notif.id))
+        .splice(0, maxItems - remaining.length);
+
+      displayed = union<WebappNotificationOptions>(displayed, added);
+      this.setState({ displayedNotifs: displayed });
+      displayed = union<WebappNotificationOptions>(remaining, added);
+      this.notificationStateObservable.next({ displayedNotifs: displayed });
+    }
+  }
+
+  public render(): JSX.Element | null {
+    const timeout = getSetting<number>(Store, 'notificationTimeout');
+    const afterHoverTimeout = getSetting<number>(Store, 'notificationAfterHoverTimeout');
+
+    let notifications = this.state.displayedNotifs!.map((item) => (
+      <NotificationItem
+        setIgnoreMouseEvents={this.setIgnoreMouseEvents}
+        notification={item}
+        timeout={timeout}
+        afterHoverTimeout={afterHoverTimeout}
+        key={item.id}
+      />
+    ));
+
+    const style: React.CSSProperties = { flexDirection: 'column' };
+
+    const isTop = this.state.notifyPosition!.corner.split('_')[0] === 'top';
+    if (!isTop) {
+      notifications = notifications.reverse();
+      style.flexDirection = 'column-reverse';
+    }
+
+    return (
+      <div className='NotificationHost' ref={this.refHandlers.host} style={style}>
+        <CSSTransitionGroup
+          className='NotificationHost-list'
+          transitionName='spin'
+          transitionEnterTimeout={400}
+          transitionLeaveTimeout={400}
+        >
+          {notifications}
+        </CSSTransitionGroup>
+      </div>
+    );
+  }
+
+  private getZoomLevel(): number {
+    return this.state.notificationZoomLevel && this.state.notificationZoomLevel !== null
+      ? this.state.notificationZoomLevel
+      : this.state.zoomLevel!;
+  }
+
+  private setZoomLevelAndLimits(): void {
+    const zoomLevel = this.getZoomLevel();
+
+    if (zoomLevel !== undefined) {
+      webFrame.setLayoutZoomLevelLimits(zoomLevel, zoomLevel);
+      webFrame.setZoomLevel(zoomLevel);
+    }
+  }
+
+  private getNotificationsWindow(): Electron.BrowserWindow | null {
+    const entry = this.state.notificationsWindow;
+    if (!entry) return null;
+    return BrowserWindow.fromId(entry.id);
+  }
+
+  /**
+   * We eventually want to call setIgnoreMouseEvents() on the window, but using the
+   * remote is tricky. Instead, we dispatch an IPC action and have the main process do it.
+   *
+   * To ensure that we don't go crazy on the IPC we'll only do it if information changed.
+   */
+  private setIgnoreMouseEvents(ignore: boolean) {
+    const isEnabled = this.state.notificationClickThrough;
+    const isDirect = this.state.notificationClickThroughMain;
+
+    if (ignore !== this.state.isMouseIgnored && isEnabled) {
+      if (isDirect) {
+        try {
+          const browserWindow = remote.getCurrentWindow();
+          if (browserWindow && !browserWindow.isDestroyed()) {
+            browserWindow.setIgnoreMouseEvents(ignore, { forward: true });
+          }
+        } catch (error) {
+          logger.error(`Notification host: Tried to toggle mouse events, but failed`, { error });
+        }
+
+        return;
+      }
+
+      Store.dispatch({
+        type: WindowFrameActions.SET_IGNORE_MOUSE_EVENTS,
+        payload: ignore
+      });
+    }
+  }
+}
+/**
+ * @module Notifications
+ */ /** for typedoc */
+
+import * as Color from 'color';
+import { Observable } from 'rxjs/Observable';
+
+import { logger } from '../../../../logger';
+
+import { notificationActions } from '../../../../actions/notification-actions';
+import { TeamBase } from '../../../../actions/team-actions';
+import { NotificationType, WebappNotificationOptions } from '../../../../browser/notifications/interfaces';
+import { Component } from '../../../../lib/component';
+import { TeamIcon } from '../../../../renderer/components/team-icon';
+import { teamStore } from '../../../../stores/team-store';
+import { TelemetryEvent, track } from '../../../../telemetry';
+import { TelemetryNotificationMethod, defaultTheme } from '../../../../utils/shared-constants';
+
+import * as React from 'react'; // tslint:disable-line
+
+const ICON_SIZE = 72;
+const notificationSystem = TelemetryNotificationMethod.HTML;
+
+export interface NotificationItemProps {
+  timeout?: number;
+  afterHoverTimeout?: number;
+  notification: WebappNotificationOptions;
+  setIgnoreMouseEvents: (ignore: boolean) => void;
+}
+
+export interface NotificationItemState {
+  team: TeamBase | null;
+}
+
+export class NotificationItem extends Component<NotificationItemProps, NotificationItemState> {
+  public static defaultProps: Partial<NotificationItemProps> = {
+    timeout: 6000,
+    afterHoverTimeout: 2000
+  };
+
+  private mainElement: HTMLDivElement;
+  private closeButtonElement: HTMLAnchorElement;
+  private readonly refHandlers = {
+    main: (ref: HTMLDivElement) => this.mainElement = ref,
+    closeButton: (ref: HTMLAnchorElement) => this.closeButtonElement = ref
+  };
+
+  private readonly eventHandlers = {
+    close: () => {
+      this.remove();
+      track(TelemetryEvent.DESKTOP_NOTIFICATION_DISMISSED, {
+        notificationId: this.props.notification.id,
+        notificationSystem
+      });
+    }
+  };
+
+  constructor(props: Partial<NotificationItemProps>) {
+    super(props);
+  }
+
+  public syncState(): NotificationItemState {
+    const state = {
+      team: teamStore.getTeam(this.props.notification.teamId)
+    };
+
+    if (!state.team) {
+      logger.warn(`NotificationItem: No team in notification ${this.props.notification.id}!`);
+      logger.warn(`NotificationItem: Requested teamId was: ${this.props.notification.teamId}`);
+      logger.warn(`NotificationItem: Available teams: ${teamStore.getTeamIds()}`);
+    }
+
+    return state;
+  }
+
+  public componentDidMount(): void {
+    const mouseLeave = Observable.fromEvent(this.mainElement, 'mouseleave');
+    const mouseOver = Observable.fromEvent(this.mainElement, 'mouseover');
+    const mouseClick = Observable.fromEvent(this.mainElement, 'click');
+
+    // By default, clicks aren't registered by the notifications window. We will however
+    // receive mouse-over events. Once the mouse is over notification item, we'll enable
+    // click capturing.
+    this.disposables.add(Observable.merge(
+      mouseOver.mapTo(false),
+      mouseLeave.mapTo(true)
+    ).subscribe((ignore) => this.props.setIgnoreMouseEvents(ignore)));
+
+    // Remove the notification if either the timeout is reached without
+    // the user mousing over it, or the user's mouse leaves the notification
+    // and a shorter timeout is reached without another mouseover
+    this.disposables.add(Observable.merge(
+      Observable.timer(this.props.timeout).takeUntil(mouseOver),
+      mouseLeave.flatMap(() =>
+        Observable.timer(this.props.afterHoverTimeout).takeUntil(mouseOver))
+      )
+      .take(1)
+      .subscribe(() => this.remove()));
+
+    this.disposables.add(mouseClick.subscribe((e: Event) => this.select(e)));
+
+    track(TelemetryEvent.DESKTOP_NOTIFICATION_SUCCESS, {
+      notificationId: this.props.notification.id,
+      notificationSystem
+    });
+  }
+
+  public render(): JSX.Element | null {
+    const { team } = this.state;
+    const notification = this.props.notification;
+
+    const theme = team ? (team.theme || defaultTheme) : defaultTheme;
+    const contentBackground = Color((theme as any).column_bg);
+    const headerBackground = Color((theme as any).menu_bg);
+    const isDarkColor = contentBackground.dark();
+
+    // Set the text color and hash image for maximum contrast with the background.
+    const textColor = isDarkColor ? '#ffffff' : '#000000';
+    const hashColor = isDarkColor ? 'white' : 'black';
+    const initialsColor = Color(textColor).alpha(0.7).rgb().string();
+    const hashSrcSet = `logo_${hashColor}@2x.png 1x,logo_${hashColor}@2x.png 2x,logo_${hashColor}@3x.png 3x`;
+    let icon = null;
+
+    if (team) {
+      icon = (
+        <div className='NotificationItem-icon' style={{ backgroundColor: headerBackground.hex() }}>
+          <TeamIcon size={ICON_SIZE} team={team} color={initialsColor} borderRadius={0} />
+        </div>
+      );
+    }
+
+    // TODO: Create a parser to extract image tags from text to avoid innerHTML dangers
+    return (
+      <div className='NotificationItem' ref={this.refHandlers.main}>
+        <div
+          className='NotificationItem-content'
+          style={{ backgroundColor: contentBackground.hex(), borderColor: contentBackground.lighten(0.33).hex() }}
+        >
+          {icon}
+          <div className='NotificationItem-text' style={{ color: textColor }}>
+            <p className='NotificationItem-title'>{notification.title}</p>
+            <p className='NotificationItem-message' dangerouslySetInnerHTML={{ __html: notification.content }}/>
+          </div>
+          <img className='NotificationItem-hash' srcSet={hashSrcSet}/>
+          <a
+            className='NotificationItem-close'
+            style={{ color: textColor }}
+            ref={this.refHandlers.closeButton}
+            onClick={this.eventHandlers.close}
+          >
+            &times;
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  private remove(): void {
+    notificationActions.removeNotification(this.props.notification.id);
+  }
+
+  private select(e: Event): void {
+    // stopPropagation wasn't working so check the target
+    if (e.target !== this.closeButtonElement) {
+      const { id, channel, teamId, msg, thread_ts, type } = this.props.notification;
+
+      if (type === NotificationType.DOWNLOAD){
+        notificationActions.clickDownloadNotification(id, teamId, msg);
+      } else {
+        notificationActions.clickNotification(id, channel, teamId, msg, thread_ts);
+        track(TelemetryEvent.DESKTOP_NOTIFICATION_CLICK, {
+          notificationId: id,
+          notificationSystem
+        });
+      }
+    }
+  }
+}
+.Notifications2016 {
+  .NotificationHost {
+    width: 98%;
+    height: 100%;
+    float: right;
+
+    display: flex;
+    align-items: flex-end;
+
+    font-family: Slack-Lato, Meiryo, Lucida Grande, sans-serif;
+    color: cyan;
+
+    &-list {
+      width: 100%;
+    }
+
+    .spin-enter {
+      -webkit-animation-duration: 0.4s;
+      -webkit-animation-fill-mode: both;
+      -webkit-animation-name: pageInRight;
+    }
+
+    .spin-leave {
+      -webkit-animation-duration: 0.4s;
+      -webkit-animation-fill-mode: both;
+      -webkit-animation-name: collapseHeight;
+      align-self: flex-end;
+    }
+  }
+
+  @-webkit-keyframes pageInRight {
+    0% { -webkit-transform: perspective(300px) rotateY(90deg); }
+    100% { -webkit-transform: none; }
+  }
+
+  @-webkit-keyframes collapseHeight {
+    0% { opacity: 1; }
+    100% { opacity: 0; height: 0; margin-top: 0; margin-bottom: 0; }
+  }
+}
+.Notifications2016 {
+  .NotificationItem {
+    width: 100%;
+    height: 72px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+
+    list-style-type: none;
+    cursor: default;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+
+    &-content {
+      display: flex;
+      flex-direction: row;
+      position: relative;
+
+      border-width: 2px;
+      border-style: solid;
+    }
+
+    &-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 72px;
+      height: 72px;
+      min-width: 72px;
+      min-height: 72px;
+      max-width: 72px;
+      max-height: 72px;
+
+      .TeamIcon {
+        width: 72px;
+        height: 72px;
+        min-width: 72px;
+        min-height: 72px;
+        max-width: 72px;
+        max-height: 72px;
+      }
+    }
+
+    &-text {
+      font-size: 0.8em;
+      padding-left: 1em;
+      line-height: 16px;
+    }
+
+    .limit-text-lines {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+    }
+
+    &-title {
+      font-weight: bold;
+      margin-top: 0.5em;
+      margin-bottom: 0;
+      padding-right: 2em;
+      -webkit-line-clamp: 1;
+      .limit-text-lines;
+    }
+
+    &-message {
+      margin-top: 0.33em;
+      padding-right: 4em;
+      -webkit-line-clamp: 2;
+      .limit-text-lines;
+
+      .emoji {
+        max-height: 16px;
+        vertical-align: middle;
+      }
+    }
+
+    &-close {
+      position: absolute;
+      right: 5px;
+
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+
+      opacity: 0.2;
+      -webkit-transition: all 0.4s ease-out;
+    }
+
+    &-content:hover > &-close {
+      opacity: 1;
+      -webkit-transition: all 0.25s ease-in;
+    }
+
+    &-hash {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      min-height: 18px;
+      max-width: 18px;
+      max-height: 18px;
+
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+    }
+  }
+}
+@import "notification-host.less";
+@import "notification-item.less";
+/**
+ * @module Notifications
+ */ /** for typedoc */
+
+import { eventActions } from '../../../../actions/event-actions';
+import { notificationActions } from '../../../../actions/notification-actions';
+import { WebappNotificationOptions } from '../../../../browser/notifications/interfaces';
+import { TelemetryEvent } from '../../../../telemetry';
+import { StringMap } from '../../../../utils/shared-constants';
+import { ensureChannelName } from '../utilities/formatting';
+import { trackNotificationEvent } from '../utilities/tracking';
+import { Message } from './message';
+
+import * as React from 'react'; // tslint:disable-line
+import { Component } from '../../../../lib/component';
+
+export interface ChannelProps {
+  name: string;
+  id: string;
+  showClose: boolean;
+  notifications: Array<WebappNotificationOptions>;
+}
+
+/**
+ * The channel component contains the channel title and all notifications
+ * coming from the same channel.
+ */
+export class Channel extends Component<ChannelProps, {}> {
+  /**
+   * Render the "open channel" section of the notification
+   *
+   * @returns {(JSX.Element | null)}
+   */
+  public renderOpenChannel(): JSX.Element {
+    const { name, id } = this.props;
+
+    // Handle a missing channel name, for instance for download or test notifications
+    if (!name) return <a className='OpenChannel' />;
+
+    const teamId = this.getTeamId();
+    const openChannel = () => {
+      eventActions.handleDeepLink(`slack://channel?team=${teamId}&id=${id}`);
+    };
+
+    return (
+      <a href='#' className='OpenChannel' onClick={openChannel}>
+        <h4>{name}</h4>
+      </a>
+    );
+  }
+
+  /**
+   * Renders the close button, which closes all notifications in this channel
+   *
+   * @returns {JSX.Element}
+   */
+  public renderCloseElement(): JSX.Element | null {
+    const { showClose, notifications } = this.props;
+
+    if (showClose) {
+      const close = () => notifications.forEach((n) => {
+        notificationActions.removeNotification(n.id);
+        trackNotificationEvent(n, TelemetryEvent.DESKTOP_NOTIFICATION_DISMISSED);
+      });
+
+      return (
+        <a href='#' onClick={close} className='Close'><i className='ts_icon ts_icon_times' /></a>
+      );
+    }
+
+    return null;
+  }
+
+  /**
+   * Render the channel element's header
+   *
+   * @returns {JSX.Element}
+   */
+  public renderHeader(): JSX.Element {
+    return (
+      <header>
+        {this.renderOpenChannel()}
+        {this.renderCloseElement()}
+      </header>
+    );
+  }
+
+  public render() {
+    const { notifications } = this.props;
+
+    return (
+      <div className='Channel'>
+        {this.renderHeader()}
+        <div className='Messages'>
+          {notifications.map((n) => <Message key={n.id} notification={n} />)}
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * We get the teamId from the first notification
+   *
+   * @returns {string}
+   */
+  private getTeamId(): string {
+    const notifications = this.props.notifications || [];
+    return (notifications[0] || {}).teamId;
+  }
+}
+
+/**
+ * Accepts a dictionary of channels and returns JSX channel elements.
+ *
+ * @param {StringMap<Array<WebappNotificationOptions>>} channels
+ */
+export const renderChannels = (
+  channels: StringMap<Array<WebappNotificationOptions>>
+) => {
+  const channelKeys = Object.keys(channels);
+  const showClose = channelKeys.length > 1;
+
+  return channelKeys.map((k) => {
+    const name = channels[k] && channels[k].length > 0
+      ? ensureChannelName(channels[k][0]).channelName || ''
+      : '';
+
+    return (
+      <Channel
+        showClose={showClose}
+        key={k}
+        name={name}
+        id={k}
+        notifications={channels[k]}
+      />
+    );
+  });
+};
+/**
+ * @module Notifications
+ */ /** for typedoc */
+
+import { notificationActions } from '../../../../actions/notification-actions';
+import { NotificationType, WebappNotificationOptions } from '../../../../browser/notifications/interfaces';
+import { Component } from '../../../../lib/component';
+import { Store } from '../../../../lib/store';
+import { getSetting } from '../../../../stores/setting-store-helper';
+import { TelemetryEvent } from '../../../../telemetry';
+import { trackNotificationEvent } from '../utilities/tracking';
+import { Timestamp } from './timestamp';
+
+import { Observable } from 'rxjs/Observable';
+import * as React from 'react'; // tslint:disable-line
+import { ensureAuthorName } from '../utilities/formatting';
+
+export interface MessageProps {
+  notification: WebappNotificationOptions;
+  timeout?: number;
+  afterHoverTimeout?: number;
+}
+
+/**
+ * This component represents a single message, embedded in a channel,
+ * which is in turn embedded in a workspace container.
+ */
+export class Message extends Component<MessageProps, {}> {
+  public static readonly defaultProps = {
+    timeout: getSetting<number>(Store, 'notificationTimeout'),
+    afterHoverTimeout: getSetting<number>(Store, 'notificationAfterHoverTimeout')
+  };
+
+  private mainElement: HTMLDivElement;
+
+  private readonly refHandlers = {
+    main: (ref: HTMLDivElement) => this.mainElement = ref,
+  };
+
+  private readonly eventHandlers = {
+    /**
+     * Open the current notification. This will also remove it.
+     */
+    open: () => {
+      const { type, id, teamId, msg, thread_ts, channel } = this.props.notification;
+
+      if (type === NotificationType.DOWNLOAD){
+        notificationActions.clickDownloadNotification(id, teamId, msg);
+      } else {
+        notificationActions.clickNotification(id, channel, teamId, msg, thread_ts);
+        trackNotificationEvent(this.props.notification, TelemetryEvent.DESKTOP_NOTIFICATION_CLICK);
+      }
+    }
+  };
+
+  /**
+   * Once the notification is on the screen, we'll start our stopwatches and
+   * will eventually remove it (once "timeout") is reached. As soon as the user
+   * hovers over the notification, we'll start a different timer ("afterHoverTimeout")
+   */
+  public componentDidMount(): void {
+    const mouseLeave = Observable.fromEvent(this.mainElement, 'mouseleave');
+    const mouseOver = Observable.fromEvent(this.mainElement, 'mouseover');
+
+    this.disposables.add(Observable.merge(
+      Observable.timer(this.props.timeout).takeUntil(mouseOver),
+      mouseLeave.flatMap(() =>
+        Observable.timer(this.props.afterHoverTimeout).takeUntil(mouseOver))
+      )
+      .take(1)
+      .subscribe(() => notificationActions.removeNotification(this.props.notification.id)));
+
+    trackNotificationEvent(this.props.notification, TelemetryEvent.DESKTOP_NOTIFICATION_SUCCESS);
+  }
+
+  public renderImage(): JSX.Element | null {
+    const { imageUri } = this.props.notification;
+
+    if (imageUri) {
+      return (<img src={imageUri} />);
+    } else {
+      return null;
+    }
+  }
+
+  public render() {
+    const { content, avatarImage } = this.props.notification;
+    const { authorName } = ensureAuthorName(this.props.notification);
+    const cleanContent = content.startsWith(`${authorName}: `)
+      ? content.replace(`${authorName}: `, '')
+      : content;
+    const avatarStyle = avatarImage
+      ? { backgroundImage: `url(${avatarImage})` }
+      : {};
+
+    return (
+      <div className='Message' onClick={this.eventHandlers.open} ref={this.refHandlers.main}>
+        <div className='Avatar' style={avatarStyle} />
+        <div className='Content'>
+          <h5>{authorName} <Timestamp /></h5>
+          <p dangerouslySetInnerHTML={{ __html: cleanContent }} />
+          {this.renderImage()}
+        </div>
+      </div>
+    );
+  }
+}
+/**
+ * @module Notifications
+ */ /** for typedoc */
+
+import { remote, webFrame } from 'electron';
+import { union } from 'lodash';
+import { CSSTransitionGroup } from 'react-transition-group';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { animationFrame } from 'rxjs/scheduler/animationFrame';
+
+import { WindowFrameActions } from '../../../../actions';
+import { NotifyPosition, WebappNotificationOptions } from '../../../../browser/notifications/interfaces';
+import { Component } from '../../../../lib/component';
+import { Store } from '../../../../lib/store';
+import { logger } from '../../../../logger';
+import { notificationStore } from '../../../../stores/notification-store';
+import { getSetting } from '../../../../stores/setting-store-helper';
+import { windowStore } from '../../../../stores/window-store';
+import { WindowMetadata } from '../../../../utils/shared-constants';
+import { NotificationWindowHelpers } from '../notification-window-helpers';
+import { getNotificationsByTeamAndChannel } from '../utilities/formatting';
+
+const { BrowserWindow } = remote;
+const { showPositionedNotificationWindow } = NotificationWindowHelpers;
+
+import * as React from 'react'; // tslint:disable-line
+import { renderTeams } from './team';
+
+export interface NotificationHostProps {
+  idleTimeoutMs: number;
+  notificationSize: {
+    width: number;
+    height: number;
+  };
+}
+
+export interface NotificationHostState {
+  notifications: Array<WebappNotificationOptions>;
+  notificationsWindow: WindowMetadata | null;
+  mainWindow: WindowMetadata | null;
+  zoomLevel: number;
+  notificationZoomLevel?: number;
+  notificationMaxItems: number;
+  notificationClickThrough: boolean;
+  notificationClickThroughMain: boolean;
+  notifyPosition: NotifyPosition;
+  displayedNotifs: Array<WebappNotificationOptions>;
+  isMouseIgnored: boolean;
+}
+
+export class NotificationHost extends Component<Partial<NotificationHostProps>, Partial<NotificationHostState>> {
+  public static defaultProps: NotificationHostProps = {
+    idleTimeoutMs: 400,
+    notificationSize: { width: 375, height: 88 },
+  };
+
+  private hostElement: HTMLDivElement;
+  private readonly refHandlers = {
+    host: (ref: HTMLDivElement) => this.hostElement = ref
+  };
+
+  private readonly windowState: Subject<{ shouldShow: boolean, shouldHide: boolean }> = new Subject();
+  private readonly notificationStateObservable: Subject<Partial<NotificationHostState>> = new Subject();
+  private readonly componentUnmountedObservable: Subject<boolean> = new Subject();
+
+  constructor(props: Partial<NotificationHostProps>) {
+    super(props);
+
+    //TODO: manipulate state is not recommended, should update logic
+    (this.state as any).displayedNotifs = this.state.notifications!.splice(0, this.state.notificationMaxItems || 3);
+
+    this.disposables.add(
+      this.windowState.filter(({ shouldHide }) => shouldHide)
+        .flatMap(() => Observable.timer(this.props.idleTimeoutMs))
+        .map(() => this.getNotificationsWindow())
+        .filter((browserWindow: Electron.BrowserWindow) => !!browserWindow && !browserWindow.isDestroyed())
+        .subscribe((browserWindow: Electron.BrowserWindow) => {
+          if (this.state.notificationClickThrough) {
+            // This is a workaround. Previously, we called hide() on the window,
+            // thus ensuring that it's not in the way for anything else. That seemed to
+            // give us trouble, so we're now making it as small as possible and are moving
+            // it out of the user's visible bounds.
+            browserWindow.setBounds({
+              height: 5,
+              width: 5,
+              x: -5000, // Todo: Is this... okay?
+              y: -5000  // Todo: Is this... okay?
+            });
+          } else {
+            browserWindow.hide();
+          }
+        })
+    );
+
+    this.disposables.add(
+      this.windowState.filter(({ shouldShow }) => shouldShow)
+        .map(() => this.getNotificationsWindow())
+        .filter((browserWindow: Electron.BrowserWindow) => !!browserWindow)
+        .subscribe((browserWindow: Electron.BrowserWindow) => {
+          const mainWindowId = this.state.mainWindow!.id;
+          const mainWindow = BrowserWindow.fromId(mainWindowId);
+
+          showPositionedNotificationWindow(
+            browserWindow,
+            mainWindow,
+            this.getZoomLevel(),
+            this.state.notificationMaxItems!,
+            this.state.notifyPosition!,
+            this.state.notificationClickThrough!);
+        })
+    );
+
+    this.notificationStateObservable
+      .takeUntil(this.componentUnmountedObservable)
+      .observeOn(animationFrame)
+      .subscribe((state: Partial<NotificationHostState>) => this.setState(state));
+
+    this.setIgnoreMouseEvents = this.setIgnoreMouseEvents.bind(this);
+  }
+
+  public syncState(): Partial<NotificationHostState> {
+    return {
+      notifications: notificationStore.getNotifications(),
+      notificationsWindow: windowStore.getNotificationsWindow(),
+      mainWindow: windowStore.getMainWindow(),
+      zoomLevel: getSetting<number>(Store, 'zoomLevel'),
+      notificationZoomLevel: getSetting<number>(Store, 'notificationZoomLevel'),
+      notificationMaxItems: getSetting<number>(Store, 'notificationMaxItems'),
+      notificationClickThrough: getSetting<boolean>(Store, 'notificationClickThrough'),
+      notificationClickThroughMain: getSetting<boolean>(Store, 'notificationClickThroughMain'),
+      notifyPosition: getSetting<NotifyPosition>(Store, 'notifyPosition'),
+    };
+  }
+
+  /**
+   * As soon as the component has mounted, we want to make sure that
+   * our zoom levels are correct and in sync with the main window.
+   */
+  public componentDidMount(): void {
+    this.setZoomLevelAndLimits();
+  }
+
+  /**
+   * We'll only unmount on shutdown - clean up anyway, though.
+   */
+  public componentWillUnmount(): void {
+    super.componentWillUnmount();
+    this.componentUnmountedObservable.next(true);
+  }
+
+  /**
+   * When we receive an update event, we likely want to add or remove notifications.
+   * We'll also watch out for changes in preferences.
+   *
+   * @param {Partial<NotificationHostProps>} _prevProps
+   * @param {Partial<NotificationHostState>} prevState
+   */
+  public componentDidUpdate(_prevProps: Partial<NotificationHostProps>, prevState: Partial<NotificationHostState>): void {
+    if (prevState.zoomLevel !== this.state.zoomLevel ||
+        prevState.notificationZoomLevel !== this.state.notificationZoomLevel) {
+      this.setZoomLevelAndLimits();
+    }
+
+    const { notificationMaxItems, notifications } = this.state as NotificationHostState;
+    const maxItems = notificationMaxItems !== undefined ? notificationMaxItems : 3;
+    const prevNotifs = prevState.notifications!;
+
+    this.windowState.next({
+      shouldShow: prevNotifs.length === 0 && notifications.length > 0,
+      shouldHide: prevNotifs.length > 0 && notifications.length === 0
+    });
+
+    // ReactCSSTransitionGroup currently does not have a more granular control
+    // over the correct ordering of new elements vs deleted elements (they commented
+    // that they might add more utilities in the future).  The default places the
+    // new element above the old deleted one as the old one transitions away.
+    // While this works when the notifications are at the bottom, when at the top
+    // we want the new notification to be below the deleted notification as it animates
+    // away so that the new notification slides up into place.  To work around this
+    // we update with both the old removed elements and the new element being shown
+    // then we update immediately after with the old element removed.
+    if (prevNotifs !== notifications) {
+      let displayed = this.state.displayedNotifs!;
+
+      // Since we maintain immutability, a changed array will have different
+      // values even if they are actually the same, so we need to filter using
+      // the notification keys rather than _.difference or _.intersection
+      const displayedKeys = displayed.reduce((set, notif) => {
+        set.add(notif.id);
+        return set;
+      }, new Set());
+
+      const remaining = notifications.filter((notif) => displayedKeys.has(notif.id));
+
+      const added = notifications.filter((notif) => !displayedKeys.has(notif.id))
+        .splice(0, maxItems - remaining.length);
+
+      displayed = union<WebappNotificationOptions>(displayed, added);
+      this.setState({ displayedNotifs: displayed });
+      displayed = union<WebappNotificationOptions>(remaining, added);
+      this.notificationStateObservable.next({ displayedNotifs: displayed });
+    }
+  }
+
+  public render(): JSX.Element | null {
+    const style: React.CSSProperties = { flexDirection: 'column' };
+    const isTop = this.state.notifyPosition!.corner.split('_')[0] === 'top';
+    const byTeamAndChannel = getNotificationsByTeamAndChannel(this.state.displayedNotifs!);
+
+    let notifications = renderTeams(byTeamAndChannel, this.setIgnoreMouseEvents);
+
+    if (!isTop) {
+      notifications = notifications.reverse();
+      style.flexDirection = 'column-reverse';
+    }
+
+    return (
+      <div className='NotificationHost' ref={this.refHandlers.host} style={style}>
+        <CSSTransitionGroup
+          className='NotificationHost-list'
+          transitionName='spin'
+          transitionEnterTimeout={400}
+          transitionLeaveTimeout={400}
+        >
+          {notifications}
+        </CSSTransitionGroup>
+      </div>
+    );
+  }
+
+  private getZoomLevel(): number {
+    return this.state.notificationZoomLevel && this.state.notificationZoomLevel !== null
+      ? this.state.notificationZoomLevel
+      : this.state.zoomLevel!;
+  }
+
+  private setZoomLevelAndLimits(): void {
+    const zoomLevel = this.getZoomLevel();
+
+    if (zoomLevel !== undefined) {
+      webFrame.setLayoutZoomLevelLimits(zoomLevel, zoomLevel);
+      webFrame.setZoomLevel(zoomLevel);
+    }
+  }
+
+  private getNotificationsWindow(): Electron.BrowserWindow | null {
+    const entry = this.state.notificationsWindow;
+    if (!entry) return null;
+    return BrowserWindow.fromId(entry.id);
+  }
+
+  /**
+   * We eventually want to call setIgnoreMouseEvents() on the window, but using the
+   * remote is tricky. Instead, we dispatch an IPC action and have the main process do it.
+   *
+   * To ensure that we don't go crazy on the IPC we'll only do it if information changed.
+   */
+  private setIgnoreMouseEvents(ignore: boolean) {
+    const isEnabled = this.state.notificationClickThrough;
+    const isDirect = this.state.notificationClickThroughMain;
+
+    if (ignore !== this.state.isMouseIgnored && isEnabled) {
+      if (isDirect) {
+        try {
+          const browserWindow = remote.getCurrentWindow();
+          if (browserWindow && !browserWindow.isDestroyed()) {
+            browserWindow.setIgnoreMouseEvents(ignore, { forward: true });
+          }
+        } catch (error) {
+          logger.error(`Notification host: Tried to toggle mouse events, but failed`, { error });
+        }
+
+        return;
+      }
+
+      Store.dispatch({
+        type: WindowFrameActions.SET_IGNORE_MOUSE_EVENTS,
+        payload: ignore
+      });
+    }
+  }
+}
+.Notifications2018 {
+  .Channel {
+    border-bottom: 1px solid rgba(44, 45, 48, .11);
+
+    header {
+      color: rgba(44, 45, 48, 0.67);
+      display: flex;
+
+      h4 {
+        font-size: 14px;
+        font-weight: 800;
+        margin: 0;
+      }
+
+      a:hover {
+        background-color: #f9f9f9;
+      }
+
+      a.OpenChannel {
+        height: 100%;
+        padding: 7px 10px 7px 10px;
+        display: inline-block;
+        width: ~"calc(100% - 35px)";
+        box-sizing: border-box;
+        flex-grow: 1;
+      }
+
+      a.Close {
+        display: inline-block;
+        padding: 7px 10px 0 10px;
+        float: right;
+        margin-right: 1px;
+      }
+
+      i.ts_icon:before, ts-icon:before {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .Channels:last-child {
+    border: none;
+  }
+}
+.Notifications2018 {
+  .Message:hover {
+    background-color: #f9f9f9;
+  }
+
+  .Message {
+    display: flex;
+    padding: 8px 10px 6px 10px;
+
+    &:last-child {
+      margin-bottom: 10px;
+    }
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    .Avatar {
+      border-radius: 4px;
+      margin: 3px 8px 0 0;
+      width: 36px;
+      min-width: 36px;
+      max-height: 36px;
+      background-size: cover;
+    }
+
+    p, h5 {
+      margin: 0;
+    }
+
+    h5 {
+      font-weight: 900;
+      color: #2C2D30;
+    }
+
+    .Timestamp {
+      font-size: 12px;
+      color: #717274;
+      font-weight: 400;
+      margin-left: 4px;
+    }
+
+    .Content {
+      // 5 lines max
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 5;
+      overflow: hidden;
+      display: -webkit-box;
+      padding: 0 2px;
+
+      p {
+        line-height: 22px;
+      }
+
+      img {
+        width: 100%;
+        border-radius: 3px;
+        margin-top: 11px;
+      }
+
+      .emoji {
+        max-width: 22px;
+        max-height: 22px;
+        margin: 0;
+        margin-bottom: -5px;
+      }
+    }
+  }
+}.Notifications2018 {
+  a {
+    text-decoration: none;
+  }
+
+  .NotificationHost {
+    width: 98%;
+    height: 100%;
+    float: right;
+    display: flex;
+    align-items: flex-end;
+
+    font-family: Slack-Lato, Meiryo, Lucida Grande, sans-serif;
+    color: #2C2D30;
+
+    &-list {
+      width: 100%;
+    }
+
+    .spin-enter {
+      -webkit-animation-duration: 0.2s;
+      -webkit-animation-fill-mode: both;
+      -webkit-animation-name: fadeIn;
+    }
+
+    .spin-leave {
+      -webkit-animation-duration: 0.2s;
+      -webkit-animation-fill-mode: both;
+      -webkit-animation-name: collapseHeight;
+      align-self: flex-end;
+    }
+  }
+
+  @-webkit-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  @-webkit-keyframes collapseHeight {
+    0% { opacity: 1; }
+    100% { opacity: 0; height: 0; margin-top: 0; margin-bottom: 0; }
+  }
+}
+@import "notification-host.less";
+@import "team.less";
+@import "channel.less";
+@import "message.less";
+.Notifications2018 {
+  .Team {
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0px 1px 4px rgba(44, 45, 48, 0.3);
+    margin: 10px;
+
+    a, a:active, a:visited, a:focus {
+      color: unset;
+    }
+
+    & > header {
+      border-radius: 4px 4px 0 0;
+      margin: 0;
+      height: 40px;
+
+      h3 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 800;
+        position: relative;
+        display: inline-block;
+        top: -4px;
+      }
+
+      i {
+        margin: 0 8px 0 0;
+      }
+
+      a.OpenTeam {
+        padding: 8px 0 0 12px;
+        display: inline-block;
+        height: 100%;
+        box-sizing: border-box;
+        width: ~"calc(100% - 40px)";
+      }
+
+      a.Close {
+        height: 100%;
+        box-sizing: border-box;
+        float: right;
+        padding: 8px 0 0 8px;
+      }
+
+      & > a:hover {
+        box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+}/**
+ * @module Notifications
+ */ /** for typedoc */
+
+import { Dictionary } from 'lodash';
+import { notificationActions } from '../../../../actions/notification-actions';
+import { WebappNotificationOptions } from '../../../../browser/notifications/interfaces';
+import { Component } from '../../../../lib/component';
+import { Store } from '../../../../lib/store';
+import { getTeamById } from '../../../../reducers/teams-reducer';
+import { StringMap } from '../../../../utils/shared-constants';
+import { renderChannels } from './channel';
+
+import * as React from 'react'; // tslint:disable-line
+import { Observable } from 'rxjs/Observable';
+import { appTeamsActions } from '../../../../actions/app-teams-actions';
+import { TelemetryEvent } from '../../../../telemetry';
+import { trackNotificationEvent } from '../utilities/tracking';
+
+export interface TeamProps {
+  id: string;
+  channels: Dictionary<Array<WebappNotificationOptions>>;
+  setIgnoreMouseEvents: (ignore: boolean) => void;
+}
+
+/**
+ * This component represents the box for a team/workspace that houses
+ * notifications for that team.
+ *
+ * @class Team
+ * @extends {Component<TeamProps, {}>}
+ */
+export class Team extends Component<TeamProps, {}> {
+  private mainElement: HTMLDivElement;
+  private readonly refHandlers = {
+    main: (ref: HTMLDivElement) => this.mainElement = ref,
+  };
+
+  constructor() {
+    super();
+
+    this.closeNotifications = this.closeNotifications.bind(this);
+    this.openTeam = this.openTeam.bind(this);
+  }
+
+  /**
+   * Will close all notifications for this team. Invoked by a little 'X'
+   * in the upper right of the notifications container.
+   */
+  public closeNotifications() {
+    for (const channel of Object.keys(this.props.channels)) {
+      for (const notification of this.props.channels[channel]) {
+        notificationActions.removeNotification(notification.id);
+        trackNotificationEvent(notification, TelemetryEvent.DESKTOP_NOTIFICATION_DISMISSED);
+      }
+    }
+  }
+
+  /**
+   * Will open the current team in the app.
+   */
+  public openTeam() {
+    appTeamsActions.selectTeam(this.props.id);
+  }
+
+  /**
+   * Once the component has mounted, we'll start watching out for mouse events.
+   */
+  public componentDidMount(): void {
+    const mouseLeave = Observable.fromEvent(this.mainElement, 'mouseleave');
+    const mouseOver = Observable.fromEvent(this.mainElement, 'mouseover');
+
+    // By default, clicks aren't registered by the notifications window. We will however
+    // receive mouse-over events. Once the mouse is over notification item, we'll enable
+    // click capturing.
+    this.disposables.add(Observable.merge(
+      mouseOver.mapTo(false),
+      mouseLeave.mapTo(true)
+    ).subscribe((ignore) => this.props.setIgnoreMouseEvents(ignore)));
+  }
+
+  public render() {
+    const { id, channels } = this.props;
+    const team = getTeamById(Store, id);
+
+    // Guards against a possible race condition right after
+    // adding a new team
+    if (!team) return null;
+
+    const headerStyle = team && team.theme.menu_bg
+      ? { color: team.theme.text_color }
+      : {};
+    const teamStyle = team && team.theme.menu_bg
+      ? { background: `linear-gradient(to bottom, ${team.theme.menu_bg} 40px, #fff 2%)` }
+      : {};
+
+    return (
+      <div className='Team' style={teamStyle} ref={this.refHandlers.main}>
+        <header style={headerStyle}>
+          <a href='#' className='OpenTeam' onClick={this.openTeam}>
+            <i className='ts_icon ts_icon_channel_list' />
+            <h3>{team.team_name}</h3>
+          </a>
+          <a href='#' className='Close' onClick={this.closeNotifications}>
+            <i className='ts_icon ts_icon_times' />
+          </a>
+        </header>
+        <div className='Channels'>
+          {renderChannels(channels)}
+        </div>
+      </div>
+    );
+  }
+}
+
+/**
+ * Accepts teams in a StringMap format and returns JSX elements.
+ *
+ * @param teams
+ * @param setIgnoreMouseEvents
+ */
+export const renderTeams = (
+  teams: StringMap<StringMap<Array<WebappNotificationOptions>>>,
+  setIgnoreMouseEvents: (ignore: boolean) => void
+) => (Object.keys(teams).map((id) => {
+    return (
+      <Team
+        key={id}
+        id={id}
+        channels={teams[id]}
+        setIgnoreMouseEvents={setIgnoreMouseEvents}
+      />
+    );
+  })
+);
+/**
+ * @module Notifications
+ */ /** for typedoc */
+
+import * as React from 'react'; // tslint:disable-line
+
+/**
+ * A humble timestamp.
+ */
+export const Timestamp = () => (
+  <span className='Timestamp'>
+    {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+  </span>
+);
+/**
+ * @module Notifications
+ */ /** for typedoc */
+
+import { get } from 'lodash';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { Store } from '../../../lib/store';
+import { getSetting } from '../../../stores/setting-store-helper';
+import { HTMLNotificationStyles } from '../../../utils/shared-constants';
+
+import '../../../rx-operators';
+
+(window as any).open = null;
+
+function main() {
+  const notificationStyle = getSetting<string | null>(Store, 'notificationStyle') || HTMLNotificationStyles.STYLE2016;
+  const NotificationHost = notificationStyle === HTMLNotificationStyles.STYLE2018
+    ? require('./2018/notification-host').NotificationHost
+    : require('./2016/notification-host').NotificationHost;
+
+  const reactHost = React.createElement(NotificationHost);
+  const rootSpan = global.document.createElement('span');
+
+  // Rendering directly into document.body is discouraged due to third-party scripts
+  // and browser extensions frequently manipulating it
+  rootSpan.classList.add(`Notifications${notificationStyle}`);
+  global.document.body.appendChild(rootSpan);
+  ReactDOM.render(reactHost, rootSpan);
+
+  // For debugging, we'll draw a bright red border around the
+  // notifications window to make mistakes more obvious.
+  if (get(process, 'env.SLACK_DEBUG_HTML_NOTIFICATION_POSITION')) {
+    document.body.style.boxShadow = 'inset 0 0 10px red';
+  }
+}
+
+main();
+/**
+ * @module Notifications
+ */ /** for typedoc */
+
+export const NOTIFICATION_SIZE = { width: 375, height: 88 };
+
+import { screen as Screen } from 'electron';
+import { NotifyPosition } from '../../../browser/notifications/interfaces';
+
+/**
+ * Ensures that the given number is even. Electron transparent windows have
+ * rendering glitches when the window size is odd. Refer to
+ * https://github.com/atom/electron/issues/1366.
+ */
+const ensureEven = (value: number) => Math.round((value % 2 === 0) ? value : value + 1);
+
+export class NotificationWindowHelpers {
+  public static showPositionedNotificationWindow(wnd: Electron.BrowserWindow,
+                                                 mainWindow: Electron.BrowserWindow,
+                                                 zoomLevel: number,
+                                                 maxCount: number,
+                                                 notifyPosition: NotifyPosition,
+                                                 useFullHeight: boolean) {
+    // NB: Each zoom level corresponds to a 20% change
+    const scaleFactor = 1 + (zoomLevel * 0.2);
+
+    const options = {
+      // Scale notifications according to the current zoom level
+      size: {
+        width: Math.round(NOTIFICATION_SIZE.width * scaleFactor),
+        height: Math.round(NOTIFICATION_SIZE.height * scaleFactor)
+      },
+      screenPosition: notifyPosition,
+      maxCount,
+      parent: mainWindow,
+      screenApi: Screen,
+      useFullHeight
+    };
+
+    wnd.showInactive();
+    wnd.setBounds(NotificationWindowHelpers.calculateHostCoordinates(options));
+  }
+
+  /**
+   * Calculates the size and position of the host window.
+   *
+   * @static
+   * @param {{
+   *     size: Electron.Size;             The size of individual notifications
+   *     parent: Electron.BrowserWindow;  The parent window
+   *     screenPosition: NotifyPosition;  Determines where notifications appear
+   *     maxCount: number;                The maximum number of notifications to display
+   *     screenApi: Electron.Screen;      Used to retrieve display information
+   *     useFullHeight: boolean;          Whether to use the full screen height
+   *   }} options
+   * @returns {Electron.Rectangle}        An object containing size and position
+   */
+  public static calculateHostCoordinates(options: {
+    size: Electron.Size;
+    parent: Electron.BrowserWindow;
+    screenPosition: NotifyPosition;
+    maxCount: number;
+    screenApi: Electron.Screen;
+    useFullHeight: boolean;
+  }): Electron.Rectangle {
+    const { size, parent, maxCount, screenApi, useFullHeight } = options;
+    let screenPosition = options.screenPosition;
+    screenPosition = screenPosition || { corner: 'bottom_right', display: 'same_as_app' };
+
+    const display = NotificationWindowHelpers.getDisplayForHost(parent, screenPosition, screenApi);
+    const bounds = display.workArea;
+    let targetHeight = 0;
+
+    if (useFullHeight) {
+      targetHeight = display.workAreaSize.height;
+    } else {
+      // We don't resize the window dynamically, so pick a height that will fit
+      // one more than our maximum number of notifications (if there are already
+      // maxCount notifications and one is leaving while another is being added,
+      // until the leaving element collapses there will be maxCount + 1 notifications)
+      targetHeight = maxCount * size.height + 0.5 * size.height;
+    }
+
+    // In multi-monitor scenarios, `workArea` can contain negative coordinates.
+    // Be sure to add x or y to the height or width.
+    let targetX = Number.NaN, targetY = Number.NaN;
+
+    switch (screenPosition.corner) {
+    case 'top_left':
+      targetX = bounds.x;
+      targetY = bounds.y;
+      break;
+    case 'top_right':
+      targetX = bounds.x + bounds.width - size.width;
+      targetY = bounds.y;
+      break;
+    case 'bottom_left':
+      targetX = bounds.x;
+      targetY = bounds.y + bounds.height - targetHeight;
+      break;
+    case 'bottom_right':
+      targetX = bounds.x + bounds.width - size.width;
+      targetY = bounds.y + bounds.height - targetHeight;
+      break;
+    }
+
+    return {
+      x: Math.round(targetX!),
+      y: Math.round(targetY!),
+      width: ensureEven(size.width),
+      height: ensureEven(targetHeight)
+    };
+  }
+
+  /**
+   * Returns the display that notifications should be positioned on, based on
+   * the `screenPosition.display` preference.
+   *
+   * @param  {BrowserWindow} parent   The parent window
+   * @param  {Object} screenPosition  Determines where notifications appear
+   * @param  {Screen} screenApi       Used to retrieve display information
+   * @return {Object}                 A display object
+   */
+  public static getDisplayForHost(parent: Electron.BrowserWindow, screenPosition: NotifyPosition = {} as any, screenApi: Electron.Screen) {
+    const getCenter = (pos: number, size: number) =>
+      Number.isInteger(pos) && Number.isInteger(size) ? Math.round(pos + size / 2.0) : Number.NaN;
+
+    switch (screenPosition.display) {
+    case 'same_as_app': {
+      // NB: Pick the display based on the center point of the main window.
+      // The top-left can be negative for maximized windows.
+      const position = parent.getPosition();
+      const windowSize = parent.getSize();
+      const centerPoint = {
+        x: getCenter(position[0], windowSize[0]),
+        y: getCenter(position[1], windowSize[1])
+      };
+
+      if (Number.isNaN(centerPoint.x) || Number.isNaN(centerPoint.y)) {
+        return screenApi.getPrimaryDisplay();
+      }
+
+      const sameDisplayAsApp = screenApi.getDisplayNearestPoint(centerPoint);
+      return sameDisplayAsApp || screenApi.getPrimaryDisplay();
+    }
+    default:
+      return screenApi.getPrimaryDisplay();
+    }
+  }
+}
+/**
+ * @module Notifications
+ */ /** for typedoc */
+
+import { each, groupBy } from 'lodash';
+import { WebappNotificationOptions } from '../../../../browser/notifications/interfaces';
+import { StringMap } from '../../../../utils/shared-constants';
+
+/**
+ * Takes an array of notifications and sorts them by team, then by channel.
+ *
+ * @param {Array<WebappNotificationOptions>} input
+ * @returns {StringMap<StringMap<Array<WebappNotificationOptions>>>}
+ */
+export function getNotificationsByTeamAndChannel(
+  input: Array<WebappNotificationOptions>
+): StringMap<StringMap<Array<WebappNotificationOptions>>> {
+  const byTeam = groupBy(input, 'teamId');
+  const byTeamAndChannel = {};
+
+  each(byTeam, (_notifications, teamId) => {
+    byTeamAndChannel[teamId] = groupBy(byTeam[teamId], 'channel');
+  });
+
+  return byTeamAndChannel;
+}
+
+/**
+ * Ensure a proper channel name
+ *
+ * @param {WebappNotificationOptions} notification
+ * @returns {WebappNotificationOptions}
+ */
+export function ensureChannelName(notification: WebappNotificationOptions) {
+  // Undefined channelName, let's return
+  if (!notification.channelName) return notification;
+  // Already starts with a '#'
+  if (notification.channelName.startsWith('#')) return notification;
+  // Doesn't, but it's not a channel, so it's cool
+  if (notification.channelName.includes(' ')) return notification;
+  // Let's add a #
+  return { ...notification, channelName: `#${notification.channelName}` };
+}
+
+/**
+ * Got a DESKTOP_NOTIFICATION object that doesn't know
+ * the author? No worries, we'll find it in the text.
+ *
+ * Todo: Remove this once the server send us
+ * 'real_author_name' (#team-notifications)
+ *
+ * @param {WebappNotificationOptions} notification
+ * @returns {WebappNotificationOptions}
+ */
+export function ensureAuthorName(notification: WebappNotificationOptions): WebappNotificationOptions {
+  if (notification && notification.authorName) {
+    return notification;
+  } else {
+    const clone = { ...notification };
+    const possibleNameMatch = clone.content.match(/.*?:/);
+
+    if (possibleNameMatch && possibleNameMatch.length > 0) {
+      clone.authorName = possibleNameMatch[0].slice(0, possibleNameMatch[0].length - 1);
+      clone.content = clone.content.replace(possibleNameMatch[0], '');
+    }
+
+    return clone;
+  }
+}
+
+/**
+ * @module Notifications
+ */ /** for typedoc */
+
+import { WebappNotificationOptions } from '../../../../browser/notifications/interfaces';
+import { TelemetryEvent, track } from '../../../../telemetry';
+import { TelemetryNotificationMethod } from '../../../../utils/shared-constants';
+
+/**
+ * Tracks a notification event
+ *
+ * @param {WebappNotificationOptions} { id }
+ * @param {TelemetryEvent} telemetryEvent
+ */
+export function trackNotificationEvent({ id }: WebappNotificationOptions, telemetryEvent: TelemetryEvent) {
+  const notificationSystem = TelemetryNotificationMethod.HTML2018;
+
+  track(telemetryEvent, {
+    notificationId: id,
+    notificationSystem
+  });
+}
+/**
+ * @module ReduxComponent
+ */ /** for typedoc */
+
+import { ipcRenderer } from 'electron';
+import { isEqual } from 'lodash';
+
+import { UnreadsInfo } from '../../actions/unreads-actions';
+import { ReduxComponent } from '../../lib/redux-component';
+import { Store } from '../../lib/store';
+import { getCombinedUnreadsInfo } from '../../reducers/unreads-reducer';
+import { OverlayChannel } from '../../utils/ipc-channel-names';
+
+const ratio = window.devicePixelRatio;
+const iconWidth = 16;
+const iconHeight = 16;
+const scale = (size: number) => size * ratio;
+
+export interface OverlayState {
+  unreadsInfo: UnreadsInfo;
+}
+
+export class OverlayManager extends ReduxComponent<OverlayState> {
+  private readonly canvas: HTMLCanvasElement = document.createElement('canvas');
+
+  constructor(props?: any) {
+    super(props);
+    this.canvas.width = scale(iconWidth);
+    this.canvas.height = scale(iconHeight);
+    this.update();
+  }
+
+  public syncState(): OverlayState {
+    return {
+      unreadsInfo: getCombinedUnreadsInfo(Store)
+    };
+  }
+
+  public shouldComponentUpdate(prevState: OverlayState, newState: OverlayState) {
+    return !isEqual(prevState.unreadsInfo, newState.unreadsInfo);
+  }
+
+  public update(): void {
+    const unreadHighlights = this.state.unreadsInfo
+      ? this.state.unreadsInfo.unreadHighlights
+      : 0;
+
+    const overlayIcon = (!unreadHighlights || unreadHighlights < 1)
+      ? null
+      : this.createOverlayIcon(unreadHighlights);
+
+    ipcRenderer.send(OverlayChannel.SetIcon, overlayIcon);
+  }
+
+  private createOverlayIcon(unreadHighlights: number): Buffer | null {
+    // http://codepen.io/anon/pen/QyjXJZ
+    const canvasRenderingContext = this.canvas.getContext('2d');
+
+    if (!canvasRenderingContext) {
+      return null;
+    }
+
+    const unreadNumber = unreadHighlights > 99 ? '+' : unreadHighlights.toString();
+    const centerX = iconWidth / 2.0;
+    const centerY = iconHeight / 2.0;
+
+    const badgeSize = (unreadNumber.length > 1 ? 7 : 6.5);
+    canvasRenderingContext.beginPath();
+    canvasRenderingContext.fillStyle = '#f66';
+    canvasRenderingContext.arc(scale(centerX), scale(centerY), scale(badgeSize), 0, 6.28 /*radians*/, false);
+    canvasRenderingContext.fill();
+
+    canvasRenderingContext.font = `${scale(10)}px Slack-Lato`;
+    canvasRenderingContext.textBaseline = 'top';
+    canvasRenderingContext.fillStyle = '#fff';
+
+    const metrics = canvasRenderingContext.measureText(unreadNumber);
+
+    // NB: In Chrome 45, measureText literally only gives us the width
+    // and nothing else :-/
+    canvasRenderingContext.fillText(unreadNumber,
+      Math.max(0, scale(centerX) - (metrics.width / 2.0) - scale(0.25)), scale(centerY - 6.25));
+
+    const canvasAsImageSource = this.canvas.toDataURL();
+    return new Buffer(canvasAsImageSource.slice(canvasAsImageSource.indexOf(',') + 1), 'base64');
+  }
+}
+/**
+ * @hidden
+ */ /** for typedoc */
+
+// We patch Observable to only include the pieces we use:
+// Static creation methods
+import 'rxjs/add/observable/bindCallback';
+import 'rxjs/add/observable/bindNodeCallback';
+import 'rxjs/add/observable/concat';
+import 'rxjs/add/observable/defer';
+import 'rxjs/add/observable/empty';
+import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/observable/fromEventPattern';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/observable/never';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/race';
+import 'rxjs/add/observable/range';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/observable/timer';
+import 'rxjs/add/observable/zip';
+
+// DOM
+import 'rxjs/add/observable/dom/ajax';
+import 'rxjs/add/observable/dom/webSocket';
+
+// Operators
+import 'rxjs/add/operator/bufferTime';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/combineLatest';
+import 'rxjs/add/operator/concat';
+import 'rxjs/add/operator/concatMap';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/delayWhen';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/groupBy';
+import 'rxjs/add/operator/ignoreElements';
+import 'rxjs/add/operator/isEmpty';
+import 'rxjs/add/operator/let';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mapTo';
+import 'rxjs/add/operator/max';
+import 'rxjs/add/operator/merge';
+import 'rxjs/add/operator/mergeAll';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/mergeMapTo';
+import 'rxjs/add/operator/observeOn';
+import 'rxjs/add/operator/pairwise';
+import 'rxjs/add/operator/partition';
+import 'rxjs/add/operator/publish';
+import 'rxjs/add/operator/publishLast';
+import 'rxjs/add/operator/reduce';
+import 'rxjs/add/operator/repeat';
+import 'rxjs/add/operator/retry';
+import 'rxjs/add/operator/retryWhen';
+import 'rxjs/add/operator/scan';
+import 'rxjs/add/operator/skip';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/subscribeOn';
+import 'rxjs/add/operator/switch';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/takeLast';
+import 'rxjs/add/operator/takeUntil';
+import 'rxjs/add/operator/takeWhile';
+import 'rxjs/add/operator/throttleTime';
+import 'rxjs/add/operator/timeInterval';
+import 'rxjs/add/operator/timeout';
+import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/windowTime';
+import 'rxjs/add/operator/windowToggle';
+import 'rxjs/add/operator/withLatestFrom';
+import 'rxjs/add/operator/zip';
+
+// Third-party
+import 'rxjs-spy/add/operator/tag';
+/**
+ * @module RxSpy
+ */ /** for typedoc */
+
+import * as circularJSON from 'circular-json';
+import { log } from 'rxjs-spy';
+import { Logger } from './logger';
+
+let isVerbose = false;
+
+/**
+ * Set internal module flag to write down value payload into log.
+ * To prevent accidental leak of sensitive contents, it is enabled only in dev mode build.
+ */
+export const enableVerboseEpicLog = () => isVerbose = true;
+
+/**
+ * Activates detailed logging of all Observables that match a certain tag.
+ * A new log file will be created for emissions from those Observables.
+ *
+ * See https://github.com/cartant/rxjs-spy for more information.
+ *
+ * @param {Function} matchPredicate A method that, given a tag name, returns
+ *                                  whether or not it should be logged
+ * @param {string} logFilePrefix    A prefix to identify the log file
+ * @return {Function}               A method that, when called, tears down the
+ *                                  logging
+ */
+export function spyOnObservablesMatching(
+  matchPredicate: (tag: string | null) => boolean,
+  logFilePrefix: string
+): () => void {
+  const observableLogger = new Logger({
+    identifierOverride: `${logFilePrefix}-${process.type}`,
+  });
+
+  const partialLogger = {
+    log: (message: string, ...args: Array<any>) => {
+      if (!shouldLogNotification(message)) return;
+      observableLogger.info(message, ...(args.map((x) => circularJSON.stringify(x))));
+    }
+  };
+
+  return log(matchPredicate, partialLogger);
+}
+
+/**
+ * The spy logs a lot of spurious information ‚Äì let's narrow it down to just
+ * the Observable lifecycle (next, complete, error, unsubscribe).
+ * Value payload will be logged only on dev build to avoid accidental leakage.
+ */
+function shouldLogNotification(message: string) {
+  const notification = message.includes('notification =');
+  if (notification) {
+    return true;
+  }
+
+  const value = message.includes('Value =');
+  return isVerbose && value;
+}
+/**
+ * @module Bugsnag
+ */ /** for typedoc */
+
+import * as fs from 'fs-extra';
+import { logger } from './logger';
+import { getInstanceUuid, getSessionId } from './uuid';
+
+/**
+ * Starts the crash reporting process that will monitor and submit minidumps
+ * to our endpoint.
+ */
+export function setupCrashReporter(extras: any): void {
+  // App Store builds can't use the crashReporter
+  if (process.platform === 'darwin' && process.mas) return;
+
+  try {
+    const extra = {
+      instanceUid: getInstanceUuid(),
+      sessionId: getSessionId(),
+      ...extras
+    };
+    const version = extras ? extras.version : null;
+    const channel = extras ? extras.channel : null;
+
+    const submitURL = `https://slack.com/apps/breakpad?instanceUid=${getInstanceUuid()}`
+      + `${!!version ? `&version=${version}` : ''}`
+      + `${!!channel ? `&channel=${channel}` : ''}`;
+
+    require('electron').crashReporter.start({
+      productName: 'Slack',
+      companyName: 'Slack Technologies',
+      uploadToServer: true,
+      submitURL,
+      extra
+    });
+  } catch (error) {
+    logger.error('CrashReporter: Unable to start crash report service', { error });
+  }
+}
+
+/**
+ * Provides a way to flush previously uploaded crash reports.
+ */
+export async function flushCurrentReports(): Promise<void> {
+  logger.info('CrashReporter: Remove uploaded crash reports');
+
+  const reporter = require('electron').crashReporter;
+  const path = require('path');
+
+  try {
+    const crashReportPath = (reporter as any).getCrashesDirectory();
+    const parsedPath = path.parse(crashReportPath);
+
+    if (parsedPath && parsedPath.name && parsedPath.name === 'Slack Crashes') {
+      await fs.remove(`${crashReportPath}/**/!(operation_log)`);
+    } else {
+      logger.warn('CrashReporter: Given invalid path', { crashReportPath });
+    }
+  } catch (error) {
+    logger.warn('CrashReporter: Unable to clear reports, will retry next time', { error });
+  }
+}
+export const getSquirrelHookName: (processArgv: Array<String>) => String | null;
+'use strict';
+
+const SQUIRREL_EVENT_ARGUMENT = /--squirrel-([a-z]+)/;
+const SQUIRREL_FIRST_RUN_EVENT = 'firstrun';
+
+/**
+ * Check if this process was started with a "--squirrel" argument, indicating
+ * it was invoked as part of a Squirrel.Windows update. If so, return the name
+ * of the event (e.g., 'updated' for '--squirrel-updated'). Otherwise, return
+ * null.
+ *
+ * @returns {String | null} The name of the event, or null if launched normally
+ */
+function getSquirrelHookName(processArgv) {
+  if (process.platform !== 'win32') return null;
+  if (!Array.isArray(processArgv)) return null;
+
+  const options = processArgv.slice(1);
+  if (options.length === 0) return null;
+
+  const squirrelArguments = options
+    .map((opt) => opt.match(SQUIRREL_EVENT_ARGUMENT))
+    .filter((match) => match && match.length >= 2)
+    .map((match) => match[1]);
+
+  if (squirrelArguments.length === 0) return null;
+
+  const eventName = squirrelArguments[0];
+  if (eventName === SQUIRREL_FIRST_RUN_EVENT) return null;
+  return eventName;
+}
+
+module.exports = { getSquirrelHookName };
+/**
+ * @module SSBIntegration
+ */ /** for typedoc */
+
+import { remote } from 'electron';
+import { logger } from '../logger';
+import { ClogEvent, clog } from './clog';
+
+const { app } = remote;
+
+/**
+ * Exposes accessibility events to the webapp.
+ * Note that this is only instantiated on Windows & macOS.
+ *
+ * @export
+ * @class AccessibilityIntegration
+ */
+export class AccessibilityIntegration {
+
+  /**
+   * Begins listening to the accessibility-support-changed event, emitted when
+   * Chrome's accessibility support changes. This event fires when assistive
+   * technologies, such as screen readers, are enabled or disabled.
+   */
+  constructor() {
+    app.on('accessibility-support-changed', (_e, enabled) => {
+      logger.info('AccessibilityIntegration: Accessibility support changed', { enabled });
+
+      if (window.TSSSB && window.TSSSB.accessibilitySupportChanged) {
+        window.TSSSB.accessibilitySupportChanged(enabled);
+      }
+
+      clog(ClogEvent.DESKTOP_CLIENT_ACCESSIBILITY_SUPPORT, { enabled });
+    });
+  }
+
+  /**
+   * This API will return true if the use of assistive technologies, such as
+   * screen readers, has been detected.
+   *
+   * See https://www.chromium.org/developers/design-documents/accessibility for
+   * more details.
+   *
+   * @returns {Boolean} True if Chrome's accessibility support is enabled,
+   *                    false otherwise
+   */
+  public isAccessibilitySupportEnabled(): boolean {
+    return app.isAccessibilitySupportEnabled();
+  }
+
+  /**
+   * Manually enables Chrome's accessibility support, allowing to expose
+   * accessibility switch to users in application settings. Disabled by
+   * default.
+   *
+   * Note: Rendering accessibility tree can significantly affect the
+   * performance of your app. It should not be enabled by default.
+   *
+   * @param {boolean} enabled Enable or disable accessibility tree rendering
+   */
+  public setAccessibilitySupportEnabled(enabled: boolean): void {
+    logger.info('AccessibilityIntegration: Setting accessibility support', { enabled });
+    app.setAccessibilitySupportEnabled(enabled);
+  }
+}
+/**
+ * @module SSBIntegration
+ */ /** for typedoc */
+
+import { ipcRenderer, remote } from 'electron';
+import { EventEmitter } from 'events';
+import * as fs from 'fs-extra';
+import * as path from 'path';
+import { Subscription } from 'rxjs/Subscription';
+
+import { channel, version } from '../../package.json';
+import { appActions } from '../actions/app-actions';
+import { eventActions } from '../actions/event-actions';
+import { settingActions } from '../actions/setting-actions';
+import { locale } from '../i18n/locale';
+import { logger } from '../logger';
+import { settingStore } from '../stores/setting-store';
+import { createZipArchiver, domFileFromPath } from '../utils/file-helpers';
+import { LogFile, getFilesToArchive } from '../utils/logging-utils';
+import { safeRequire } from '../utils/safe-require';
+import {
+  IS_WINDOWS_STORE,
+  Region,
+  StringMap,
+  UpdateStatus,
+  WebContentsLifeCycle
+} from '../utils/shared-constants';
+import { getInstanceUuid } from '../uuid';
+import { getCurrentWindow } from './helpers';
+
+import '../rx-operators';
+import { WebContentsChannel } from '../utils/ipc-channel-names';
+import { postLoadTaskSetup } from './post-load-task';
+
+declare const TS: any;
+
+const globalProcess = (window as any).process;
+const isDarwin = globalProcess.platform === 'darwin';
+const isWin32 = globalProcess.platform === 'win32';
+
+// Deferred safe requires
+let dialog: Electron.Dialog;
+let keyboardLayout: any;
+
+let performTextSubstitution: (input: HTMLElement) => Subscription;
+const textSubstitutionSubscriptions: { [input: string]: Subscription; } = {};
+
+const safeProcessKeys = [ 'title', 'version', 'versions', 'arch', 'platform',
+  'release', 'env', 'pid', 'features', 'execPath', 'cwd', 'hrtime', 'uptime',
+  'memoryUsage', 'type', 'resourcesPath', 'helperExecPath', 'nextTick',
+  'getProcessMemoryInfo', 'getSystemMemoryInfo', 'windowsStore' ];
+
+const safeProcess = safeProcessKeys.reduce((acc, k) => {
+  if (typeof (process[k]) !== 'function') {
+    acc[k] = process[k];
+    return acc;
+  }
+
+  acc[k] = (...args: Array<any>) => process[k](...args);
+  return acc;
+}, {});
+
+export interface TelemetryId {
+  instanceUid: string;
+}
+
+interface LocaleInformation {
+  systemLocale: string;
+  systemRegion: string;
+  keyboardLayouts: Array<string> | [null];
+  inputMethods: Array<string>;
+}
+
+type KeyboardLayoutCallback = (layout: string) => void;
+
+interface Disposable {
+  dispose: () => void;
+}
+
+export interface TextSubstitution {
+  replace: string;
+  with: string;
+  on: boolean;
+}
+
+export interface TextSubstitutionSettings {
+  substitutions: Array<TextSubstitution>;
+  useSmartQuotes: boolean;
+  useSmartDashes: boolean;
+}
+
+export class AppIntegration {
+  // @ts-ignore: instance auto attach behavior, doesn't have reference
+  private readonly readSystemTextPreferences: () => TextSubstitutionSettings;
+
+  private modifiers: {
+    ctrl: boolean,
+    shift: boolean,
+    alt: boolean,
+    meta: boolean
+  };
+
+  private debugDragRegions: Array<Region> = [];
+
+  constructor() {
+    this.listenForModifierKeys();
+
+    if (isDarwin) {
+      // Since we're requiring this remotely, request a serialized response and
+      // deserialize it ourselves. This avoids remote objects in the result.
+      const readSystemTextPreferencesJSON = remote.require(
+        'electron-text-substitutions/preference-helpers'
+      ).readSystemTextPreferencesJSON;
+      this.readSystemTextPreferences = () => JSON.parse(readSystemTextPreferencesJSON());
+    }
+
+    // Increase EventEmitter limit: 0 would remove the warning completely, but we
+    // probably shouldn't have more than a hundred on anything
+    EventEmitter.defaultMaxListeners = 100;
+  }
+
+  /**
+   * A signal for when the embedded page finishes loading. This is called when
+   * slack.com/messages gets past its loading screen, and so unlike the
+   * page-loaded event, we can guarantee that we have Slack-specific globals,
+   * such as `window.TS`.
+   *
+   *
+   * @param {WebContentsLifeCycle} [state]  Identifies the state of the page
+   */
+  public didFinishLoading(state?: WebContentsLifeCycle): void {
+    const webappState = !!state ? state : WebContentsLifeCycle.WEBAPP_LOADED;
+    window.perfTimer.DID_FINISH_LOADING = process.hrtime();
+
+    ipcRenderer.send(WebContentsChannel.DidFinishLoading, webappState);
+
+    // NB: Unfortunately, Electron's setImmediate assumes that global.process
+    // still exists in Chrome 43, so we have to patch a modified version back
+    // in
+    window.process = safeProcess;
+
+    postLoadTaskSetup().catch((r: any) => logger.error(`postLoadTaskSetup failed`, r));
+  }
+
+  /**
+   * Checks if a preference with the given name is supported.
+   *
+   * @param  {String} name  The name of the preference
+   * @return {Boolean}      True if the preference is supported
+   */
+  public hasPreference(name: string): boolean {
+    // TODO: Remove this check once app-scoped security bookmarks are
+    // implemented. See https://github.com/electron/electron/pull/11711.
+    if (name === 'PrefSSBFileDownloadPath' && process.mas) return false;
+    return settingStore.getSettings()[name] !== undefined;
+  }
+
+  /**
+   * Gets the value of a preference.
+   *
+   * @param  {String} name  The name of the preference
+   * @return {Object}       The value
+   */
+  public getPreference<T>(name: string): T {
+    return settingStore.getSettings()[name];
+  }
+
+  /**
+   * Sets the value of a preference.
+   *
+   * @param  {Object} pref
+   * @param  {Object} pref.name   The name of the preference
+   * @param  {Object} pref.value  The new value of the preference
+   */
+  public setPreference(pref: {
+    name: string,
+    value: any
+  }): void {
+    const update = {};
+    update[pref.name] = pref.value;
+    settingActions.updateSettings(update);
+  }
+
+  /**
+   * Shows a native open file / folder dialog, refer to
+   * https://slack-github.com/slack/docs/blob/master/ssb-runtime-bridge/dialogs.md.
+   *
+   * @param  {Object}   options   Options to pass to the dialog
+   * @param  {Function} callback  A method called with the filenames on completion
+   * @return {Promise}            If a callback is specified, returns nothing.
+   * Otherwise, returns a `Promise` that will be resolved with the filenames, or
+   * undefined when the dialog is canceled
+   */
+  public showOpenDialog(options: any, callback?: (fileNames: Array<string>) => void): Promise<Array<string>> | void {
+    dialog = dialog || remote.dialog;
+
+    const mainWindow = getCurrentWindow();
+    const { type, title, defaultPath, multiSelect, filters } = options;
+    const properties = [ type ];
+    if (multiSelect) properties.push('multiSelections');
+
+    if (callback) {
+      dialog.showOpenDialog(mainWindow, { title, defaultPath, filters, properties }, callback);
+      return;
+    }
+
+    return new Promise((resolve) => {
+      dialog.showOpenDialog(mainWindow, { title, defaultPath, filters, properties }, (filenames) => {
+        resolve(filenames);
+      });
+    });
+  }
+
+  /**
+   * Shows a native file save dialog.
+   *
+   * @param  {Object}   options   Options to pass to the dialog
+   * @param  {Function} callback  A method called with the filename on completion
+   * @return {Promise}            If a callback is specified, returns nothing.
+   * Otherwise, returns a `Promise` that will be resolved with the filename, or
+   * undefined when the dialog is canceled
+   */
+  public showSaveDialog(options: any, callback?: (fileName: string) => void): Promise<string> | void {
+    dialog = dialog || remote.dialog;
+
+    const mainWindow = getCurrentWindow();
+
+    if (callback) {
+      dialog.showSaveDialog(mainWindow, options, callback);
+      return;
+    }
+
+    return new Promise((resolve) => {
+      dialog.showSaveDialog(mainWindow, options, (filename) => {
+        resolve(filename);
+      });
+    });
+  }
+
+  /**
+   * Shows a native file informational dialog.
+   *
+   * @param  {Object}   options   Options to pass to the dialog
+   * @param  {Function} callback  A method called with the clicked button index on completion
+   * @return {Promise}            If a callback is specified, returns nothing.
+   * Otherwise, returns a `Promise` that will be resolved with the clicked button index.
+   */
+  public showMessageBox(options: any, callback?: (response: number, checkboxChecked: boolean) => void): Promise<number> | void {
+    if (!options || !options.message) return;
+    dialog = dialog || remote.dialog;
+
+    if (callback) {
+      dialog.showMessageBox(options, callback);
+      return;
+    }
+
+    return new Promise((resolve) => {
+      dialog.showMessageBox(options, (response) => {
+        resolve(response);
+      });
+    });
+  }
+
+  /**
+   * Adds additional items to the application menu.
+   *
+   * @param {StringMap<Array<Electron.MenuItemConstructorOptions>>} customItems  A map describing the items
+   */
+  public setCustomMenuItems(customItems: StringMap<Array<Electron.MenuItemConstructorOptions>>): void {
+    if (window.teamId) appActions.setCustomMenuItems(customItems, window.teamId);
+  }
+
+  /**
+   * Focuses the currently selected team's webview element. This is necessary
+   * in some cases (e.g., after a native file dialog was opened).
+   */
+  public focusWebView(): void {
+    eventActions.mainWindowFocused();
+  }
+
+  /**
+   * Quits the app, applies an available update, and restarts.
+   */
+  public quitAndInstallUpdate(): void {
+    appActions.setUpdateStatus(UpdateStatus.RESTART_TO_APPLY);
+  }
+
+  /**
+   * Quits the app.
+   */
+  public quit(): void {
+    eventActions.quitApp();
+  }
+
+  /**
+   * Occurs when a new input field is added to the DOM; wire it up to text
+   * substitutions.
+   *
+   * @param  {HTMLElement} input  The field that was added
+   */
+  public inputFieldCreated(input: HTMLElement): void {
+    if (input && isDarwin) {
+      performTextSubstitution = performTextSubstitution ||
+        require('electron-text-substitutions').default;
+      textSubstitutionSubscriptions[input.id] = performTextSubstitution(input);
+    }
+  }
+
+  /**
+   * Occurs when an input field is removed from the DOM.
+   *
+   * @param  {HTMLElement} input  The field that was removed
+   */
+  public inputFieldRemoved(input: HTMLElement): void {
+    if (input && isDarwin && textSubstitutionSubscriptions[input.id]) {
+      textSubstitutionSubscriptions[input.id].unsubscribe();
+      delete textSubstitutionSubscriptions[input.id];
+    }
+  }
+
+  /**
+   * Reloads the current team.
+   */
+  public reload(): void {
+    if (window.TS && (window.TS as any).reload) {
+      TS.reload(false, 'desktop initiated');
+    } else {
+      logger.warn(`TS.reload is not available, fall back to location.reload instead`);
+      window.location.reload();
+    }
+  }
+
+  /**
+   * Called by the webapp to determine whether or not HTML should be rendered
+   * in notifications.
+   *
+   * @return {Boolean}  True if HTML notifications are being used, false otherwise
+   */
+  public canShowHtmlNotifications(): boolean {
+    return settingStore.isShowingHtmlNotifications();
+  }
+
+  /**
+   * Called by the webapp to determine if local font resource is available - if it is,
+   * the webapp should always use local resource.
+   */
+  public loadLocalStyleResources(resourceName: string): boolean {
+    const resourcePath = path.resolve(__dirname, '..', 'static', `${resourceName}.css`);
+    if (!fs.existsSync(resourcePath)) {
+      logger.warn(`loadLocalStyleResources: Can't locate style resource `, resourceName);
+      return false;
+    }
+
+    const data = fs.readFileSync(resourcePath, 'utf8');
+    const style = document.createElement('style');
+    style.innerHTML = data;
+    document.head.appendChild(style);
+
+    return true;
+  }
+
+  /**
+   * Returns the major.minor.patch version as a string.
+   * @return {String} Version string.
+   */
+  public versionString(): string {
+    return version.split('-')[0];
+  }
+
+  /**
+   * Returns the major.minor.patch-prerelease version as a string.
+   * @return {String} Version string.
+   */
+  public versionStringWithPrerelease(): string {
+    return version;
+  }
+
+  /**
+   * Returns the components of the version.
+   * @return {Object} Version.
+   */
+  public version(): {
+    major: number,
+    minor: number,
+    patch: number,
+    prerelease: string
+  } {
+    const [ version_num, prerelease ] = version.split('-');
+    const [ major, minor, patch ] = version_num.split('.');
+    return { major, minor, patch, prerelease };
+  }
+
+  public isAppStoreBuild(): boolean {
+    return (isDarwin && channel === 'mas') ||
+      (isWin32 && IS_WINDOWS_STORE!);
+  }
+
+  public isBetaChannel(): boolean {
+    return (isWin32 && channel === 'beta');
+  }
+
+  /**
+   * Use this method to determine if you should create a transparent window or
+   * not (transparent windows won't work correctly when DWM composition is
+   * disabled).
+   *
+   * @return {Boolean}  True if transparent windows are supported, false otherwise
+   */
+  public areTransparentWindowsSupported(): boolean {
+    if (isWin32) {
+      return settingStore.getSetting<boolean>('isAeroGlassEnabled');
+    } else {
+      return true;
+    }
+  }
+
+  /**
+   * Allows the webapp to open devTools.
+   */
+  public toggleDevTools(forAllWebContents: boolean = true): void {
+    eventActions.toggleDevTools(forAllWebContents);
+  }
+
+  /**
+   * Opens an Electron-specific process manager.
+   * This is wired up to the /slacktaskmanager slash command.
+   */
+  public openTaskManager(): void {
+    const metrics = remote.app.getAppMetrics();
+    logger.info('openTaskManager: Current metrics', { metrics });
+
+    const { openProcessManager } = remote.require('electron-process-manager');
+    openProcessManager();
+  }
+
+  /**
+   * Returns our app log files zipped and as a DOM file element (or un-zipped if zipping fails
+   * for some reason). The logs will be sorted by modification time,
+   * and will pick up latest logs modified in a week. (7 days)
+   *
+   * @return {Promise<Array<File>>} A Promise that resolves with an array of Files
+   */
+  public async getAppLogFiles(): Promise<Array<File>> {
+    logger.info('AppIntegration: prepare get application log files to report issue');
+    let files: Array<LogFile> = [];
+
+    try {
+      files = await getFilesToArchive();
+    } catch (err) {
+      logger.error('Tried to get files to archive during getAppLogFiles, but failed', err);
+      return [];
+    }
+
+    try {
+      // Convert in-memory zip archive buffer to DOMFile directly
+      const archiver = await createZipArchiver(files.map((x) => x.path)).toPromise();
+      const archiveBuffer = await archiver.generateAsync({
+        compression: 'DEFLATE',
+        compressionOptions: { level: 7 },
+        type: 'nodebuffer'
+      } as any);
+      const file = new File([ archiveBuffer ], 'logs.zip', { type: 'text/plain' });
+
+      logger.info(`AppIntegration: log files are prepared`, files);
+      return [ file ];
+    } catch (err) {
+      logger.warn(`Couldn't zip log files: ${err}`);
+
+      return files.map((file) => {
+        return domFileFromPath(file.path).catch((err) => logger.warn(`Unable to get file`, err));
+      }) as any;
+    }
+  }
+
+  /**
+   * Modifier keys aren't being propagated to the webapp for some events, so we
+   * give them a workaround here.
+   *
+   * @return {Object}
+   * @return {Object}.ctrl  True if the `Ctrl` key is pressed
+   * @return {Object}.shift True if the `Shift` key is pressed
+   * @return {Object}.alt   True if the `Alt` key is pressed
+   * @return {Object}.meta  True if the meta key is pressed
+   */
+  public getModifierKeys(): {
+    ctrl: boolean,
+    shift: boolean,
+    alt: boolean,
+    meta: boolean
+  } {
+    return this.modifiers;
+  }
+
+  public listenForModifierKeys(): void {
+    this.modifiers = {
+      ctrl: false,
+      shift: false,
+      alt: false,
+      meta: false
+    };
+
+    const keyListener = (e: KeyboardEvent) => {
+      this.modifiers.ctrl = e.ctrlKey;
+      this.modifiers.shift = e.shiftKey;
+      this.modifiers.alt = e.altKey;
+      this.modifiers.meta = e.metaKey;
+    };
+
+    window.addEventListener('keydown', keyListener);
+    window.addEventListener('keyup', keyListener);
+  }
+
+  /**
+   * Updates or creates a "drag region", which is a region
+   * that can be used to drag the window. Set environment variable
+   * SLACK_DEBUG_DRAG_REGIONS to also draw them in the BrowserView.
+   *
+   * @param {Region | Array<Region>} region
+   */
+  public updateDragRegion(region: Region): void {
+    if (process && process.env && process.env.SLACK_DEBUG_DRAG_REGIONS) {
+      const { id, top, left, width, height } = region;
+
+      if (this.debugDragRegions[region.id]) {
+        document.body.removeChild(this.debugDragRegions[region.id]);
+      }
+
+      const regionElement = this.debugDragRegions[id] = document.createElement('div');
+      regionElement.style.position = 'absolute';
+      regionElement.style.top = `${top}px`;
+      regionElement.style.left = `${left}px`;
+      regionElement.style.width = `${width}px`;
+      regionElement.style.height = `${height}px`;
+      regionElement.style.border = '2px solid red';
+      regionElement.style.zIndex = '999';
+      regionElement.style.pointerEvents = 'none';
+
+      document.body.appendChild(regionElement);
+    }
+
+    appActions.updateDragRegion(region);
+  }
+
+  /**
+   * @returns {boolean} - Is the window frameless
+   */
+  public isMainWindowFrameless(): boolean {
+    return settingStore.getSetting<boolean>('isTitleBarHidden');
+  }
+
+  /**
+   * Get the current zoom level active in the SSB
+   *
+   * @returns {number} zoomLevel - The current zoom level
+   */
+  public getZoom(): number {
+    return settingStore.getSetting<number>('zoomLevel');
+  }
+
+  /**
+   * Set the new zoom level. Will be automatically clamped between
+   * -3 and 3.
+   *
+   * @param {number} zoomLevel
+   */
+  public setZoom(zoomLevel: number): void {
+    settingActions.updateSettings({ zoomLevel: Math.max(-3, Math.min(zoomLevel, 3)) });
+  }
+
+  /**
+   * Zooms in. Will be automatically maxed at level 3.
+   */
+  public zoomIn(): void {
+    settingActions.zoomIn();
+  }
+
+  /**
+   * Zoom out. Will be automatically lowed at -2.
+   */
+  public zoomOut(): void {
+    settingActions.zoomOut();
+  }
+
+  /**
+   * Resets the current zoom level.
+   */
+  public zoomReset(): void {
+    settingActions.resetZoom();
+  }
+
+  /**
+   * Returns an object containing information about current system's locale.
+   */
+  public getLocaleInformation(): TelemetryId & LocaleInformation {
+    keyboardLayout = keyboardLayout || safeRequire('keyboard-layout');
+
+    const localeInfo = locale.currentLocale;
+    const currentKeyboardLayout = keyboardLayout && keyboardLayout.getCurrentKeyboardLayout
+      ? keyboardLayout.getCurrentKeyboardLayout()
+      : null;
+
+    const ret = {
+      ...localeInfo,
+      instanceUid: getInstanceUuid(),
+      currentKeyboardLayout,
+      keyboardLayouts: [
+        currentKeyboardLayout
+      ],
+      inputMethods: []
+    };
+
+    return ret;
+  }
+
+  /**
+   * Subscribes to changes to the user's current keyboard layout.
+   * Callback gets invoked anytime the current keyboard layout changes.
+   *
+   * This won't pick up on changes to IME input state.
+   * It's also currently broken on Windows.
+   *
+   * @param {KeyboardLayoutCallback} callback A function that gets called with the string
+   *                                identifier of the current layout based on the
+   *                                value returned by the OS.
+   * @returns {Disposable}
+   */
+  public onDidChangeKeyboardLayout(callback: KeyboardLayoutCallback) {
+    keyboardLayout = keyboardLayout || safeRequire('keyboard-layout');
+
+    return keyboardLayout.onDidChangeCurrentKeyboardLayout(callback) as Disposable;
+  }
+}
+/**
+ * @module SSBIntegration
+ */ /** for typedoc */
+
+import { remote } from 'electron';
+
+/**
+ * If we're loading in the context of a BrowserView, we won't have a current
+ * window when the preload script runs (because only one BrowserView can be
+ * attached to the main window at a time). So we find the current window ID
+ * within a remote global set by the main process.
+ *
+ * But if we're in the context of a webapp window, we'll have a different
+ * window ID, which we can safely look up using remote.getCurrentWindow().
+ */
+const currentWindow = remote.getCurrentWindow();
+const browserWindowId = global.browserWindowId = currentWindow
+  ? currentWindow.id
+  : remote.getGlobal('browserWindowId');
+
+export {
+  browserWindowId
+};
+/**
+ * @module SSBIntegration
+ */ /** for typedoc */
+
+import { clipboard, desktopCapturer as ElectronDesktopCapturer, remote } from 'electron';
+import { get } from 'lodash';
+import { logger } from '../logger';
+import { IS_WINDOWS_STORE } from '../utils/shared-constants';
+
+let WebRTC: any = null;
+const path = require('path');
+
+interface CallsCallback {
+  onLocalFrame(...args: Array<any>): void;
+  onRemoteFrame(...args: Array<any>): void;
+  onJanusDisconnected(): void;
+}
+
+interface MiniPanelReceiver {
+  destroy(): void;
+  signalDoneRenderingFrame(): void;
+}
+
+interface CallsSession extends MiniPanelReceiver {
+  invokeNativeFunction(jsonString: string): void;
+  waitForAsyncShutdown(): void;
+  signalDoneRenderingLocalFrame(): void;
+}
+
+export class Calls {
+  private callbacks: Partial<CallsCallback> = {};
+  private minipanelReceiverCallback: (...args: Array<any>) => void;
+  private minipanelReceiver: MiniPanelReceiver | null;
+  private session: CallsSession | null;
+  private appSleepId: any;
+
+  constructor() {
+    WebRTC = WebRTC || require('@slack/slack-calls');
+    const basepath = path.join(__dirname, '..', 'static').replace('app.asar', 'app.asar.unpacked');
+    WebRTC.setResourceBasePath(basepath);
+  }
+
+  public init(obj: { callbacks: any }) {
+    this.callbacks = obj.callbacks;
+  }
+
+  public startMinipanelReceiver(cb: (...args: Array<any>) => void) {
+    this.minipanelReceiver = new WebRTC.MinipanelReceiver(
+      this.onMemoryFrame.bind(this),
+      this.onLog.bind(this));
+    this.minipanelReceiverCallback = cb;
+  }
+
+  public stopMinipanelReceiver() {
+    if (this.minipanelReceiver) {
+      this.minipanelReceiver.destroy();
+      this.minipanelReceiver = null;
+    }
+  }
+
+  public startNewCall(options: any) {
+    options = options || {};
+    const version = `${window.TS.model.win_ssb_version}.${window.TS.model.win_ssb_version_minor}`;
+    logger.info('Starting new Calls');
+    this.appSleepId = remote.powerSaveBlocker.start('prevent-display-sleep');
+    this.session = new WebRTC.SHSession(
+      (j: string) => this.invokeJSMethod(j),
+      () => this.onJanusDisconnected(),
+      (i: string, j: any) => this.onLog(i, j),
+      this.onRemoteFrame.bind(this),
+      this.onLocalFrame.bind(this),
+      version,
+      logger.logLocation,
+      get(options, 'is_slim_mode', false),
+      get(options, 'should_start_cpu_monitor', true));
+  }
+
+  public getScreenPreviewThumbnails(size: Electron.Size, captureTypes?: Array<string>): Promise<Array<Electron.DesktopCapturerSource>> {
+    return new Promise(function(resolve: (reason: any) => void, reject: (reason: any) => void) {
+      ElectronDesktopCapturer.getSources(
+          { types: captureTypes || [ 'screen' ], thumbnailSize: size },
+          (err: Error, sources: Array<Electron.DesktopCapturerSource>) => {
+            if (err) {
+              logger.error('Screen preview failed with error: ', err);
+              reject(err);
+              return;
+            }
+            resolve(sources);
+          });
+    });
+  }
+
+  public invokeJSMethod(msg_json: string): void {
+    // console.log("NATIVE_TO_JS: " + msg_json);
+    const msg = JSON.parse(msg_json);
+
+    if (!this.callbacks[msg.method]) {
+      logger.error(`Call from NATIVE to invalid JS method: ${msg.method} - ${msg}`);
+    } else {
+      this.callbacks[msg.method](msg.args);
+    }
+  }
+
+  public invokeNativeMethod(json_str: string): void {
+    // console.log('JS_TO_NATIVE: ' + json_str);
+    if (this.session) {
+      this.session.invokeNativeFunction(json_str);
+    } else {
+      logger.error('Calls.session is null/not defined; ignoring invokeNativeMethod()');
+    }
+  }
+
+  public setMiniPanelState(active: any, title: string, _userid: any, _info: any): void {
+    logger.debug(`setMiniPanelState: ${active}, title: ${title}`);
+  }
+
+  public closeWindow(): void {
+    logger.info('Close window called');
+  }
+
+  public disconnectJanus(webview: any) {
+    logger.info(`disconnect webview ${webview}`);
+  }
+
+  public onLog(logmsg: string, level?: 'INFO'|'DEBUG'|'WARNING'|'FATAL'): void {
+    switch (level) {
+    case 'INFO':
+      logger.info(logmsg);
+      break;
+    case 'DEBUG':
+      logger.debug(logmsg);
+      break;
+    case 'WARNING':
+      logger.warn(logmsg);
+      break;
+    case 'FATAL':
+      logger.fatal(logmsg);
+      break;
+    default:
+      logger.error(logmsg);
+      break;
+    }
+  }
+
+  public waitForAsyncShutdown(): void {
+    if (this.session) {
+      this.session.waitForAsyncShutdown();
+    }
+  }
+
+  public shutdown(): void {
+    remote.powerSaveBlocker.stop(this.appSleepId);
+    if (this.session) {
+      this.session.destroy();
+      this.session = null;
+    }
+  }
+
+  public onJanusDisconnected(session?: any): void {
+    logger.info(`Session ${session} disconnected`);
+    this.shutdown();
+    this.callbacks.onJanusDisconnected!();
+  }
+
+  public requestCapabilities() {
+    return {
+      supports_voice: true,
+      supports_video: true,
+      supports_screen_sharing: true,
+      supports_disconnection_cb: true,
+      supports_mmap_minipanel: (process.platform === 'darwin'),
+      supports_screenhero: true,
+      is_mas: !!process.mas,
+      is_ws: !!IS_WINDOWS_STORE
+    };
+  }
+
+  public readClipboardData() {
+    // Eventually, this should also support images, html and rtf
+    return clipboard.readText();
+  }
+
+  public writeClipboardData(obj: { data: any, dataType: string }): void {
+    // Eventually, this should also support images, html and rtf
+    if (obj.dataType === 'string') clipboard.writeText(obj.data);
+  }
+
+  private onRemoteFrame(...args: Array<any>): void {
+    this.callbacks.onRemoteFrame!(...args);
+    if (this.session) {
+      this.session.signalDoneRenderingFrame();
+    } else {
+      this.onLog('session to signal renderingframe does not exists', 'WARNING');
+    }
+  }
+
+  private onMemoryFrame(...args: Array<any>) {
+    if (this.minipanelReceiverCallback) this.minipanelReceiverCallback(...args);
+    if (this.minipanelReceiver) {
+      this.minipanelReceiver.signalDoneRenderingFrame();
+    } else {
+      this.onLog('minipanel receiver to signal does not exists', 'WARNING');
+    }
+  }
+
+  private onLocalFrame(...args: Array<any>): void {
+    this.callbacks.onLocalFrame!(...args);
+    if (this.session) {
+      this.session.signalDoneRenderingLocalFrame();
+    } else {
+      this.onLog('session to signal localframe does not exists', 'WARNING');
+    }
+  }
+}
+/**
+ * @module SSBIntegration
+ */ /** for typedoc */
+
+import { clipboard, nativeImage } from 'electron';
+
+export class ClipboardIntegration {
+  /**
+   * Writes plain text onto the OS clipboard
+   *
+   * @param  {String} text A text string
+   */
+  public writeString(text: string): void {
+    clipboard.writeText(text);
+  }
+
+  /**
+   * Returns text content from the OS clipboard
+   *
+   * @return {String}  The content as plain text
+   */
+  public readString(): string {
+    return clipboard.readText();
+  }
+
+  /**
+   * Writes plain text onto the macOS find pasteboard.
+   *
+   * @param  {String} text A text string
+   */
+  public writeFindString(text: string): void {
+    clipboard.writeFindText(text);
+  }
+
+  /**
+   * Returns text content from the macOS find pasteboard
+   *
+   * @return {String}  The content as plain text
+   */
+  public readFindString(): string | null {
+    return clipboard.readFindText();
+  }
+
+  /**
+   * Writes an image onto the OS clipboard
+   *
+   * @param  {String} data  A base64-encoded representation of the raw image
+   *                        data. The image is expected to be in PNG format.
+   */
+  public writeImage(data: string): void {
+    const buffer = new Buffer(data, 'base64');
+    const image = nativeImage.createFromBuffer(buffer);
+    clipboard.writeImage(image);
+  }
+
+  /**
+   * Returns image content from the OS clipboard
+   *
+   * @return {String} A string with the base64-encoded representation of the
+   *                  raw image data. The image will be in PNG format.
+   */
+  public readImage(): string {
+    const image = clipboard.readImage();
+    const buffer = image.toPNG();
+    return buffer.toString('base64');
+  }
+}
+/**
+ * @module SSBIntegration
+ */ /** for typedoc */
+
+import { root } from 'getroot';
+import { logger } from '../logger';
+import { StringMap } from '../utils/shared-constants';
+
+/**
+ * Telemetry event we are sending via `clog` directly, instead of using destkop implementation
+ */
+const enum ClogEvent {
+  //SpellChecker related events
+  DESKTOP_LANGUAGE_DETECTED = 'DESKTOP_LANGUAGE_DETECTED',
+  DESKTOP_DICT_UNSUPPORTED = 'DESKTOP_DICT_UNSUPPORTED',
+  DESKTOP_DICT_INVALID_HASH = 'DESKTOP_DICT_INVALID_HASH',
+  DESKTOP_DICT_DOWNLOAD_FAIL = 'DESKTOP_DICT_DOWNLOAD_FAIL',
+  DESKTOP_SPELLCHECK_FORCE_LANGUAGE = 'DESKTOP_SPELLCHECK_FORCE_LANGUAGE',
+  DESKTOP_SPELLCHECK_AUTO_LANGUAGE = 'DESKTOP_SPELLCHECK_AUTO_LANGUAGE',
+  DESKTOP_SPELLCHECK_UNLOAD_DICT = 'DESKTOP_SPELLCHECK_UNLOAD_DICT',
+  DESKTOP_SPELLCHECK_SWITCH_FAIL = 'DESKTOP_SPELLCHECK_SWITCH_FAIL',
+
+  //Perf metrics event
+  DESKTOP_CLIENT_TIME_TO_USABLE = 'DESKTOP_CLIENT_TIME_TO_USABLE',
+
+  //Accessibility
+  DESKTOP_CLIENT_ACCESSIBILITY_SUPPORT = 'DESKTOP_CLIENT_ACCESSIBILITY_SUPPORT',
+}
+
+/**
+ * Accessor to clog within context of webapp.
+ */
+const clog = (event: ClogEvent, args: StringMap<any>) => {
+  if (root.TS && root.TS.interop && root.TS.interop.clog && root.TS.interop.clog.track) {
+    root.TS.interop.clog.track(event, {
+      ...args
+    });
+  } else {
+    logger.error('clog: unable to track event, no TS.interop.clog found');
+  }
+};
+
+export {
+  ClogEvent,
+  clog
+};
+/**
+ * @module SSBIntegration
+ */ /** for typedoc */
+
+import { eventActions } from '../actions/event-actions';
+
+/**
+ * @module SSBIntegration
+ */ /** for typedoc */
+
+/**
+ * Webapp calls this method when there is a custom context menu to prepend
+ * to the existing one
+ *
+ * @param {Electron.MenuItemConstructorOptions[]} menuTemplate The menu items to add
+ */
+export const createContextMenu = (menuTemplate: Array<Electron.MenuItemConstructorOptions>) => {
+  eventActions.setContextMenuTemplate(menuTemplate);
+};
+/**
+ * @module SSBIntegration
+ */ /** for typedoc */
+
+import { RemoteRendererGlobalModule, remoteProcessMethod } from '../utils/remote-process-method';
+
+export const deviceStorage = {
+  getItem: <T = any>(key: string) => remoteProcessMethod<T>(RemoteRendererGlobalModule.localStorage, 'getItem', key),
+  setItem: (key: string, value: any) => remoteProcessMethod(RemoteRendererGlobalModule.localStorage, 'setItem', key, value),
+  removeItem: (key: string) => remoteProcessMethod(RemoteRendererGlobalModule.localStorage, 'removeItem', key)
+};
+/**
+ * @module SSBIntegration
+ */ /** for typedoc */
+
+import { ArrayBuffer as md5ArrayBuffer } from 'spark-md5';
+import { logger } from '../logger';
+import { getLanguageRegionCode, manifest } from '../utils/dictionary-manifest';
+import { ClogEvent, clog } from './clog';
+
+enum DictState {
+  INVALID = 'invalid',
+  VALID = 'valid'
+}
+
+/**
+ * Stringmap cache dictionary hash validation state.
+ * If stored value is valid, subsequent fetch to read dictionary from disk cache won't try validation.
+ */
+const verifiedDict = {};
+
+enum CachePolicy {
+  RELOAD = 'reload',
+  DEFAULT = 'default'
+}
+
+/**
+ * Download dictionary file from remote endpoint, returns arraybuffer of file.
+ *
+ */
+const fetchResourceAsBuffer = async (ext: string, basePath: string, dictState: DictState, reload: boolean) => {
+  const isDictInvalid = (dictState && dictState === DictState.INVALID);
+  const cachePolicy = (reload || isDictInvalid) ? CachePolicy.RELOAD : CachePolicy.DEFAULT;
+  const filePath = `${basePath}.${ext}`;
+
+  logger.info(`fetchResourceAsBuffer: downloading`, { filePath, cachePolicy });
+
+  const response = await fetch(filePath, { cache: cachePolicy });
+  const buffer = await response.arrayBuffer();
+
+  return buffer;
+};
+
+/**
+ * Calculate MD5 from given arraybuffer.
+ */
+const getBufferHash = (buffer: ArrayBuffer) => {
+  const spark = new md5ArrayBuffer();
+  spark.append(buffer as any);
+  return spark.end();
+};
+
+const availableDictionaries = Object.keys(manifest);
+const emptyDict = { dic: null, aff: null };
+
+/**
+ * Lightweight hunspell dictionary downloader via fetch.
+ * Instead of using full-fledged hunspell-dict-downloader implementation, we can rely on
+ * behavior of `fetch`, around caching contents (using browser cache), loading contents into arraybuffer.
+ */
+const dictionaryDownloader = {
+  /**
+   * Download dictionary corresponding to given language code, returns arraybuffer of contents.
+   * If downloaded buffer fails verification, throws error and next attempt will always redownload
+   * until verification passes. In case of download error except verification failure, it'll return empty dict object.
+   *
+   * @param {string} code Language code for corresponding dictionary does not contain region code.
+   * @param {boolean} reload If cache exists ignore and redownload, verify dictionary. Existing cache will be updated by newly downloaded.
+   */
+  download: async (code: string, reload: boolean = false) => {
+    const language = getLanguageRegionCode(code as any);
+
+    if (!availableDictionaries.includes(language)) {
+      logger.warn(`dictionaryDownloader: language ${code} is not supported`);
+      clog(ClogEvent.DESKTOP_DICT_UNSUPPORTED, { language: code });
+      return emptyDict;
+    }
+
+    const dictState = verifiedDict[language];
+    const { version } = manifest[language];
+    const basePath = `https://spellcheck.slack-edge.com/dictionaries/${language}/${version}/${language}`;
+
+    const ret: { aff: ArrayBuffer | null, dic: ArrayBuffer | null } = { aff: null, dic: null };
+
+    try {
+      logger.info(`download: downloading dictionary for '${code}'`);
+
+      ret.aff = await fetchResourceAsBuffer('aff', basePath, dictState, reload);
+      ret.dic = await fetchResourceAsBuffer('dic', basePath, dictState, reload);
+
+      if (!ret.aff || !ret.dic) {
+        logger.error(`dictionaryDownloader: Fetched resource is empty`);
+        throw new Error(`Fetched resource is empty`);
+      }
+    } catch (error) {
+      logger.error(`dictionaryDownloader: could not download dictionary`, { error });
+      clog(ClogEvent.DESKTOP_DICT_DOWNLOAD_FAIL, { message: error.message });
+      return emptyDict;
+    }
+
+    const isVerified = !reload && (dictState === DictState.VALID);
+    if (isVerified) {
+      return ret;
+    }
+
+    logger.info(`dictionaryDownloader: verifying hash`);
+    const { dicMD5, affMD5 } = (manifest && manifest[language]) ?
+      manifest[language] :
+      { dicMD5: '', affMD5: '' };
+    const bufferDicMD5 = getBufferHash(ret.dic);
+    const bufferAffMD5 = getBufferHash(ret.aff);
+
+    //we're expecting few edge cases of verification failure requires explicit retry.
+    //1. cache corruption, 2. download inturrpted for some reason (i.e, firewall)
+    //general download failure (rejection of fetch) rely on implicit attempt like app reload, restart.
+    if (bufferDicMD5 !== dicMD5 || bufferAffMD5 !== affMD5) {
+      logger.error(`dictionaryDownloader: hash mismatch, downloaded dic / aff hash is`, { bufferDicMD5, bufferAffMD5 });
+      clog(ClogEvent.DESKTOP_DICT_INVALID_HASH, { bufferDicMD5, bufferAffMD5, language });
+      verifiedDict[language] = DictState.INVALID;
+      throw new Error(`signature verification failed for dictionary '${language}'`);
+    }
+
+    verifiedDict[language] = DictState.VALID;
+    return rInfoNew 14bee 16a 156 1866 9 -1 7c74 eb26############################
+THMB_IMG_MAIN 14d5a 225e 224f 1866 11 -1 e5ce f05a##############################
+THMB_IMG_INDX 16fba 27 18 1866 9 -1 0a63 7b5e###################################
+EMPTY_SPACE_FOR_REUSE 16fe3 7e8 0 1866 11 -1 0000 0000##########################
+EMPTY_SPACE_FOR_REUSE 177cd 9b 0 1866 11 -1 0000 0000###########################
+NEXT_TOC_ENTRY 18bce 1e6 0 1866 1 -1 0000 0000##################################
+#CGFMappingTable
+‡ pgl_cgf_map_array „‡ pgl_cgf_array ¯˜˚‚‡	id  ‡memb_id_tab ¯ Û#
+#CGFPersistTable
+DIV-OL07BL   ,         >     Á         @  ˇˇˇ ø  ã      ]èM
+¬@F3UDE=Å=A:ì˘…\∏ÙVEu!n{,è7¶’6b‡AﬁG¯ Ä¬g¬RX´˝È∏ΩUáÀÓz~Äë§b{ÛFÕÕ˝π©`.€D ÀK∂*‰ÉJ¥®¬âzIñíä/µ ≈®å§ÏPÿ-‡‰˙è»A≈Ñ±ºªñ¿‰\◊?‰éˆ’f¶¬ÏªwŸˇºîGM=  ã      cb``da @Ã°xÄ4T  PÔ45<   ã      ï“GNƒ@F·∂«lOŒ9Á»`À≠8Œ¿exhA©≈ﬂ“ìÉ>ïk·–π rŒÖT·˛ïÎÉªû‡ˆ>Cü&K9 SÅbJ(•"ï®|ù„™T£:5®I-jSá∫‘£>hH#”Ñ¶4£9-hI+Z”Ü∂¥£=ËH':”≈›ﬂä?ûﬂ+oè…mﬂ‡ñ3|Ìüü~˚¿°g~h¯å«gyˆâüıÃœ>ÁÒ9√Á=˚‰_Ã/>ˆ¯ÿâgüƒ©g~j¯˚?ÙÚ«_}YÙ—WE_}]Ù—7Eﬂ}[Ù—wEﬂ}_Ù—E?˝XÙ—OE?˝\Ù—/Eø˝ZÙ—oEø˝^Ù—E˝YÙó˙ØÛFq‘@Ë	  ã      cb``da```b ÷bF ¡‡ü/πG3¶/àÕu]yÄÒoÛü¥G”˝áæÇµ›‹πE	®‘™≈»_—ÊÈÄ¶Ìqá©Ìõ¿{6,Ü⁄ºÿ&Ü≈6®6[t•»|‹é¥%—ë– +Õbi≥Åàè≈6ê2µë·Hê62ÇI)Ä‰HR¢)HàK\“@Ã
+ñ“Y<í †√øM	»dò€Ål∞—î@-Ÿ3ãê0L	‹MòJ™EÙ¿Jlsõl±òR3˚Jòæ	¥∞CS
+v†)vPSˆ‚pL	∑ ÖÌ†l‹ûÜƒ%(å–îÄ"Ö@Ë"í-AS∏¶èè`…O∏Äî]$ãp≈ísq≈4R^≈ï^`Èô@™ÉÖ.ÃD‹Jˆ‚Q≥èH6ƒ´Ê#n!B	(tÒ(ÅF#>%∞h$¨_–¡“aÁRJªCØHË.∆Á\h4¢*Å UÚ¶¶î  #
+#IndentTag
+‡ Fiéª◊S*ıAÎ◊&¯øÒ`»»h´Ca%ÍœîP˘€Ì&Âoî¡y@∞p"XÕwúáÍﬁ}"‚•I≥ì·-ùß
+ÔjzB*˘$ÃØ¯lÛ-Ì76Zb±s©5nzV¿‹≠{E,‘32\>∞ÄÔà’FπWù∞Äp6¬fæe6òÕ‡/˜¥UÈí9I {¬ÿ^á{4µyÑgÆ®©+¯8Ãç˘˘7ú˝&i[„ÀÓËPˆ™·Ûÿœ‘r:Ùﬂz“›iﬁGÀÚG´L/Çê’Æo:B%>x<˚JÔŸû∂âŒHx;µÖ!ôÆ◊I6ÌªÕT!ÁQ¸.OüŸ,ΩwKvQpÔ≠ã÷ˇ/3ÒßBKj1~{—QRÈfô8–Ùêiú-≠ƒ@Z ¯¯vqP√^g±\Q‘N∑ØS?·Oª'≠˙ñ™»æ¨W1¨KÒD¥tπyÃ`ÙÛå≥Õ ê<ïQ^k¡÷´ß/ˇZ«Ÿò√Ní‚VW^ûH® È=ˆ<mS%óù5qÂ˘ç'æû ˙Ûfk54H†Ó[‰ëA »
+H/∑›ÉÂs¬GS∑Tà€√T,≈≠⁄ì
+›zF»˘±¢øR◊RÍè¡+•OPﬂ√k,◊å£!≈[∫TDHÕk¬@3%E—»[ès€∫Åÿßvxöz=iAùû9◊arªöWã5X(ù;ê£d~Obº ä\,¶SûÕå≠Áb]˙´∏z,W∫£·Ì	S5Ñaü”Nî¡72$kˇ'Ï˝E8î~©L√P^JsSrΩ.K%LÇt,QA,˚âlG∂ã'/öÿ-√Ó”OÊûõ§È!õÊ0*Èı©‰§K9≈¿∞sÊT∑◊1¥EC-Üÿ<Ä˙—Í!ÜaûS5‡Ñ¡ó¿ÀwúIUü£‡©téRÑ4‘
+zR ©—4Sà3ËªÿòS-Æ,≈’ÉïÏÌRJ`r˜b‰8~)˙ÎdîÊDBü¯DHZiÆª…!≈„d˝ê-$ÚSÓöWoXê‚√4¯ªbVûSÇ1∂ÆçL94˝Ï±˚¿^
+ÜIOG=OÒ¡XnÕ†ÅÉG^ôyt∂”çòÈ‚{Ï‚Ë@¿èÍK3`§öÙ˘g…å«Z%ó√œÉy	êª3ÓˆAÚÀ&ØçÙZ0‚R?w‰!x|˚f´Úßª9GG§—ÍB¿±ûÓé7.º∏â^§Å Y00Ÿ3˙πÒÿ\ü˘>é¿8Yä¯ê√‘}@nOpﬁ?(DÆa¿`∫NGÕ„Ô-å>»ê48€„ﬂ;%Ä(∫˚,-iK∞÷æ©~åƒtN“E
+|xÍÆ t¥wƒÍ+XÜCØƒñ—úÜtÜ}#ìŒ≥=SØâˇcÄgRÉÕ˚ô‹ü¬˜3E‘&9™˝AUˆf0©≠n∆∆≠à´çFo”Û˘,à¸i-ÛÆ…ZEÜp°ò‹]O}—ÔVèÊ()UHˆÍˆ˘çÚ/`8ÃÂ§£'¨˛Î∞¨…kXÃnlâ∫ÚÅäÆˇ9y·|øÀﬂâ<—O-Ã>íBäfi£•}§ß5ßìÑ∆ãÇø˛Êl‹[õVû’ŸÉ¢p•ê¨Àjr£[31XÔüƒmX %ﬂÒÇ4à$B#s}¢dòî¯D“√GÙHﬁØ◊AÛ¡ot$ìıË¡\:«u¡è&£kñ¢≠„>ÃA¬ûh©äRÅ˘-†/Õ8›uÔl<◊"{∫ñ?aHEºã—øàk˙y‡LÏ∞%1˚Í˛ÇVËE‹Ó RÜ¬ø6dºÏOb—‡5Ÿ∑Ï}Ø\3˛U.@Ó<•Â-Wõ˚€®õ◊€$πNv±û∑ã™!m—o«‘/Ä™I?»z;Ïgw–ÈR	?∑î(8e €` ™Íê$SÑÕ&ÕvÀﬂ˛R°eº¥?h8ÎÆde-û;vÜØAµXv‚KÖ	ŸG\I.£>m„öPhûBë∞?õT—£∞ö∆êgX∏R!R<!ì”tYÿH≈¯ªq	:∆·üÇÓ≥ﬁ"¶M∑ˇ¿X∂Å|>Kh◊VëÔÍlÁ:◊¿>ÿµ@”¿x¨Ò‡≥‰ñbäÄ6Bé_ZtBﬁ≤ﬁò«!±gmø z&H8sæT\°ëU›úmpÄ€Ë…©˘ñk‡∑vœ˘§X*ö-å˛¯5∂˘ïïèÄﬂNÆùXLË:´ ôXÓãÈ\˙]Ì«5pùJ-‰G œ6Ê¸DK,äìÔÔ±¶»∂ÄÕ4ÛZkπP‡EßÎ*£ˆ' Cõ≈rvT1ø¥D0ﬁ@Pø¬,0I∆¯X#⁄ËS
+Ω«¢áÖQøB¡˜„8[œÕ¬sy¸˘I"†qrr¯«Â[wr€=<&˙GË§6TÏISúÈﬂI<Kï∂ﬂ5áÔcΩã,jõE»Ë|
+ì/k"oà[«}Mi‘0«õ◊"ÿÁŸmN¢7JLi™˘pŸ™h¥L”—,BUUY6˚\≈V>òK˚ëCk:3lYêexÀ∆ﬁSK™O8UàbÂM|tÖ}˜X‡Å\≈sºBñ£&¡8^ë	îÄ`E
+‘2£–á†yﬁ÷oÇTfÍ}.ƒ˛G£Á–«húÚ¯\Eq∑¸yQ!éSXÆwç¢ûq≥ûµTª∆B'Øp∞"K†
+bÁU'6<zq~≥Aëgi%Sñ•Êå°∏ÿ‚∏•≠ñe#
+#FeatRefData
+‡ FeCú€¿ˇà™˜™QÚaZ¶ñ‹§?∂±>t åÒ1ˇVÇ<[ÂNÂ¸˛ÇeJ	÷ûS÷Dﬂ7MAÉ§îkÂﬁ.âÂøZˆ√kÆæâˇV3ï ˝Y5—I∑‰h	€˛¡Ïi*¢I© €u¡ÚﬁÚÊâ%èMÎSÿ¿ƒbSbä‘T≠rc}⁄ˆë™c}Ø]s,e#
+#UGC_TOC 2 5 81 17##############################################################
+CGFMappingTable 17f0f 54 43 1866 9 -1 1b95 b459#################################
+CGFPersistTable 17f65 3d0 3bf 1866 11 -1 9686 e071##############################
+IndentTag 18337 7f5 7ea 1866 b -1 e1a6 496c#####################################
+FeatRefData 18b2e 9e 91 1866 b -1 4b6e a221#####################################
+################################################################################
+#END_OF_UGC

@@ -1,0 +1,63 @@
+   }
+          ]
+        },
+        {
+          "itemsOnScreen": [
+            {
+              "type": "FUNCTION",
+              "name": "condition",
+              "args": ["Gmail.isConversationViewDisabled()"],
+              "callbacks": {
+                "true": {
+                  "functionName": "changeChapterTo",
+                  "args": ["threadBreakerConversationViewDisabled"]
+                },
+                "false": "next"
+              }
+            }
+          ]
+        },
+        {
+          "onEnter": "loadInbox",
+          "itemsOnScreen": [
+            {
+              "type": "FUNCTION",
+              "name": "intervalCondition",
+              "args": ["Gmail.$('[role=main] [gh=tl]').length > 0"],
+              "callbacks": {
+                "next": "next"
+              }
+            }
+          ]
+        },
+        {
+          "itemsOnScreen": [
+            {
+              "type": "FUNCTION",
+              "name": "condition",
+              "args": ["Gmail.getMainList().find('tr:has(.yW:contains(())').length === 0"],
+              "callbacks": {
+                "true": {
+                  "functionName": "changeChapterTo",
+                  "args": ["threadBreakerNoRelevantThread"]
+                },
+                "false": {
+                  "functionName": "next"
+                }
+              }
+            }
+          ],
+          "noHistory": true
+        },
+        {
+          "itemsOnScreen": [
+            {
+              "type":"TOOLTIP",
+              "targetID": "[role=main] [gh=tl] tr:has(.yW:contains(()):first",
+              "position": "top",
+              "title": "Open a conversation",
+              "html": "Click on a conversation that has more than one email.",
+              "buttons": []
+            },
+            {
+      

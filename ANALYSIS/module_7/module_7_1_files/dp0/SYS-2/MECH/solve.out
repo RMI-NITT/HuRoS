@@ -1,0 +1,254 @@
+    *-------------------------------------------------------------*
+    |                                                             |
+    |  W E L C O M E   T O   T H E   A N S Y S (R)  P R O G R A M |
+    |                                                             |
+    *-------------------------------------------------------------*
+    ***************************************************************
+    *                  ANSYS 19.2 LEGAL NOTICES                   *
+    ***************************************************************
+    *                                                             *
+    * Copyright 1971-2017 SAS IP, Inc.  All rights reserved.      *
+    * Unauthorized use, distribution or duplication is            *
+    * prohibited.                                                 *
+    * ANSYS is a registered trademark of ANSYS, Inc or its        *
+    * subsidiaries in the United States or other countries.       *
+    *                                                             *
+    * ANSYS, Inc. is UL registered                                *
+    * ISO 9001:2008 Companies.                                    *
+    *                                                             *
+    ***************************************************************
+    *                                                             *
+    * THIS ANSYS SOFTWARE PRODUCT AND PROGRAM DOCUMENTATION       *
+    * INCLUDE TRADE SECRETS AND CONFIDENTIAL AND PROPRIETARY      *
+    * PRODUCTS OF ANSYS, INC., ITS SUBSIDIARIES, OR LICENSORS.    *
+    * The software products and documentation are furnished by    *
+    * ANSYS, Inc. or its subsidiaries under a software license    *
+    * agreement that contains provisions concerning               *
+    * non-disclosure, copying, length and nature of use,          *
+    * compliance with exporting laws, warranties, disclaimers,    *
+    * limitations of liability, and remedies, and other           *
+    * provisions.  The software products and documentation may be *
+    * used, disclosed, transferred, or copied only in accordance  *
+    * with the terms and conditions of that software license      *
+    * agreement.                                                  *
+    *                                                             *
+    * See the ANSYS, Inc. online documentation or the ANSYS, Inc. *
+    * documentation CD for the complete Legal Notice.             *
+    *                                                             *
+    ***************************************************************
+    *                                                             *
+    * This product is subject to US laws governing export and     *
+    * re-export.                                                  *
+    *                                                             *
+    * For U.S. Government users, except as specifically granted   *
+    * by the ANSYS, Inc. software license agreement, the use,     *
+    * duplication, or disclosure by the United States Government  *
+    * is subject to restrictions stated in the ANSYS, Inc.        *
+    * software license agreement and FAR 12.212 (for non-DOD      *
+    * licenses).                                                  *
+    *                                                             *
+    ***************************************************************
+    Version No 19,2018,220,1
+
+    Creating Internal Loads
+    Creating Flexible Bodies Internal Drivers
+    Updating Loads and Drivers Based On Internal Joint Representation
+    Updating Stops Based On Internal Joint Representation
+    Creating Stops Contact Points
+    Updating Relations Based On Internal Joint Representation
+    Initializing Transient Analysis
+
+    ___________________________________________________________________________________________________________________________________________________________________________
+    Starting assembly simulation
+
+    Convergence reached after 1 Iteration
+
+
+    Analysis of model redundancies:
+    Joint Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[109](Transient Structural) shows some constraint redundancies
+    Z Rotation constraint equation was at time redundant
+    Joint Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[143](Transient Structural) shows some constraint redundancies
+    Y Translation constraint equation was at time redundant
+    X Rotation constraint equation was at time redundant
+    Z Rotation constraint equation was at time redundant
+
+
+
+    _________________________________________________________________________
+    Starting transient simulation
+
+    Using Runge-Kutta 4 time integration
+
+    Model Summary:
+
+    Number of effective bodies: 27
+    Total Number of Joints: 32 (26 based on degrees of freedom, 6 based on constraint equations)
+        14 Joints of Type Revolute
+        2 Joints of Type Translational
+        16 Joints of Type Weld
+
+    Number of Physical Degrees of Freedom: 12
+
+    _________________________________________________________________________
+
+    Current Time: 0 Current time step 0.01
+    Current Time: 0.0356227 Current time step 0.00476699
+    Current Time: 0.0872359 Current time step 0.00345432
+    Current Time: 0.13441 Current time step 0.00553151
+    Current Time: 0.189027 Current time step 0.00386531
+    Current Time: 0.214889 Current time step 0.00185858
+    Current Time: 0.237576 Current time step 0.00246427
+    Current Time: 0.266096 Current time step 0.00357519
+    Current Time: 0.311121 Current time step 0.00584156
+    Current Time: 0.383328 Current time step 0.00839771
+    Current Time: 0.440096 Current time step 0.00409803
+    Current Time: 0.475553 Current time step 0.00167124
+    Current Time: 0.495504 Current time step 0.00189461
+    Current Time: 0.518469 Current time step 0.00258702
+    Current Time: 0.542932 Current time step 0.0038073
+    Current Time: 0.595211 Current time step 0.00305268
+    Current Time: 0.64344 Current time step 0.00610524
+    Current Time: 0.715979 Current time step 0.0087719
+    Current Time: 0.722095 Current time step 0.000266158
+    Current Time: 0.723091 Current time step 0.000298006
+    Current Time: 0.724488 Current time step 0.0006405
+    Current Time: 0.725738 Current time step 0.000391667
+    Current Time: 0.749209 Current time step 0.00669478
+    Current Time: 0.814811 Current time step 0.00589363
+    Current Time: 0.864658 Current time step 0.00547422
+    Current Time: 0.91572 Current time step 0.00434521
+    Current Time: 0.920687 Current time step 7.48034e-05
+    Current Time: 0.920792 Current time step 1.0099e-05
+    Current Time: 0.920824 Current time step 9.55815e-07
+    Current Time: 0.92083 Current time step 4.76335e-07
+    Current Time: 0.920834 Current time step 5.48596e-07
+    Current Time: 0.920842 Current time step 1.09814e-06
+    Current Time: 0.92086 Current time step 3.39544e-06
+    Current Time: 0.920937 Current time step 1.84508e-05
+    Current Time: 0.921574 Current time step 0.000128406
+    Current Time: 0.922622 Current time step 0.000199903
+    Current Time: 0.923626 Current time step 0.000140707
+    Current Time: 0.924534 Current time step 0.000153225
+    Current Time: 0.925435 Current time step 0.000207227
+    Current Time: 0.926449 Current time step 0.000284522
+    Current Time: 0.927167 Current time step 0.000164731
+    Current Time: 0.927875 Current time step 0.000128176
+    Current Time: 0.928516 Current time step 0.000128176
+    Current Time: 0.929157 Current time step 0.000128176
+    Current Time: 0.930011 Current time step 0.000396672
+    Current Time: 0.930856 Current time step 0.000327436
+    Current Time: 0.931674 Current time step 0.000327436
+    Current Time: 0.932493 Current time step 0.000327436
+    Current Time: 0.933312 Current time step 0.000327436
+    Current Time: 0.93413 Current time step 0.000327436
+    Current Time: 0.934949 Current time step 0.000327436
+    Current Time: 0.935767 Current time step 0.000327436
+    Current Time: 0.936586 Current time step 0.000327436
+    Current Time: 0.937405 Current time step 0.000327436
+    Current Time: 0.938223 Current time step 0.000327436
+    Current Time: 0.939369 Current time step 0.000327436
+    Current Time: 0.940188 Current time step 0.000327436
+    Current Time: 0.941006 Current time step 0.000327436
+    Current Time: 0.941825 Current time step 0.000327436
+    Current Time: 0.942643 Current time step 0.000327436
+    Current Time: 0.943462 Current time step 0.000327436
+    Current Time: 0.944281 Current time step 0.000327436
+    Current Time: 0.945099 Current time step 0.000327436
+    Current Time: 0.945918 Current time step 0.000327436
+    Current Time: 0.946736 Current time step 0.000327436
+    Current Time: 0.947555 Current time step 0.000327436
+    Current Time: 0.948374 Current time step 0.000327436
+    Current Time: 0.949192 Current time step 0.000327436
+    Current Time: 0.950011 Current time step 0.000327436
+    Current Time: 0.950828 Current time step 0.00032606
+    Current Time: 0.951636 Current time step 0.000321008
+    Current Time: 0.952429 Current time step 0.000314802
+    Current Time: 0.953208 Current time step 0.000309539
+    Current Time: 0.953977 Current time step 0.000306509
+    Current Time: 0.954742 Current time step 0.000306061
+    Current Time: 0.955507 Current time step 0.000306061
+    Current Time: 0.956273 Current time step 0.000306061
+    Current Time: 0.957038 Current time step 0.000306061
+    Current Time: 0.957803 Current time step 0.000306061
+    Current Time: 0.958568 Current time step 0.000306061
+    Current Time: 0.959333 Current time step 0.000306061
+    Current Time: 0.960098 Current time step 0.000306061
+    Current Time: 0.960863 Current time step 0.000306061
+    Current Time: 0.961629 Current time step 0.000306061
+    Current Time: 0.962394 Current time step 0.000306061
+    Current Time: 0.963159 Current time step 0.000306061
+    Current Time: 0.963924 Current time step 0.000306061
+    Current Time: 0.964689 Current time step 0.000306061
+    Current Time: 0.965454 Current time step 0.000306061
+    Current Time: 0.96622 Current time step 0.000306061
+    Current Time: 0.966985 Current time step 0.000306061
+    Current Time: 0.96775 Current time step 0.000306061
+    Current Time: 0.968515 Current time step 0.000306061
+    Current Time: 0.96928 Current time step 0.000306061
+    Current Time: 0.970045 Current time step 0.000306061
+    Current Time: 0.97081 Current time step 0.000306061
+    Current Time: 0.971576 Current time step 0.000306061
+    Current Time: 0.972341 Current time step 0.000306061
+    Current Time: 0.973106 Current time step 0.000306061
+    Current Time: 0.973871 Current time step 0.000306061
+    Current Time: 0.974636 Current time step 0.000306061
+    Current Time: 0.975401 Current time step 0.000306061
+    Current Time: 0.976166 Current time step 0.000306061
+    Current Time: 0.976932 Current time step 0.000306061
+    Current Time: 0.977697 Current time step 0.000306061
+    Current Time: 0.978462 Current time step 0.000306061
+    Current Time: 0.979227 Current time step 0.000306061
+    Current Time: 0.979992 Current time step 0.000306061
+    Current Time: 0.980757 Current time step 0.000306061
+    Current Time: 0.981523 Current time step 0.000306061
+    Current Time: 0.982288 Current time step 0.000306061
+    Current Time: 0.983053 Current time step 0.000306061
+    Current Time: 0.983818 Current time step 0.000306061
+    Current Time: 0.984583 Current time step 0.000306061
+    Current Time: 0.985348 Current time step 0.000306061
+    Current Time: 0.986113 Current time step 0.000306061
+    Current Time: 0.986879 Current time step 0.000306061
+    Current Time: 0.987644 Current time step 0.000306061
+    Current Time: 0.988409 Current time step 0.000306061
+    Current Time: 0.989174 Current time step 0.000306061
+    Current Time: 0.989939 Current time step 0.000306061
+    Current Time: 0.990704 Current time step 0.000306061
+    Current Time: 0.99147 Current time step 0.000306061
+    Current Time: 0.992235 Current time step 0.000306061
+    Current Time: 0.993 Current time step 0.000306061
+    Current Time: 0.993765 Current time step 0.000306061
+    Current Time: 0.99453 Current time step 0.000306061
+    Current Time: 0.995295 Current time step 0.000306061
+    Current Time: 0.99606 Current time step 0.000306061
+    Current Time: 0.996826 Current time step 0.000306061
+    Current Time: 0.997591 Current time step 0.000306061
+    Current Time: 0.998356 Current time step 0.000306061
+    Current Time: 0.999121 Current time step 0.000306061
+    Current Time: 0.999847 Current time step 0.00015303
+
+    ___________________________________________________________________________________________________________________________________________________________________________
+
+    Total number of time steps: 816
+    Average time step: 0.000751315
+
+    Number of rejected time steps: 515
+    Number of discontinuities: 0
+    Number of saved transient configurations: 817
+    Maximum relative error: 0.0198397 (%)
+    Number of position correction iterations: 817
+    Number of velocity correction steps: 817
+
+    End of Transient Simulation. CPU Time 9.96875 Elapsed Time 4.913
+
+
+    ___________________________________________________________________________________________________________________________________________________________________________
+
+    Analysis of model redundancies:
+    Joint Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[109](Transient Structural) shows some constraint redundancies
+    Z Rotation constraint equation was at time redundant
+    Joint Fixed - MODULE_7_FOOT[81] To MODULE_7_LINK4[143](Transient Structural) shows some constraint redundancies
+    Y Translation constraint equation was at time redundant
+    X Rotation constraint equation was at time redundant
+    Z Rotation constraint equation was at time redundant
+
+

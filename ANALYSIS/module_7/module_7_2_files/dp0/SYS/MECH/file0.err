@@ -1,0 +1,42 @@
+/COM,ANSYS RELEASE Release 19.2      BUILD 19.2      UP20180808       23:08:26
+
+ *** WARNING ***                         CP =       1.109   TIME= 23:08:28
+ Element shape checking is currently inactive.  Issue SHPP,ON or         
+ SHPP,WARN to reactivate, if desired.                                    
+
+ *** WARNING ***                         CP =       1.266   TIME= 23:08:28
+ Material number 137 (used by element 68297) should normally have at     
+ least one MP or one TB type command associated with it.  Output of      
+ energy by material may not be available.                                
+
+ *** WARNING ***                         CP =       1.266   TIME= 23:08:28
+ No constraints have been defined using the D command.                   
+
+ *** WARNING ***                         CP =       1.703   TIME= 23:08:28
+ Overconstraint may occur for Lagrange multiplier or MPC based contact   
+ algorithm.                                                              
+
+ *** WARNING ***                         CP =       1.703   TIME= 23:08:28
+ Certain contact elements (for example 71103 & 70104) overlap with       
+ other.                                                                  
+
+ *** WARNING ***                         CP =       8.078   TIME= 23:08:35
+ Pivoting has been activated for the Distributed Sparse Matrix Solver .  
+ The memory required may greatly exceed the predicted amount.  In that   
+ event, use the DSPOPTION command to change the memory mode and/or       
+ memory size used by the Distributed Sparse Matrix Solver.               
+
+ *** WARNING ***                         CP =     426.812   TIME= 23:15:57
+ Pivoting has been activated for the Distributed Sparse Matrix Solver .  
+ The memory required may greatly exceed the predicted amount.  In that   
+ event, use the DSPOPTION command to change the memory mode and/or       
+ memory size used by the Distributed Sparse Matrix Solver.               
+
+ *** ERROR ***                           CP =     843.953   TIME= 23:23:33
+ Solution not converged at time 1 (load step 1 substep 1).               
+  Run terminated.                                                        
+
+ *** WARNING ***                         CP =     843.953   TIME= 23:23:33
+ The unconverged solution (identified as time 10 substep 999999) is      
+ output for analysis debug purposes.  Results should not be used for     
+ any other purpose.                                                      

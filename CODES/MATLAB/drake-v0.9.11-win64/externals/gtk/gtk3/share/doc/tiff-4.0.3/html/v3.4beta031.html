@@ -1,0 +1,112 @@
+pe": "MODAL",
+          "title": "Someone shared a Pipeline with you",
+          "html": "A friend or work-mate has shared a Pipeline with you. Take a 3-minute tour of Streak and see how you can get a dramatic increase in your productivity.",
+          "rightButtonText": "Show me",
+          "showRightButton": true,
+          "rightButtonFunction": {
+            "functionName": "changeChapterTo",
+            "args": ["boxDetailView"]
+          },
+          "showLeftButton": true,
+          "leftButtonText": "No Need",
+          "leftButtonFunction": "exit",
+          "showLink": false
+        }],
+        "onEnter": "setupExistingPipeline"
+      }]
+    },
+
+    "userHasNotSeenFullTour": {
+      "pages": [{
+        "itemsOnScreen": [{
+          "type": "MODAL",
+          "title": "Take a tour of Streak",
+          "html": "Take a 3-minute tour of Streak and see how you can get a dramatic increase in your productivity.",
+          "rightButtonText": "Show me",
+          "showRightButton": true,
+          "rightButtonFunction": {
+            "functionName": "changeChapterTo",
+            "args": ["boxDetailView"]
+          },
+          "showLeftButton": true,
+          "leftButtonText": "No Need",
+          "leftButtonFunction": "exit",
+          "showLink": false
+        }],
+        "onEnter": "setupExistingPipeline"
+      }]
+    },
+
+    "boxDetailView": {
+      "pages": [{
+        "itemsOnScreen": [{
+          "type": "MODAL",
+          "title": "We're just finishing setting up the tour. Please hold on",
+          "html": "Loading...",
+          "showRightButton": false,
+          "showLeftButton": false,
+          "showLink": false
+        }, {
+          "type": "FUNCTION",
+          "name": "intervalCondition",
+          "args": ["context.currentBox"],
+          "callbacks": {
+            "next": "next"
+          }
+        }],
+        "noHistory": true,
+        "onEnter": {
+          "functionName": "markChapterAsSeen",
+          "args": ["boxDetailView"]
+        }
+      },
+      {
+        "itemsOnScreen": [
+          {
+            "type": "FUNCTION",
+            "name": "startHelpChapter",
+            "args": ["newBoxViewFirstRunTour"]
+          }
+        ],
+        "onEnter": "loadBoxView"
+      },
+      {
+        "itemsOnScreen": [
+          {
+            "type": "FUNCTION",
+            "name": "condition",
+            "args": ["true"],
+            "callbacks": {
+              "true": {
+                "functionName": "changeChapterTo",
+                "args": ["pipelineView"]
+              },
+              "false": {
+                "functionName": "changeChapterTo",
+                "args": ["pipelineView"]
+              }
+            }
+          }
+        ]
+      }]
+    },
+
+    "pipelineView": {
+      "pages": [{
+        "itemsOnScreen": [{
+          "type": "HIGHLIGHT",
+          "targetElement": ".main_mid"
+        }, {
+          "type": "TOOLTIP",
+          "targetID": ".bb_overview",
+          "position": "right",
+          "title": "This page is the Pipeline View",
+          "html": "A Streak Pipeline is a collection of Boxes organized into stages."
+        }],
+        "onEnter": "loadPipelineView"
+      }, {
+        "itemsOnScreen": [{
+          "type": "HIGHLIGHT",
+          "targetElement": ".streak__visualization_wrapper"
+        }, {
+          "type":

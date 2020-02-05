@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SimscapeMultibodyImportXML version="2.0" xmlns="urn:mathworks:SimscapeMultibody:import" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Created by="psvss" on="02/27/18||22:28:58" using="Simscape Multibody Link Version 5.1" from="Pro/Engineer Creo 4.0 - 2016390"/>
+<ModelUnits mass="kg" length="mm"/>
+<RootAssembly name="BIPED_WITHOUT_ACTUATORS" uid="BIPED_WITHOUT_ACTUATORS_asm" version="1381">
+<AssemblyFile name="BIPED_WITHOUT_ACTUATORS.asm" type="ProEngineer Assembly"/>
+<InstanceTree>
+<Instance name="TORSO_BASE_WOA_1" grounded="true" uid="40" entityUid="TORSO_BASE_WOA_1_asm" rigid="true">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+<Instance name="BASE1" grounded="true" uid="40" entityUid="BASE1_prt">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+<Instance name="BASE1" uid="57" entityUid="BASE1_prt">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-110 0 0</Translation>
+</Transform>
+</Instance>
+<Instance name="LINK_BASE_1" uid="85" entityUid="LINK_BASE_1_prt">
+<Transform>
+<Rotation>0 1 0 -1 0 0 0 0 1</Rotation>
+<Translation>-100 -14.364916731037109 -60</Translation>
+</Transform>
+</Instance>
+<Instance name="LINK_BASE_2" uid="92" entityUid="LINK_BASE_2_prt">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 -19.364916731037109 160</Translation>
+</Transform>
+</Instance>
+<Instance name="LINK_BASE_2" uid="95" entityUid="LINK_BASE_2_prt">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 -19.364916731037109 -150</Translation>
+</Transform>
+</Instance>
+<Instance name="KNEE_MOTOR" uid="102" entityUid="KNEE_MOTOR_prt">
+<Transform>
+<Rotation>1 0 0 0 0 1 0 -1 0</Rotation>
+<Translation>-50 6.9953027911617394 0</Translation>
+</Transform>
+</Instance>
+<Instance name="KNEE_MOTOR" uid="105" entityUid="KNEE_MOTOR_prt">
+<Transform>
+<Rotation>-1 0 0 0 0 1 0 1 0</Rotation>
+<Translation>-50 6.9953027911617394 0</Translation>
+</Transform>
+</Instance>
+</Instance>
+<Instance name="PLUS" uid="41" entityUid="PLUS_prt">
+<Transform>
+<Rotation>0 0 1 0 1 0 -1 0 0</Rotation>
+<Translation>-50 0.10508326896288978 -78.5</Translation>
+</Transform>
+</Instance>
+<Instance name="PLUS" uid="42" entityUid="PLUS_prt">
+<Transform>
+<Rotation>0 6.2467018493647715e-010 -1.0000000000000002 0 1.0000000000000002 6.2467018493647715e-010 1.0000000000000002 0 0</Rotation>
+<Translation>-50 0.10508326896288978 78.5</Translation>
+</Transform>
+</Instance>
+<Instance name="UPPER_LEG_WOA" uid="43" entityUid="UPPER_LEG_WOA_asm" rigid="true">
+<Transform>
+<Rotation>0 0 -1 0 -1 0 -1 0 0</Rotation>
+<Translation>-52.999999999999979 -399.89491673103748 99.169333848296844</Translation>
+</Transform>
+<Instance name="KNEE_SHAFT_CONNECTOR" grounded="true" uid="40" entityUid="KNEE_SHAFT_CONNECTOR_prt">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+<Instance name="PRIMARY_LINK_UL" uid="41" entityUid="PRIMARY_LINK_UL_prt">
+<Transform>
+<Rotation>1 0 0 0 -1 0 0 0 -1</Rotation>
+<Translation>-25 -50 -25</Translation>
+</Transform>
+</Instance>
+<Instance name="PRIMARY_LINK_UL" uid="67" entityUid="PRIMARY_LINK_UL_prt">
+<Transform>
+<Rotation>-1 0 0 0 -1 0 0 0 1</Rotation>
+<Translation>-25 -50 25</Translation>
+</Transform>
+</Instance>
+<Instance name="KNEE_SHAFT_CONNECTOR" uid="68" entityUid="KNEE_SHAFT_CONNECTOR_prt">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-54.999999999999957 1.1368683772161603e-013 7.1054273576010019e-015</Translation>
+</Transform>
+</Instance>
+<Instance name="SUPPORT_LINK1" uid="70" entityUid="SUPPORT_LINK1_prt">
+<Transform>
+<Rotation>0 1.3243387025898741e-015 -1.0000000000000002 -1.0000000000000002 0 0 0 1.0000000000000002 1.3243387025898741e-015</Rotation>
+<Translation>20.080666151703369 -220.00000000000003 30</Translation>
+</Transform>
+</Instance>
+<Instance name="SUPPORT_LINK1" uid="77" entityUid="SUPPORT_LINK1_prt">
+<Transform>
+<Rotation>0 -1.3243387025892103e-015 1.0000000000000002 -1.0000000000000002 0 0 0 -1.0000000000000002 -1.3243387025892103e-015</Rotation>
+<Translation>-70.080666151703369 -220 -29.999999999999993</Translation>
+</Transform>
+</Instance>
+<Instance name="HIP_SHAFT1_CONNECTOR" uid="69" entityUid="HIP_SHAFT1_CONNECTOR_prt">
+<Transform>
+<Rotation>1.3243387025898739e-015 0 1 0 -1 0 1 0 -1.3243387025898739e-015</Rotation>
+<Translation>-24.91933384829666 -400 22</Translation>
+</Transform>
+</Instance>
+<Instance name="HIP_SHAFT1_CONNECTOR" uid="84" entityUid="HIP_SHAFT1_CONNECTOR_prt">
+<Transform>
+<Rotation>-1.5463833075145242e-015 0 -1 0 -1 0 -1 0 1.5463833075145242e-015</Rotation>
+<Translation>-25.080666151703355 -400 -21.999999999999996</Translation>
+</Transform>
+</Instance>
+<Instance name="BALL_BEARING" uid="89" entityUid="BALL_BEARING_prt">
+<Transform>
+<Rotation>1.3243387025898739e-015 1 0 0 0 1 1 -1.3243387025898739e-015 0</Rotation>
+<Translation>-24.91933384829666 -400 22</Translation>
+</Transform>
+</Instance>
+<Instance name="BALL_BEARING" uid="92" entityUid="BALL_BEARING_prt">
+<Transform>
+<Rotation>-1.5463833075145242e-015 1 0 0 0 -1 -1 -1.5463833075145242e-015 0</Rotation>
+<Translation>-25.080666151703355 -400 -21.999999999999996</Translation>
+</Transform>
+</Instance>
+<Instance name="BALL_BEARING" uid="95" entityUid="BALL_BEARING_prt">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+<Instance name="BALL_BEARING" uid="98" entityUid="BALL_BEARING_prt">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-54.999999999999957 1.1368683772161603e-013 7.1054273576010019e-015</Translation>
+</Transform>
+</Instance>
+</Instance>
+<Instance name="UPPER_LEG_WOA" uid="44" entityUid="UPPER_LEG_WOA_asm" rigid="true">
+<Transform>
+<Rotation>0 0 1 0 -1 0 1 0 0</Rotation>
+<Translation>-47.000000000000021 -399.89491673103743 -99.330666151703497</Translation>
+</Transform>
+<Instance name="KNEE_SHAFT_CONNECTOR" grounded="true" uid="40" entityUid="KNEE_SHAFT_CONNECTOR_prt">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+<Instance name="PRIMARY_LINK_UL" uid="41" entityUid="PRIMARY_LINK_UL_prt">
+<Transform>
+<Rotation>1 0 0 0 -1 0 0 0 -1</Rotation>
+<Translation>-25 -50 -25</Translation>
+</Transform>
+</Instance>
+<Instance name="PRIMARY_LINK_UL" uid="67" entityUid="PRIMARY_LINK_UL_prt">
+<Transform>
+<Rotation>-1 0 0 0 -1 0 0 0 1</Rotation>
+<Translation>-25 -50 25.000000000000004</Translation>
+</Transform>
+</Instance>
+<Instance name="KNEE_SHAFT_CONNECTOR" uid="68" entityUid="KNEE_SHAFT_CONNECTOR_prt">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-54.999999999999972 1.1368683772161603e-013 7.1054273576010019e-015</Translation>
+</Transform>
+</Instance>
+<Instance name="SUPPORT_LINK1" uid="70" entityUid="SUPPORT_LINK1_prt">
+<Transform>
+<Rotation>0 1.3243387025898741e-015 -1.0000000000000002 -1.0000000000000002 0 0 0 1.0000000000000002 1.3243387025898741e-015</Rotation>
+<Translation>20.080666151703383 -220.00000000000003 30.000000000000004</Translation>
+</Transform>
+</Instance>
+<Instance name="SUPPORT_LINK1" uid="77" entityUid="SUPPORT_LINK1_prt">
+<Transform>
+<Rotation>0 -1.3243387025892101e-015 1.0000000000000002 -1.0000000000000002 0 0 0 -1.0000000000000002 -1.3243387025892101e-015</Rotation>
+<Translation>-70.080666151703383 -220 -29.999999999999986</Translation>
+</Transform>
+</Instance>
+<Instance name="HIP_SHAFT1_CONNECTOR" uid="69" entityUid="HIP_SHAFT1_CONNECTOR_prt">
+<Transform>
+<Rotation>1.3243387025898739e-015 0 1 0 -1 0 1 0 -1.3243387025898739e-015</Rotation>
+<Translation>-24.919333848296645 -400 22.000000000000004</Translation>
+</Transform>
+</Instance>
+<Instance name="HIP_SHAFT1_CONNECTOR" uid="84" entityUid="HIP_SHAFT1_CONNECTOR_prt">
+<Transform>
+<Rotation>-1.5463833075145242e-015 0 -1 0 -1 0 -1 0 1.5463833075145242e-015</Rotation>
+<Translation>-25.080666151703355 -400 -21.999999999999986</Translation>
+</Transform>
+</Instance>
+<Instance name="BALL_BEARING" uid="89" entityUid="BALL_BEARING_prt">
+<Transform>
+<Rotation>1.3243387025898739e-015 1 0 0 0 1 1 -1.3243387025898739e-015 0</Rotation>
+<Translation>-24.919333848296645 -400 22.000000000000004</Translation>
+</Transform>
+</Instance>
+<Instance name="BALL_BEARING" uid="92" entityUid="BALL_BEARING_prt">
+<Transform>
+<Rotation>-1.5463833075145242e-015 1 0 0 0 -1 -1 -1.5463833075145242e-015 0</Rotation>
+<Translation>-25.080666151703355 -400 -21.999999999999986</Translation>
+</Transform>
+</Instance>
+<Instance name="BALL_BEARING" uid="95" entityUid="BALL_BEARING_prt">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+<Instance name="BALL_BEARING" uid="98" entityUid="BALL_BEARING_prt">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-54.999999999999972 1.1368683772161603e-013 7.1054273576010019e-015</Translation>
+</Transform>
+</Instance>
+</Instance>
+<Instance name="LOWER_LEG_WOA_1" uid="46" entityUid="LOWER_LEG_WOA_1_asm" rigid="true">
+<Transform>
+<Rotation>1 6.2467008535655221e-010 0 -6.2467008535655221e-010 1 0 0 0 1</Rotation>
+<Translation>-53.000000249868059 -399.89491672916347 84.169333848296773</Translation>
+</Transform>
+<Instance name="KNEE_AXLE" grounded="true" uid="42" entityUid="KNEE_AXLE_prt">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+<VisualProperties>
+<Ambient r="0.54999999999999993" g="0.54999999999999993" b="0" a="1"/>
+<Diffuse r="1" g="1" b="0" a="1"/>
+<Specular r="1" g="1" b="1" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>1</Shininess>
+</VisualProperties>
+</Instance>
+<Instance name="BALL_BEARING" uid="43" entityUid="BALL_BEARING_prt">
+<Transform>
+<Rotation>0 1 0 0 0 1 1 0 0</Rotation>
+<Translation>-7.1054273576010019e-015 0 5</Translation>
+</Transform>
+<VisualProperties>
+<Ambient r="0.46156879999999995" g="0.24588244999999997" b="0.21352924999999998" a="1"/>
+<Diffuse r="0.67137279999999988" g="0.35764719999999994" b="0.31058799999999998" a="1"/>
+<Specular r="0.59999999999999998" g="0.54588239999999999" b="0.4588236" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.59999999999999998</Shininess>
+</VisualProperties>
+</Instance>
+<Instance name="MOTOR_CONNECTOR" uid="58" entityUid="MOTOR_CONNECTOR_prt">
+<Transform>
+<Rotation>0 0 -1 0 1 0 1 0 0</Rotation>
+<Translation>-7.1054273576010019e-015 0 5</Translation>
+</Transform>
+<VisualProperties>
+<Ambient r="0.27087383401860538" g="0.40254223903454417" b="0.44941199999999998" a="1"/>
+<Diffuse r="0.40631075102790809" g="0.60381335855181628" b="0.67411799999999999" a="1"/>
+<Specular r="0.59999999999999998" g="0.59999999999999998" b="0.59999999999999998" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.59999999999999998</Shininess>
+</VisualProperties>
+</Instance>
+<Instance name="BALL_BEARING" uid="61" entityUid="BALL_BEARING_prt">
+<Transform>
+<Rotation>0 0 -1 0 1 0 1 0 0</Rotation>
+<Translation>-7.1054273576010019e-015 5.6843418860808015e-014 70.000000000000014</Translation>
+</Transform>
+<VisualProperties>
+<Ambient r="0.46156879999999995" g="0.24588244999999997" b="0.21352924999999998" a="1"/>
+<Diffuse r="0.67137279999999988" g="0.35764719999999994" b="0.31058799999999998" a="1"/>
+<Specular r="0.59999999999999998" g="0.54588239999999999" b="0.4588236" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.59999999999999998</Shininess>
+</VisualProperties>
+</Instance>
+<Instance name="MOTOR_CONNECTOR" uid="64" entityUid="MOTOR_CONNECTOR_prt">
+<Transform>
+<Rotation>0 0 1 0 1 0 -1 0 0</Rotation>
+<Translation>0 5.6843418860808015e-014 75.000000000000014</Translation>
+</Transform>
+<VisualProperties>
+<Ambient r="0.27087383401860538" g="0.40254223903454417" b="0.44941199999999998" a="1"/>
+<Diffuse r="0.40631075102790809" g="0.60381335855181628" b="0.67411799999999999" a="1"/>
+<Specular r="0.59999999999999998" g="0.59999999999999998" b="0.59999999999999998" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.59999999999999998</Shininess>
+</VisualProperties>
+</Instance>
+<Instance name="PRIMARY_LINK" uid="92" entityUid="PRIMARY_LINK_prt">
+<Transform>
+<Rotation>0 0 1 0 1 0 -1 0 0</Rotation>
+<Translation>25.999999999999F0mDHWrjAWVn6iHNf5TnDqGiSvr13q Å%O1aanmBNEXBbyFLkKMG4_A2i2Vl87-Se6HP%O1aKCOigF8QlZW22k8n77WQlQbZ6Lm-iWZm&O1aICrMuldXM9M_XLIfQ17ByGz2R0zOHyR ò&O1_t6P2vciR3yggVqsHpakr0JSBRPLimHx á¥ &1_oLRs_LIeKPrSc4GZ8_hk-M5Pgm5BELI,&O1_dky2kipDyW-9v-JN6FjNsDR-nME83sJ Ÿ&O1_cY3q0yGRi5xvOCmCCNDVqU_qcxGnHX_ ﬁ&O1_TyGR4MHSwK9mh_lya2U4AVtXme5x7TT ä&O1_NjaVoyeeXy9knI8c4Y5GTeu0NOz7JHn ⁄&O1ZqE5NH-09vGXwDYJACnZslceTONnR4Hj ü&O1ZbhKw6UcZjLribHWQP_lXbC_nA8ygO_M •%O1ZT-MEN6-3HRobe8MXAx0yqSt9Q9fISXwa   L1ZOK3F7FuaJQYYhNhQQi-WtYWIorEFPeT5%O1Z7Y9PDSg4Qw6S00aYZOtiIlNKd1XoOgZ<T˙·Ö   
+È ˝H‚–Õ	‹4ÑÒ¨ä•ﬁû°>z	
+	˙¸:tÄ	¥j‰
+J
+v
+@Ï9	ñ	z⁄÷R%‰à	(ÆD	™€≤ÿ
+¬Ë	Zò
+Æä¿D	»l5	åî
+Ù
+˛≤0©ú
+,]è∆ìÓ	 	FÅ8 à	æ
+ö∑¶î0N	Ê†
+:íÌÆ™ûÜT‰¢é	dBto®é]∞.Vt	Ç
+|
+÷≥Ó≤k⁄‰˙0Óƒbb~Ñ>N		xˇ“4úƒl≈
+"KË‘∫	n,
+6	Pp◊#òGŒó
+Üº	<}í>R	†–∆f®fˆ
+§
+r¯Ä
+‡‡
+êäPÚ–&
+ÍxªYº $K~
+T&\	“¿
+ ¯8ºf
+∏ºL⁄XjÓ∂X…	B*b
+hpHŒ\
+^'ˆ*∆úvﬂ	2
+Ã``                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        	Eì1W8	XEø6	€Ûßã4	ñ-7 3	≥eZÈ2	›QE|1	kòn0	næIö/	$Qák.	xﬂr∂-	G°xö,	ÖNØ++	⁄ÀiA)	äï$(	Ò4Û'	∆ˆe<&	7näƒ%	>ˆu…$	>d V#	‰M"	…ÃI!	“¿©Á 	GN˜p	W9	Æ	E‘dŸ	◊„∂	nü€u	!ï(±	Úù,	ÄYä	¶∞ê	oÍA	BxÛk	-∂	£	°|ß°	†ÛF	ÏËLt	ª¡f∏	ÁˇÎù		ÑÉ>œ	iS√Ë	[A\«	]aN	(ÅÇ=	âıõ¸ 	(,¿ ˇ	Lå[B ˛	ï’‰ ˝	.ıÃÄ ˘	’ä¸Ω ¯	ôÇØ≠ ˜	V∆¿ ˆ	ÙI\j ı	]Ú0> Ù	n]â Û	cÌëÎ Ò	ˆp„8 	Ê Ô	f3·h Ó	ñ≠êf Ì	≥8ˆ Î	◊ãÒ Í	8 Óÿ È	…1 Ë	Ÿ¡‡ö Á	ÚnñN Â	(ˇÅÀ ‰	"¡U’ „	3r% ‚	∑Hc∑ ·	Ävò ‡	õ∆"I ﬂ	u%%\ ﬁ	”·[m ›	ìj† ‹	û•ˇ) €	™´§ ⁄	±b¸S Ÿ	zÖÄf ÿ	7òc© ◊	‘»5Ë ’	,¯"N ”	∏Ó∞∑ “	Ììå≠ —	)9Ú˛ –	L⁄ œ	˘˚7w Œ	≈≈âb Õ	û4ß Ã	=":∑ À	≥Ú=  	ñÙ`ò …	◊v“W »	¡ÖW «	[)&™ ∆	Ç1. ≈	ﬂ3ı √	n≤æ ¬	ï˛/ ¡	‡ﬂ
+ ¿	[ˇ≈ö ø	ôŸÖ! æ	'	9‹ Ω	…(≤ º	+võ ª	öÉ÷á ∫	òsxá π	W¢/Ë ∏	r—*¥ ∑	o(◊ù ∂	Fâ–É µ	˝x∫i ¥	7mÖ ≥	KCµ@ ≤	◊ít« ±	EkÉ- ∞	æ-År Ø	bõ˜¯ Æ	∑Ñ’X ≠	{q[ ¨	˝‡t( ´	H	iœ ™	Q
+4… ©	∆_T  ®	∆ceÈ ß	∞ü ¶	‡J} •	 ‡Xî §	Pﬂ… £	ıım ¢	‚ÈÙ °	øùÕ †	 ≤" ü	e¢e" û	±JÈ ù	¬É…Ï ú	öX†" õ	ñ∞ ö	K°S ô	∆ºÕ ò	Âì#} ó	C7Ò; ñ	∑?UJ ï	`;å√ î	x@ü ì	Pæ∞T í	•»l ë	ò^7Ô ê	fjôi è	]ﬁ5∏ é	Ωê¥ ç	π(ﬂÌ å	rπΩ ã	U∫•ÿ ä	uÉ“ â	Ç¨„ à	ê` Ë á	o–Ÿ≈ Ü	<'tØ Ö	X{â Ñ	D#ìÜ É	oπN Ç	ígØ˜ Å	É≥9M ÄÒ„BC3‰‡F~ﬂU∏–}»®¬'| «É{QÅ¨°zòàkyÇ'?x•ˆ0wy√ORv∏QîuÉÚtãçgsøŸ/r/øâq ˜|ÚpÍZ¯∞otªÔn»äÕ¯mù¨ïlÌîR‚kWQ5CjÊ_¨øiÀ/È#haà:Ñg>cüfQq¡Ôe’í dæıºcœ€È‘b!†	†aàÖN’`‰9⁄d_ŸsŒ^øñ»]kö†\ 2-„[µ»˝◊ZÁËò^Y‰ ’iXEW–WSúVbÔU6$‘PTlù˘S/8ªR+^ëìQ≈˚éP8…DO1fu2NLzÏ3MS˜÷LûK«*ÑJÌ¥%ÕI7ß∞lHÂ¥¡ÎGÀ:≤eF/KΩdEéòQUDÂ<¶êCˇ|†±Bb£g:A&8Œ©@oÂ1Ñ?.8´>JOµM=˜ /|Ü</ ;ﬂñ;/ 4	*ã˜V7	E∫–è5	1¡ÿ	ß£Ec ¸B 	rÙÎ6	’ÆJK ˚U 	Î˜˜R'	'Wáﬂ ÷¶ ?œÊ#	Ú5Oπ*¶ 	óˆ˝^	ˆ™S3	Wåy4	®ÕT†	„/Ÿ‰ Ï	x√Ú ƒ∏ ›˝w@	±¿u• Ú˜ 	Uò˘–
+	À}»ü	ÅQ,¿	e˚E ˙	®+–Q ÊÊ∏ ‘   	Ã·¶´$T˙›3   ∞ {	   îµ´¶°úóíçàÉ~ytoje`[VQLGB=83.)$ˇ˘ÛÌÁ·€’œ…√Ω∑±´•üôìçáÅ{uoic]WQKE?93-'!	˝˜ıÔÒÎÂﬂŸ”»Õ«¡ªµØ©·£ùóëãÖysmgaΩ[UOIC€=“71+%   DOWNLOADCREATEROBO4xgAJdcQFjY29tbW9uLmNsb3VkX2VudHJ5CkNsb3VkRW50cnkKcQIpgXEDTn1xBChVBHNpemVxBU5VCGRvY190eXBlcQZjY29tbW9uLmNvbnN0YW50cwpEb2NUeXBlCnEHSwCFUnEIVQ1jaGlsZF9kb2NfaWRzcQljY29tbW9uLmNsb3VkX2VudHJ5CkNoaWxkcmVuTm90TG9hZGVkCnEKKYFxC059hmJVFGxhc3RfY2hhbmdlZF9sb2NhbGx5cQyJVQ5wYXJlbnRfZG9jX2lkc3ENY19fYnVpbHRpbl9fCnNldApxDl1xD1gEAAAAcm9vdHEQYYVScRFVB2NyZWF0ZWRxEk5VBnNoYXJlZHETiVUIY2hlY2tzdW1xFE5VCWlzX3pvbWJpZXEViVUIbW9kaWZpZWRxFkoVvC9aVQhmaWxlbmFtZXEXWAYAAABST0JPNHhxGFURb3JpZ2luYWxfY2hlY2tzdW1xGU5VB3ZlcnNpb25xGksBVQ1vcmlnaW5hbF9zaXplcRtOVQhhY2xfcm9sZXEcY2NvbW1vbi5jb25zdGFudHMKQWNsUm9sZQpxHUsAhVJxHlUSZG93bl9zYW1wbGVfc3RhdHVzcR9OVQxjaGFuZ2Vfc3RhbXBxIE5VB3JlbW92ZWRxIYlVBmRvY19pZHEiWCEAAAAxSWRadUVFVTdIWUZIVE9NSGE0Y2hzeXQ3MklCOEZ4VUZxI1UPcGlja2xlZF92ZXJzaW9ucSRLB1UTZG93bmxvYWRfcmVzdHJpY3RlZHEliXWGYmEu\\?\S:\FILES(imp)\Drive1IdZuEEU7HYFHTOMHa4chsyt72IB8FxUF     ™serial:1350362267¨,MROBO4xác.    5å];  O/   	                5  DOWNLOADCREATEparallel manipulatorgAJdcQFjY29tbW9uLmNsb3VkX2VudHJ5CkNsb3VkRW50cnkKcQIpgXEDTn1xBChVBHNpemVxBU5VCGRvY190eXBlcQZjY29tbW9uLmNvbnN0YW50cwpEb2NUeXBlCnEHSwCFUnEIVQ1jaGlsZF9kb2NfaWRzcQljY29tbW9uLmNsb3VkX2VudHJ5CkNoaWxkcmVuTm90TG9hZGVkCnEKKYFxC059hmJVFGxhc3RfY2hhbmdlZF9sb2NhbGx5cQyJVQ5wYXJlbnRfZG9jX2lkc3ENY19fYnVpbHRpbl9fCnNldApxDl1xD1gEAAAAcm9vdHEQYYVScRFVB2NyZWF0ZWRxEk5VBnNoYXJlZHETiVUIY2hlY2tzdW1xFE5VCWlzX3pvbWJpZXEViVUIbW9kaWZpZWRxFkpiWEdaVQhmaWxlbmFtZXEXWBQAAABwYXJhbGxlbCBtYW5pcHVsYXRvcnEYVRFvcmlnaW5hbF9jaGVja3N1bXEZTlUHdmVyc2lvbnEaSwVVDW9yaWdpbmFsX3NpemVxG05VCGFjbF9yb2xlcRxjY29tbW9uLmNvbnN0YW50cwpBY2xSb2xlCnEdSwCFUnEeVRJkb3duX3NhbXBsZV9zdGF0dXNxH05VDGNoYW5nZV9zdGFtcHEgTlUHcmVtb3ZlZHEhiVUGZG9jX2lkcSJYIQAAADFDTjNteVI1elE0VnFnQkN6eV9hWVZ1UEVrX0pPUUlSS3EjVQ9waWNrbGVkX3ZlcnNpb25xJEsHVRNkb3dubG9hZF9yZXN0cmljdGVkcSWJdYZiYS4=\\?\S:\FILES(imp)\Drive1CN3myR5zQ4VqgBCzy_aYVuPEk_JOQIRK     ™serial:1350362267gêmpparallel manipulatoráW.    -åU;  O/   	                -  DOWNLOADCREATERmi Trip photos_gAJdcQFjY29tbW9uLmNsb3VkX2VudHJ5CkNsb3VkRW50cnkKcQIpgXEDTn1xBChVBHNpemVxBU5VCGRvY190eXBlcQZjY29tbW9uLmNvbnN0YW50cwpEb2NUeXBlCnEHSwCFUnEIVQ1jaGlsZF9kb2NfaWRzcQljY29tbW9uLmNsb3VkX2VudHJ5CkNoaWxkcmVuTm90TG9hZGVkCnEKKYFxC059hmJVFGxhc3RfY2hhbmdlZF9sb2NhbGx5cQyJVQ5wYXJlbnRfZG9jX2lkc3ENY19fYnVpbHRpbl9fCnNldApxDl1xD1gEAAAAcm9vdHEQYYVScRFVB2NyZWF0ZWRxEk5VBnNoYXJlZHETiFUIY2hlY2tzdW1xFE5VCWlzX3pvbWJpZXEViVUIbW9kaWZpZWRxFkoqZstaVQhmaWxlbmFtZXEXWBAAAABSbWkgVHJpcCBwaG90b3NfcRhVEW9yaWdpbmFsX2NoZWNrc3VtcRlOVQd2ZXJzaW9ucRpLjlUNb3JpZ2luYWxfc2l6ZXEbTlUIYWNsX3JvbGVxHGNjb21tb24uY29uc3RhbnRzCkFjbFJvbGUKcR1LAYVScR5VEmRvd25fc2FtcGxlX3N0YXR1c3EfTlUMY2hhbmdlX3N0YW1wcSBOVQdyZW1vdmVkcSGJVQZkb2NfaWRxIlghAAAAMVhwUjloTUYybjNycGhodDl4b0hkRnZIOS1IbmVQdGtwcSNVD3BpY2tsZWRfdmVyc2lvbnEkSwdVE2Rvd25sb2FkX3Jlc3RyaWN0ZWRxJYl1hmJhLg==\\?\S:\FILES(imp)\Drive1XpR9hMF2n3rphht9xoHdFvH9-HnePtkp     ™serial:1350362267	¢Ï Rmi Trip photos_ á/.    å5;  O/   	                  DOWNLOADCREATEGategAJdcQFjY29tbW9uLmNsb3VkX2VudHJ5CkNsb3VkRW50cnkKcQIpgXEDTn1xBChVBHNpemVxBU5VCGRvY190eXBlcQZjY29tbW9uLmNvbnN0YW50cwpEb2NUeXBlCnEHSwCFUnEIVQ1jaG   Ç6   ìÇ4   íÇ2   ëÇ0   Ç.   Ç*   éÇ&   çÇ$   åÇ"   ãÇ    Ç   âÇ   àÇ   Ç   áÇ   ÜÇ   ÖÇ   ÑÇ   Ç   ÉÇ
+   ÇÇ   ÅÇ   Ç   Ç    ~Å~   Å|   }Åz   |Åx   {Åv   Åt   xÅp   wÅn   Ål   vÅj   uÅh   tÅf   rÅ`   qÅ]   pÅZ   oÅW   nÅT   mÅR   lÅP   ÅN   kÅL   jÅJ   iÅH   hÅF   gÅD   fÅB   eÅ@   bÅ>   aÅ<   `Å:   _Å8   ^Å6   ]Å4   \Å2   YÅ0   XÅ.   WÅ+   VÅ)   UÅ'   TÅ$   SÅ"   RÅ    QÅ   PÅ   OÅ   NÅ   MÅ   LÅ   KÅ   JÅ   IÅ   HÅ   GÅ
+   FÅ   EÅ   BÅ   AÅ   @Å    ?~   >|   =z   <x   ;v   :t   9r   8p   7n   6l   5j   4h   3f   2d   1b   0`   /^   .\   -Z   ,X   +V   *T   )R   (P   'N   &L   %J   $H   #F   "D   !B    @   >√ <   =Œ    äÇŒ 9   zÅrÁ    êÇ,Á    èÇ(   ÄÇ˚ 2      Åd   sÅb   0T˙‚%   SQLite format 3   @    Ò   î                                                         Ò .Z    ë 
+Y
+	´	I”Dÿoä                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        j;Åindexfschanges_name_hint_idxfschangesCREATE INDEX fschanges_name_hint_idx on fschanges (name_hint)Å IÅ%indexfschanges_direction_action_idxfschangesCREATE INDEX fschanges_direction_action_idx on fschanges (direction, action)`5{indexfschanges_action_idxfschangesCREATE INDEX fschanges_action_idx on fschanges (action)g
+9Åindexfschanges_old_path_idxfschangesCREATE INDEX fschanges_old_path_idx on fschanges (old_path)j	;Åindexfschanges_full_path_idxfschanges
+CREATE INDEX fschanges_full_path_idx on fschanges (full_path)ÅQÅ5indexfschanges_new_inode_new_volume_idxfschanges	CREATE INDEX fschanges_new_inode_new_volume_idx on fschanges (new_inode, new_volume)tAÅindexfschanges_inode_volume_idxfschangesCREATE INDEX fschanges_inode_volume_idx on fschanges (inode, volume)`5{indexfschanges_doc_id_idxfschangesCREATE INDEX fschanges_doc_id_idx on fschanges (doc_id)Z1sindexfschanges_hash_idxfschangesCREATE INDEX fschanges_hash_idx on fschanges (hash)P++Ytablesqlite_sequencesqlite_sequenceCREATE TABLE sqlite_sequence(name,seq)á$établefschangesfschangesCREATE TABLE fschanges (identifier INTEGER, direction TEXT, action TEXT, inode INTEGER, volume TEXT, path TEXT, name TEXT, route TEXT, mapped_path TEXT, mapped_path_complete INTEGER, mapped_old_path TEXT, mapped_old_path_complete INTEGER, doc_id TEXT, parent_inode INTEGER, parent_volume TEXT, new_inode INTEGER, new_volume TEXT, new_name TEXT, is_folder INTEGER, affects_gdoc INTEGER, unparents_shared INTEGER, modified INTEGER, old_parent_inode INTEGER, old_parent_volume TEXT, old_path TEXT, acl_role INTEGER, checksum TEXT, size INTEGER, generator_module INTEGER, shared INTEGER, user_notification_response INTEGER, doc_type INTEGER, exception TEXT, batch_id INTEGER, parent_doc_id TEXT, original_size INTEGER, original_checksum TEXT, entry INTEGER, local_modified INTEGER, hash INTEGER, full_path TEXT, name_hint TEXT, root_volume TEXT, root_inode INTEGER, PRIMARY KEY (identifier AUTOINCREMENT))ÅK7Å'indexchange_buffer_entries_state_idxchange_buffer_entriesCREATE INDEX change_buffer_entries_state_idx on change_buffer_entries (state)Çl77Ñwtablechange_buffer_entrieschange_buffer_entriesCREATE TABLE change_buffer_entries (identifier INTEGER NOT NULL, state INTEGER NOT NULL, fschange INTEGER NOT NULL, failure_count INTEGER, next_retry_time INTEGER, fschange_on_success INTEGER, fschange_on_failure INTEGER, blacklist_info TEXT, time INTEGER, ignore_on_failure INTEGER, PRIMARY KEY (identifier))T˙‡z           •R                                                                                                                                                                                                                                                                                                                                  éT>.éP>.    7ö-;  O/           	       7  DOWNLOADCREATEmodule_1_foot_1.prt.2gAIoY2NvbW1vbi5jbG91ZF9lbnRyeQpDbG91ZEVudHJ5CnEBKYFxAk59cQMoVQRzaXplcQROVQhkb2NfdHlwZXEFY2NvbW1vbi5jb25zdGFudHMKRG9jVHlwZQpxBksAhVJxB1UNY2hpbGRfZG9jX2lkc3EIY2NvbW1vbi5jbG91ZF9lbnRyeQpDaGlsZHJlbk5vdExvYWRlZApxCSmBcQpOfYZiVRRsYXN0X2NoYW5nZWRfbG9jYWxseXELiVUOcGFyZW50X2RvY19pZHNxDGNfX2J1aWx0aW5fXwpzZXQKcQ1dcQ5YBAAAAHJvb3RxD2GFUnEQVQdjcmVhdGVkcRFOVQZzaGFyZWRxEohVCGNoZWNrc3VtcRNOVQlpc196b21iaWVxFIlVCG1vZGlmaWVkcRVKYSLGW1UIZmlsZW5hbWVxFlgFAAAAQmlwZWRxF1URb3JpZ2luYWxfY2hlY2tzdW1xGE5VB3ZlcnNpb25xGUtxVQ1vcmlnaW5hbF9zaXplcRpOVQhhY2xfcm9sZXEbY2NvbW1vbi5jb25zdGFudHMKQWNsUm9sZQpxHEsBhVJxHVUSZG93bl9zYW1wbGVfc3RhdHVzcR5OVQxjaGFuZ2Vfc3RhbXBxH05VB3JlbW92ZWRxIIlVBmRvY19pZHEhWCEAAAAxTWtNd3lVU2Q5WUZGeld3OXBoOEI0Q2ZTc0xnNlpoaXZxIlUPcGlja2xlZF92ZXJzaW9ucSNLB1UTZG93bmxvYWRfcmVzdHJpY3RlZHEkiXWGYmgBKYFxJU59cSYoaAROaAVoB2gIaApoC4loDGgNXXEnWCEAAAAxTWtNd3lVU2Q5WUZGeld3OXBoOEI0Q2ZTc0xnNlpoaXZxKGGFUnEpaBFOaBKIaBNOaBSJaBVKjSHGW2gWWAMAAABDQURxKmgYTmgZSwRoGk5oG2gcSwCFUnEraB5OaB9OaCCJaCFYIQAAADFwTG8wVVNZVFEtOGRZeWd4V21maW80bVRnZTF5VjlCUnEsaCNLB2gkiXWGYmgBKYFxLU59cS4oaAROaAVoB2gIaApoC4loDGgNXXEvWCEAAAAxcExvMFVTWVRRLThkWXlneFdtZmlvNG1UZ2UxeVY5QlJxMGGFUnExaBFOaBKIaBNOaBSJaBVKyCHGW2gWWAgAAABtb2R1bGVfMXEyaBhOaBlLA2gaTmgbaCtoHk5oH05oIIloIVghAAAAMTU4N3ROdEJNckN1LVJSVWZycktUWkQ5STRVc3lZTzhpcTNoI0sHaCSJdYZiaAEpgXE0Tn1xNShoBEr23AEAaAVoBksBhVJxNmgIaApoC4loDGgNXXE3WCEAAAAxNTg3dE50Qk1yQ3UtUlJVZnJyS1RaRDlJNFVzeVlPOGlxOGGFUnE5aBFOaBKIaBNYIAAAADQ5OWMwMmVkMjhiZjBlNTM5ZjdjOWE3ODk5ZDYzZTY2cTpoFIloFUohIsZbaBZYFQAAAG1vZHVsZV8xX2Zvb3RfMS5wcnQuMnE7aBhOaBlLBGgaTmgbaCtoHmNjb21tb24uY29uc3RhbnRzCkhRRG93blNhbXBsZVN0YXR1cwpxPEsAhVJxPWgfTmggiWghWCEAAAAxM0JVNDdwaVBCXzNXOXRPalkwQXBGTjNuOVZoSlJNdm9xPmgjSwdoJIl1hmJ0cT8u\\?\S:\FILES(imp)\Drive13BU47piPB_3W9tOjY0ApFN3n9VhJRMvo     ™serial:1350362267‹ˆ>.8´module_1_foot_1.prt.2éX=.    ;ö5;  O/           	       ;  DOWNLOADCREATEmodule_1_rocker_1.prt.2gAIoY2NvbW1vbi5jbG91ZF9lbnRyeQpDbG91ZEVudHJ5CnEBKYFxAk59cQMoVQRzaXplcQROVQhkb2NfdHlwZXEFY2NvbW1vbi5jb25zdGFudHMKRG9jVHlwZQpxBksAhVJxB1UNY2hpbGRfZG9jX2lkc3EIY2NvbW1vbi5jbG91ZF9lbnRyeQpDaGlsZHJlbk5vdExvYWRlZApxCSmBcQpOfYZiVRRsYXN0X2NoYW5nZWRfbG9jYWxseXELiVUOcGFyZW50X2RvY19pZHNxDGNfX2J1aWx0aW5fXwpzZXQKcQ1dcQ5YBAAAAHJvb3RxD2GFUnEQVQdjcmVhdGVkcRFOVQZzaGFyZWRxEohVCGNoZWNrc3VtcRNOVQlpc196b21iaWVxFIlVCG1vZGlmaWVkcRVKYSLGW1UIZmlsZW5hbWVxFlgFAAAAQmlwZWRxF1URb3JpZ2luYWxfY2hlY2tzdW1xGE5VB3ZlcnNpb25xGUtxVQ1vcmlnaW5hbF9zaXplcRpOVQhhY2xfcm9sZXEbY2NvbW1vbi5jb25zdGFudHMKQWNsUm9sZQpxHEsBhVJxHVUSZG93bl9zYW1wbGVfc3RhdHVzcR5OVQxjaGFuZ2Vfc3RhbXBxH05VB3JlbW92ZWRxIIlVBmRvY19pZHEhWCEAAAAxTWtNd3lVU2Q5WUZGeld3OXBoOEI0Q2ZTc0xnNlpoaXZxIlUPcGlja2xlZF92ZXJzaW9ucSNLB1UTZG93bmxvYWRfcmVzdHJpY3RlZHEkiXWGYmgBKYFxJU59cSYoaAROaAVoB2gIaApoC4loDGgNXXEnWCEAAAAxTWtNd3lVU2Q5WUZGeld3OXBoOEI0Q2ZTc0xnNlpoaXZxKGGFUnEpaBFOaBKIaBNOaBSJaBVKjSHGW2gWWAMAAABDQURxKmgYTmgZSwRoGk5oG2gcSwCFUnEraB5OaB9OaCCJaCFYIQAAADFwTG8wVVNZVFEtOGRZeWd4V21maW80bVRnZTF5VjlCUnEsaCNLB2gkiXWGYmgBKYFxLU59cS4oaAROaAVoB2gIaApoC4loDGgNXXEvWCEAAAAxcExvMFVTWVRRLThkWXlneFdtZmlvNG1UZ2UxeVY5QlJxMGGFUnExaBFOaBKIaBNOaBSJaBVKyCHGW2gWWAgAAABtb2R1bGVfMXEyaBhOaBlLA2gaTmgbaCtoHk5oH05oIIloIVghAAAAMTU4N3ROdEJNckN1LVJSVWZycktUWkQ5STRVc3lZTzhpcTNoI0sHaCSJdYZiaAEpgXE0Tn1xNShoBEpHkwEAaAVoBksBhVJxNmgIaApoC4loDGgNXXE3WCEAAAAxNTg3dE50Qk1yQ3UtUlJVZnJyS1RaRDlJNFVzeVlPOGlxOGGFUnE5aBFOaBKIaBNYIAAAADVkNjg5ODcyYWIxNTM3ZTdjZjZjYTQ0MTNjMjMzMGI3cTpoFIloFUohIsZbaBZYFwAAAG1vZHVsZV8xX3JvY2tlcl8xLnBydC4ycTtoGE5oGUsEaBpOaBtoK2geY2NvbW1vbi5jb25zdGFudHMKSFFEb3duU2FtcGxlU3RhdHVzCnE8SwCFUnE9aB9OaCCJaCFYIQAAADFkWGxZYlBqZ3RmTGlxaVRUSlNQQUpnTV8xQzVRMmRNYXE+aCNLB2gkiXWGYnRxPy4=\\?\S:\FILES(imp)\Drive1dXlYbPjgtfLiqiTTJSPAJgM_1C5Q2dMa     ™serial:1350362267ìG=JOµMmodule_1_rocker_1.prt.2T˙‚<                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             fschanges8T˙‹(   
+≠ ˝ 	∏#VH ˇ˘ÛÌÁ·€’œ∫¥Æ®…√ùóëãÖysmgWQKE?93-'!a
+˛¯ÚÏÊ‡⁄‘…√Ω∑±´•üôìÅ{ohaZåSL-&E>7ˇ¯Òÿ— √‰ºµÆß†ôÜxqjíc\C<5.'O ˇ¯ÒÍ„‹’Œ«¿qπ¶üòë≤äÉ|ungZSLjE>70) 
+˘
+Ú
+Î
+‰¨
+›
+÷
+œ
+»
+¡
+∫
+≥
+¨
+••
+û
+ó€Ì
+ê
+â
+Ç
+{
+t
+m 
+f
+_c
+X
+Q
+J˘
+C
+<
+5
+.
+'
+ YR
+
+
+
+	˝	ˆ	Ô√ºûë	Ë	·	⁄	”	Ã	≈	æâ	±	™	£|	ú	ï	é	á	Ä	y	r	k	d	]	V	O	H	AÊ	:	3	,	%		A				˚ÙÌ70Êﬂÿ— aa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      54321.-,+*)'&%$#" 6
+	  ˇ ˛ ˝ ¸ ˘ ¯ ˜ ˆ ı Ù Ú Ò  Ó Ì Î Í È Ë Á Ê „ ‚ ‡ ﬂ ﬁ › ‹ € ⁄ Ÿ ÿ ÷ ’ ‘ ” “ — – œ Œ7 Õ Ã À   … « ∆ ≈< ƒ √ ¬ ¡ ¿ ø Ω º ª ∫   æ π ∑ ∂ µ ¥ ≥ ± ∞ Ø Æ ≠J   ≤ ¨ ´ ™ ® ß ¶ • §ç   ©8 £ ¢ † ü û ù úﬂ   ° õ ö ô ò ó ñ î ì í ëÎ   ï 1 ê è é ; å ãu   ç á Üá  ä â à Ö Ñ Ç Å Äá 2~}œ   É|{zyxwvuts }rqponmlkjih] ~gedcba`_^]\£ f[ZYXWVUTSR& ONMLD QPKJIHGDCBAD FE@?>N 
+<N 0/N (=x  ˚ ˙ñ  Ô » ∏É ò %≥ & · ◊÷ 6÷  Ï˙ Ë‚  ‰Ù ! Â    ÛT˙ﬁ“   d óT ÁŒµúÉjQ8Ì‘ª¢âpW>%Û⁄¡®èv]D+˘‡«Æï|cJ1Î“π†ánU<#
+
+Ò
+ÿ
+ø
+¶
+ç
+t
+[
+B
+)
+	˜	ﬁ	≈	¨	ì	z	a	H	/	˝‰À≤ôÄgN5Í—∏üÜmT;"ı‹√™ëx_F-˚‚…∞ó~eL3Ëœ∂ùâpW>%Û⁄¡®èv]D+˘‡«Æï|cJ1ËœûÖl∑T                              Ç7     7@≠Ï=p£◊Ç5     5@≠Ë=p£◊Ç4     4@≠‰=p£◊Ç2     2@≠ﬂ?|ÌíÇ6     6@≠Íºj~˙Ç1     1@≠‹ºj~˙Ç0     0@≠⁄=p£◊   Ç8     8
+ﬂÇ3     3@≠‚ºj~˙Ç/     /@≠ÿ    Ç.     .@≠‘    Ç-     -@≠–˝Û∂FÇ,     ,@≠Œºj~˙Ç+     +@≠     Ç*     *@≠«æv»¥Ç)     )@≠ƒ~˘€#Ç(     (@≠¬    Ç'     '@≠¿=p£◊Ç&     &@≠ººj~˙Ç%     %@≠ª?|ÌíÇ$     $@≠π?|ÌíÇ#     #@≠∏    Ç"     "@≠∂=p£◊Ç!     !@≠¥ºj~˙Ç       @≠≤~˘€#Ç     @≠Ø|ÌëiÇ     @≠Æ    Ç     @≠´æv»¥Ç     @≠©æv»¥Ç     @≠ß?|ÌíÇ     @≠•æv»¥Ç     @≠£|ÌëiÇ     @≠¢=p£◊Ç     
+⁄Ç     @≠û    Ç     @≠õ|ÌëiÇ     @≠ô|ÌëiÇ     @≠ñºj~˙Ç     @≠î˝Û∂FÇ     @≠íºj~˙Ç     @≠ê˝Û∂FÇ     @≠è?|ÌíÇ     @≠å~˘€#Ç     @≠à    Ç     @≠Ç=p£◊Ç     @≠~~˘€#Ç
+     
+@≠x=p£◊Ç	     	@≠r˝Û∂FÇ     @≠o?|ÌíÇ     @≠m?|ÌíÇ     @≠k?|ÌíÇ     @≠h~˘€#Ç     @≠c?|ÌíÇ     @≠`ºj~˙Ç     @≠[?|ÌíÇ     @≠X˝Û∂FÇ       @≠W?|ÌíÅ      ˇ@≠Tºj~˙Å~      ˛@≠S?|ÌíÅ}      ˝
+’Å|      ¸@≠L=p£◊Å{      ˚@≠Iæv»¥Åz      ˙@≠H    Åy      ˘@≠C?|ÌíÅx      ¯@≠?æv»¥Åw      ˜@≠<~˘€#Åv      ˆ@≠9æv»¥Åu      ı@≠7æv»¥Åt      Ù@≠5æv»¥Ås      Û@≠3?|ÌíÅr      Ú@≠/|ÌëiÅq      Ò@≠*~˘€#Åp      @≠$=p£◊Åo      Ô@≠ ºj~˙Ån      Ó@≠ºj~˙Åm      Ì@≠˝Û∂FÅl      Ï@≠˝Û∂FÅk      Î@≠    Åj      Í@≠æv»¥Åi      È@≠|ÌëiÅh      Ë@≠æv»¥Åg      Á@≠    Åf      Ê@≠æv»¥Åe      Â@≠æv»¥Åd      ‰@≠ ˝Û∂FÅc      „@¨˛ºj~˙Åb      ‚@¨˙    Åa      ·@¨ıæv»¥Å`      ‡@¨Ú~˘€#Å_      ﬂ@¨˝Û∂FÅ^      ﬁ@¨Ìæv»¥Å]      ›@¨Ï    Å\      ‹@¨Í~˘€#Å[      €@¨È?|ÌíÅZ      ⁄@¨Áæv»¥ÅY      Ÿ@¨Ê=p£◊ÅX      ÿ@¨‰=p£◊ÅW      ◊@¨‚    ÅV      ÷@¨ﬂ?|ÌíÅU      ’@¨›æv»¥ÅT      ‘@¨Ÿ|ÌëiÅS      ”@¨“~˘€#ÅR      “@¨–˝Û∂FÅQ      —@¨œ|ÌëiÅP      –@¨Œ    ÅO      œ@¨Ã=p£◊ÅN      Œ@¨ ºj~˙ÅM      Õ@¨»~˘€#ÅL      Ã@¨«?|ÌíÅK      À@¨ƒºj~˙ÅJ       @¨¬˝Û∂FÅI      …
+ÃÅH      »@¨æ    ÅG      «@¨º    ÅF      ∆@¨∫~˘€#ÅE      ≈@¨∏˝Û∂FÅD      ƒ@¨∂˝Û∂FÅC      √@¨≤~˘€#ÅB      ¬@¨∞=p£◊ÅA      ¡@¨Æ~˘€#Å@      ¿@¨¨    Å?      ø@¨™ºj~˙Å>      æ@¨¶˝Û∂FÅ=      Ω@¨•?|ÌíÅ<      º@¨£|ÌëiÅ;      ª@¨¢    Å:      ∫@¨†~˘€#Å9      π@¨û˝Û∂FÅ8      ∏@¨ú˝Û∂FÅ7      ∑@¨öºj~˙Å6      ∂@¨ô?|ÌíÅ5      µ@¨ñ    Å4      ¥@¨í=p£◊Å3      ≥@¨é~˘€#Å2      ≤@¨ãæv»¥Å1      ±@¨ä=p£◊Å0      ∞@¨à˝Û∂FÅ/      Ø@¨áæv»¥Å.      Æ@¨Ü    Å-      ≠@¨Ñ    Å,      ¨@¨Å|ÌëiÅ+      ´@¨}?|ÌíÅ*      ™@¨y?|ÌíÅ)      ©@¨v~˘€#Å(      ®@¨tºj~˙Å'      ß@¨s?|ÌíÅ&      ¶@¨r    Å%      •@¨p~˘€#Å$      §@¨nºj~˙Å#      £@¨k|ÌëiÅ"      ¢@¨hºj~˙T˙‡é                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        _2_prt" version="234">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="LINK_BASE_2.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>59717256.661176912</Mass>
+<CenterOfMass>-50.000008708691489 30.049853569081925 -5</CenterOfMass>
+<Inertia>18465511339.615406 50497007517.452866 67967231246.04866 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="link_base_2_prt.step" type="STEP"/>
+</Part>
+<Part name="LOWER_LEG_CONNECTOR" uid="LOWER_LEG_CONNECTOR_prt" version="152">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="LOWER_LEG_CONNECTOR.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>28274333.88230814</Mass>
+<CenterOfMass>5 0 0</CenterOfMass>
+<Inertia>12723450247.038662 6597344774.2305746 6597344370.8465576 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="lower_leg_connector_prt.step" type="STEP"/>
+</Part>
+<Part name="MOTOR_CONNECTOR" uid="MOTOR_CONNECTOR_prt" version="201">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="MOTOR_CONNECTOR.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>20208198.198085804</Mass>
+<CenterOfMass>2.5 -27.261795462925662 0</CenterOfMass>
+<Inertia>19880467860.501419 4064375781.1057773 15900292905.822365 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="motor_connector_prt.step" type="STEP"/>
+</Part>
+<Part name="PLUS" uid="PLUS_prt" version="210">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="PLUS.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>3270148.6503302511</Mass>
+<CenterOfMass>45.749999999907772 0 0</CenterOfMass>
+<Inertia>238333717.78501391 2037495771.9538338 1812177537.2976685 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="plus_prt.step" type="STEP"/>
+</Part>
+<Part name="PRIMARY_LINK_UL" uid="PRIMARY_LINK_UL_prt" version="211">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="PRIMARY_LINK_UL.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>57978120.107487164</Mass>
+<CenterOfMass>0 109.76984122593899 2.5</CenterOfMass>
+<Inertia>204487556547.50125 18458243205.928078 222704224252.97839 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="primary_link_ul_prt.step" type="STEP"/>
+</Part>
+<Part name="PRIMARY_LINK" uid="PRIMARY_LINK_prt" version="196">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="PRIMARY_LINK.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>29363330.638242848</Mass>
+<CenterOfMass>-30.173335081765575 82.089570215211893 2</CenterOfMass>
+<Inertia>54657652378.031853 6423733680.6638365 61003083843.660309 0 0 -75507780.031785369</Inertia>
+</MassProperties>
+<GeometryFile name="primary_link_prt.step" type="STEP"/>
+</Part>
+<Part name="SERVO" uid="SERVO_prt" version="305">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="SERVO.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>31543539.81633975</Mass>
+<CenterOfMass>10.000004240490258 5.2748767637880398 -0.024277765750260343</CenterOfMass>
+<Inertia>8409979133.2311535 5650393143.3040037 4857498048.9430704 15871272.470320122 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="servo_prt.step" type="STEP"/>
+</Part>
+<Part name="SHAFT_SUPPORT_LINK" uid="SHAFT_SUPPORT_LINK_prt" version="162">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="SHAFT_SUPPORT_LINK.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>5964657.0826471141</Mass>
+<CenterOfMass>2.5 30 10</CenterOfMass>
+<Inertia>1999960239.217978 212406484.92054087 1812406492.1417999 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="shaft_support_link_prt.step" type="STEP"/>
+</Part>
+<Part name="SUPPORT_LINK1" uid="SUPPORT_LINK1_prt" version="251">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="SUPPORT_LINK1.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>31200000</Mass>
+<CenterOfMass>54.5 -30 2.5400641025641022</CenterOfMass>
+<Inertia>9424949919.8717937 28251549919.871796 37546600000 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="support_link1_prt.step" type="STEP"/>
+</Part>
+<Part name="TARSAL_CONNECTOR" uid="TARSAL_CONNECTOR_prt" version="613">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="TARSAL_CONNECTOR.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>28617513.278257247</Mass>
+<CenterOfMass>2.0412787067601208 45.357596745604667 29.999999999082423</CenterOfMass>
+<Inertia>26919323140.95158 9470050808.2179832 17750010610.370655 0 0 60942402.520996049</Inertia>
+</MassProperties>
+<GeometryFile name="tarsal_connector_prt.step" type="STEP"/>
+</Part>
+<Part name="TARSAL_LINK" uid="TARSAL_LINK_prt" version="450">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="TARSAL_LINK.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>109265094.11558056</Mass>
+<CenterOfMass>25.00000000000195 16.924108106846987 12.684757055169527</CenterOfMass>
+<Inertia>119726404445.00458 136421054327.87526 29588229184.610287 6690474554.7749624 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="tarsal_link_prt.step" type="STEP"/>
+</Part>
+<Part name="TOEB" uid="TOEB_prt" version="314">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="TOEB.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>12209142.186073394</Mass>
+<CenterOfMass>12.756849007361192 7.4426490732202293 -12.991575957157234</CenterOfMass>
+<Inertia>1395609469.8006053 1782197060.6323202 914946188.1647625 -150005383.23581904 -40423021.600723267 -3079444.6016508155</Inertia>
+</MassProperties>
+<GeometryFile name="toeb_prt.step" type="STEP"/>
+</Part>
+<Part name="TOE" uid="TOE_prt" version="342">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="TOE.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>12209142.186073337</Mass>
+<CenterOfMass>12.243150992638785 7.4426490732202204 -12.991575957157579</CenterOfMass>
+<Inertia>1395609469.800849 1782197060.6325622 914946188.1647594 -150005383.23581034 40423021.600745618 3079444.6016517468</Inertia>
+</MassProperties>
+<GeometryFile name="toe_prt.step" type="STEP"/>
+</Part>
+<Part name="UNIVERSAL_LINK_A" uid="UNIVERSAL_LINK_A_prt" version="324">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="UNIVERSAL_LINK_A.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>2954406.3653118322</Mass>
+<CenterOfMass>2.5 24.603529228331418 3.3769305405973791</CenterOfMass>
+<Inertia>1630080227.6122801 1104305028.9023519 538085225.23206079 -81087686.30818522 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="universal_link_a_prt.step" type="STEP"/>
+</Part>
+<Part name="UNIVERSAL_LINK_B" uid="UNIVERSAL_LINK_B_prt" version="311">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="UNIVERSAL_LINK_B.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>19110646.695374463</Mass>
+<CenterOfMass>7.5000048456302482 0 -8.6698926346078942</CenterOfMass>
+<Inertia>18714823729.071587 8984041983.749403 10456349866.936115 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="universal_link_b_prt.step" type="STEP"/>
+</Part>
+<Part name="UNIVERSAL_LINK_C_WOA" uid="UNIVERSAL_LINK_C_WOA_prt" version="492">
+<ModelUnits mass="kg" length="mm"/>
+<PartFile name="UNIVERSAL_LINK_C_WOA.prt" type="ProEngineer Part"/>
+<MassProperties>
+<Mass>43175616.626373991</Mass>
+<CenterOfMass>-0.086023905815359569 0.016538766137740919 0.0075897884464205655</CenterOfMass>
+<Inertia>15144713301.533691 9723839160.5486183 11132420394.606308 6022214.3742609285 3248406.2921673115 7079301.3285393501</Inertia>
+</MassProperties>
+<GeometryFile name="universal_link_c_woa_prt.step" type="STEP"/>
+</Part>
+</Parts>
+</SimscapeMultibodyImportXML>

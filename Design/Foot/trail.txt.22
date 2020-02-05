@@ -1,0 +1,55 @@
+﻿!trail file version No. 1900
+!Creo  TM  5.0  (c) 2019 by PTC Inc.  All Rights Reserved.
+!Exit Logger data:
+!	Process ID: 14280
+!	Application: Creo_Parametric
+!	Start date&time: 2019/02/10  17:59:50
+!	language: usascii
+!	machine type: x86e_win64
+!	datecode: 5.0.0.0
+!	Server: NONE
+!	Workspace: NONE
+!	traceback file: S:\FILES(imp)\BIPED\Design\Foot\traceback.log
+!end Exit Logger data.
+< 0 1.220741 1795 0 0 1030 1920 0 0 1080 13
+!mem_use INCREASE Blocks 766835, AppSize 82222589, SysSize 96174888
+< 0 0.988444 1650 0 0 834 1920 0 0 1080 13
+< 0 0.988444 1485 0 0 834 1920 0 0 1080 13
+< 0 0.987259 1485 0 0 833 1920 0 0 1080 13
+< 0 0.987259 1501 0 0 833 1920 0 0 1080 13
+< 0 0.987259 1517 0 0 833 1920 0 0 1080 13
+< 0 0.987259 1533 0 0 833 1920 0 0 1080 13
+!%CIWelcome to Creo Parametric 5.0.0.0.
+!AFX datecode: 5.0.0.0 2017.12.21.11
+!AFX exec path: C:\Program Files\PTC\Creo 5.0.0.0\Common Files\afx\x86e_win64\afx50.dll
+!AFX text path: C:\Program Files\PTC\Creo 5.0.0.0\Common Files\afx\
+< 0 1.114074 1533 0 0 940 1920 0 0 1080 13
+< 0 0.987259 1533 0 0 833 1920 0 0 1080 13
+#PART
+#RETRIEVE
+!%CPEnter object name: 
+!%TR
+S:\FILES(imp)\BIPED\Design\Foot\axleb_2-1.prt.1
+< 2 0.118519 178 0 0 100 1920 0 0 1080 13
+~ Trail `UI Desktop` `UI Desktop` `DLG_PREVIEW_POST` \
+ `file_open`
+!Command ProCmdOSExit was pushed from the software.
+! Message Dialog: Warning
+!               : Creo Parametric will terminate and any unsaved work will be lost.
+!               : Do you really want to exit?
+!Application (WB192PluginProWF): running DLL-mode user_initialize
+!Application (WB192PluginProWF): returned from DLL-mode user_initialize; status is 0
+!Application (WB192PluginProWF): started via registry.
+!	exec path: C:\Program Files\ANSYS Inc\v192\aisol\CADIntegration\ProE\winx64\WBPlugInCreo4COM.dll
+!	type: synchronous Pro/TOOLKIT DLL
+!Application (ac4pro192dll): running DLL-mode user_initialize
+!Application (ac4pro192dll): returned from DLL-mode user_initialize; status is 0
+!Application (ac4pro192dll): started via registry.
+!	exec path: C:\Program Files\ANSYS Inc\v192\ANSYS\ac4\bin\pro\winx64\ac4pro.exe
+!	type: synchronous Pro/TOOLKIT DLL
+!%CI dbg_err_crash() - continuing from serious error (ORDER_DEBUG). 
+!%CI dbg_err_crash() - continuing from serious error (ORDER_DEBUG). 
+!%CI dbg_err_crash() - continuing from serious error (ORDER_DEBUG). 
+~ Close `UI Message Dialog` `UI Message Dialog`
+!mem_use INCREASE Blocks 799758, AppSize 110188025, SysSize 126318856
+!%CI dbg_err_crash() - continuing from serious error (ORDER_DEBUG). 

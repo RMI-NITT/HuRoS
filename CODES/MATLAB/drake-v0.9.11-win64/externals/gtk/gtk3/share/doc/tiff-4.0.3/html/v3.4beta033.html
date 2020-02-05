@@ -1,0 +1,66 @@
+getElement": "[gh=mtb] .bbButtonGroup",
+            "description": "The Boxes Button is where you can add this email to a Box",
+            "buttons": [{
+              "name": "Got it",
+              "function": "exit"
+            }]
+          }],
+          "showInfo": false
+        }]
+      }]
+    },
+
+    "showIOSModal": {
+      "trigger": {
+        "type": "view_change_expression",
+        "params": "BB.isExperimentEnabled('iosNotify') && BB.Data.getAllBoxesMap().size() > 0 && (_.isNotReal(BB.getUser().get('lastSeenIOSVersion')) || BB.getUser().get('lastSeenIOSVersion') === '')"
+      },
+
+      "pages": [{
+        "itemsOnScreen": [{
+          "type": "FUNCTION",
+          "name": "showIOSModal",
+          "callbacks": {
+            "next": "exit"
+          }
+        }],
+        "noHistory": true
+      }]
+    },
+
+    "bumpLaterFirstRun": {
+      "trigger": {
+        "type": "FIRST_LOAD_EXPRESSION",
+        "params": "BB.getUser().get('installAppId') === 'BumpLater'"
+      },
+
+      "pages": [{
+        "itemsOnScreen": [{
+          "type": "MODAL",
+          "title": "Welcome to Email Snooze by Streak",
+          "html": "Thanks for installing Streak! Snoozing an email lets you archive a message now, but then pop back to the top of your inbox later.<br/><br/>Take this 47 second tour on how to use some of the great features in email snooze.",
+          "rightButtonText": "Show me",
+          "showRightButton": true,
+          "rightButtonFunction": {
+            "functionName": "changeChapterTo",
+            "args": ["bumpLaterHowTo"]
+          },
+          "showLeftButton": true,
+          "leftButtonText": "Not now",
+          "leftButtonFunction": "exit"
+        }]
+      }]
+    },
+
+    "bumpLaterExisting": {
+      "trigger": {
+        "type": "FIRST_LOAD_EXPRESSION",
+        "params": "TourRunner.hasSeenChapterBefore('main') && BB.getUser().get('installAppId') !== 'BumpLater' && BB.isExperimentEnabled('bumpLater')"
+      },
+
+      "pages": [{
+        "itemsOnScreen": [{
+          "type": "MODAL",
+          "title": "New Streak Feature: Email Snoozing",
+          "html": "Streak just got better! We've added the ability to snooze your emails and bring them back to the top of your inbox. Would you like to take a tour of this new feature?",
+        

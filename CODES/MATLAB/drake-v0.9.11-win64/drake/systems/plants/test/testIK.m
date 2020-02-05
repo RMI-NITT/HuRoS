@@ -1,0 +1,933 @@
+function testIK
+w = warning('off','Drake:RigidBody:SimplifiedCollisionGeometry');
+warning('off','Drake:RigidBody:NonPositiveInertiaMatrix');
+warning('off','Drake:RigidBodyManipulator:ReplacedCylinder');
+warning('off','Drake:RigidBodyManipulator:UnsupportedContactPoints');
+warning('off','Drake:RigidBodyManipulator:UnsupportedVelocityLimits');
+urdf = [getDrakePath,'/examples/Atlas/urdf/atlas_minimal_contact.urdf'];
+urdf_collision = [getDrakePath,'/examples/Atlas/urdf/atlas_convex_hull.urdf'];
+options.floating = true;
+robot = RigidBodyManipulator(urdf,options);
+nq = robot.getNumPositions();
+
+r_collision = RigidBodyManipulator(urdf_collision,options);
+ignored_bodies = {'ltorso','mtorso','r_talus','l_talus'};
+r_collision = addLinksToCollisionFilterGroup(r_collision,ignored_bodies,'no_collision',1);
+r_collision = r_collision.compile();
+
+l_foot = robot.findLinkId('l_foot');
+r_foot = robot.findLinkId('r_foot');
+l_hand = robot.findLinkId('l_hand');
+r_hand = robot.findLinkId('r_hand');
+head = robot.findLinkId('head');
+world = robot.findLinkId('world');
+l_foot_geometry = robot.getBody(l_foot).getCollisionGeometry;
+r_foot_geometry = robot.getBody(r_foot).getCollisionGeometry;
+l_foot_pts = [];
+r_foot_pts = [];
+for i=1:length(l_foot_geometry),
+  l_foot_pts = [l_foot_pts robot.getBody(l_foot).getCollisionGeometry{i}.getPoints];
+end
+for i=1:length(r_foot_geometry),
+  r_foot_pts = [r_foot_pts robot.getBody(r_foot).getCollisionGeometry{i}.getPoints];
+end
+n_l_foot_pts = size(l_foot_pts, 2);
+n_r_foot_pts = size(r_foot_pts, 2);
+l_hand_pts = [0;0;0];
+r_hand_pts = [0;0;0];
+
+coords = robot.getStateFrame.getCoordinateNames();
+coords = coords(1:robot.getNumPositions);
+l_leg_kny = find(strcmp(coords,'l_leg_kny'));
+r_leg_kny = find(strcmp(coords,'r_leg_kny'));
+l_leg_hpy = find(strcmp(coords,'l_leg_hpy'));
+r_leg_hpy = find(strcmp(coords,'r_leg_hpy'));
+l_leg_aky = find(strcmp(coords,'l_leg_aky'));
+r_leg_aky = find(strcmp(coords,'r_leg_aky'));
+l_leg_hpz = find(strcmp(coords,'l_leg_hpz'));
+r_leg_hpz = find(strcmp(coords,'r_leg_hpz'));
+
+tspan = [0,1];
+nom_data = load('../../../examples/Atlas/data/atlas_fp.mat');
+q_nom = nom_data.xstar(1:nq);
+q_seed = q_nom+1e-2*randn(nq,1);
+ikoptions = IKoptions(robot);
+ikoptions = ikoptions.setDebug(true);
+ikoptions = ikoptions.setMex(false);
+ikoptions = ikoptions.setMajorIterationsLimit(3000);
+ikmexoptions = ikoptions;
+ikmexoptions = ikmexoptions.setMex(true);
+
+kc1 = WorldCoMConstraint(robot,[0;0;0.9],[0;0;1],tspan,1);
+kc1prime = WorldCoMConstraint(robot,[nan;nan;0.9],[nan;nan;0.92],tspan/2,1);
+display('Check a single CoM constraint')
+q = test_IK_userfun(robot,q_seed,q_nom,kc1,ikoptions);
+kinsol = doKinematics(robot,q);
+com = getCOM(robot,kinsol);
+valuecheck(com(1:2),[0;0],1e-5);
+if(com(3)>1+1e-5 || com(3)<0.9-1e-5)
+  error('CoM constraint is not satisfied')
+end
+display('Check IK pointwise with a single CoM constraint')
+[q,info] = test_IKpointwise_userfun(robot,[0,1],[q_seed q_seed],[q_nom q_nom],kc1,ikoptions);
+for i = 1:size(q,2)
+  kinsol = doKinematics(robot,q(:,i));
+  com = getCOM(robot,kinsol);
+  valuecheck(com(1:2),[0;0],1e-5);
+  if(com(3)>1+1e-5 ||com(3)<0.9-1e-5)
+    error('CoM constraint is not satisfied');
+  end
+end
+display('Check IK pointwise with multiple CoM constraints')
+[q,info] = test_IKpointwise_userfun(robot,[0,1],[q_seed q_seed],[q_nom q_nom],kc1,kc1prime,ikoptions);
+if(all(info == 1)&&~isempty(info))
+kinsol = doKinematics(robot,q(:,1));
+com = getCOM(robot,kinsol);
+valuecheck(com(1:2),[0;0],1e-5);
+if(com(3)>0.92+1e-5 ||com(3)<0.9-1e-5)
+  error('CoM constraint is not satisfied');
+end
+kinsol = doKinematics(robot,q(:,2));
+com = getCOM(robot,kinsol);
+valuecheck(com(1:2),[0;0],1e-5);
+if(com(3)>1+1e-5 ||com(3)<0.9-1e-5)
+  error('CoM constraint is not satisfied');
+end
+end
+pc_knee = PostureConstraint(robot,tspan);
+l_knee_idx = find(strcmp(robot.getStateFrame.getCoordinateNames(),'l_leg_kny'));
+r_knee_idx = find(strcmp(robot.getStateFrame.getCoordinateNames(),'r_leg_kny'));
+pc_knee = pc_knee.setJointLimits([l_knee_idx;r_knee_idx],[0.2;0.2],[inf;inf]);
+display('Check a single CoM constraint with a posture con/y>
+            <z>4.795</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.81294</x>
+            <y>14.030736</y>
+            <z>4.795</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.975154</x>
+            <y>13.92563</y>
+            <z>4.795</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.133265</x>
+            <y>13.814444</y>
+            <z>4.795</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.28696</x>
+            <y>13.697229</y>
+            <z>4.795</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.436155</x>
+            <y>13.574337</y>
+            <z>4.795</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.580776</x>
+            <y>13.446095</y>
+            <z>4.795</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.721025</x>
+            <y>13.313086</y>
+            <z>4.795</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>4.9952</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.857289</x>
+            <y>13.175997</y>
+            <z>4.795</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.940291</x>
+            <y>12.868741</y>
+            <z>5.0831</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>4.8829</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.292274</x>
+            <y>14.282402</y>
+            <z>4.5948</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.473391</x>
+            <y>14.215117</y>
+            <z>4.5948</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.646541</x>
+            <y>14.129097</y>
+            <z>4.5948</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.81294</x>
+            <y>14.030736</y>
+            <z>4.5948</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.975154</x>
+            <y>13.92563</y>
+            <z>4.5948</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.133265</x>
+            <y>13.814444</y>
+            <z>4.5948</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.28696</x>
+            <y>13.697229</y>
+            <z>4.5948</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.436155</x>
+            <y>13.574337</y>
+            <z>4.5948</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.580776</x>
+            <y>13.446095</y>
+            <z>4.5948</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.721025</x>
+            <y>13.313086</y>
+            <z>4.5948</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>4.795</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.857289</x>
+            <y>13.175997</y>
+            <z>4.5948</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.940291</x>
+            <y>12.868741</y>
+            <z>4.8829</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>4.6827</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.292274</x>
+            <y>14.282402</y>
+            <z>4.3946</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.473391</x>
+            <y>14.215117</y>
+            <z>4.3946</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.646541</x>
+            <y>14.129097</y>
+            <z>4.3946</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.81294</x>
+            <y>14.030736</y>
+            <z>4.3946</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.975154</x>
+            <y>13.92563</y>
+            <z>4.3946</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.133265</x>
+            <y>13.814444</y>
+            <z>4.3946</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.28696</x>
+            <y>13.697229</y>
+            <z>4.3946</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.436155</x>
+            <y>13.574337</y>
+            <z>4.3946</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.580776</x>
+            <y>13.446095</y>
+            <z>4.3946</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.721025</x>
+            <y>13.313086</y>
+            <z>4.3946</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>4.5948</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.857289</x>
+            <y>13.175997</y>
+            <z>4.3946</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.940291</x>
+            <y>12.868741</y>
+            <z>4.6827</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>4.4825</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.292274</x>
+            <y>14.282402</y>
+            <z>4.1944</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.473391</x>
+            <y>14.215117</y>
+            <z>4.1944</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.646541</x>
+            <y>14.129097</y>
+            <z>4.1944</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.81294</x>
+            <y>14.030736</y>
+            <z>4.1944</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.975154</x>
+            <y>13.92563</y>
+            <z>4.1944</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.133265</x>
+            <y>13.814444</y>
+            <z>4.1944</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.28696</x>
+            <y>13.697229</y>
+            <z>4.1944</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.436155</x>
+            <y>13.574337</y>
+            <z>4.1944</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.580776</x>
+            <y>13.446095</y>
+            <z>4.1944</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.721025</x>
+            <y>13.313086</y>
+            <z>4.1944</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>4.3946</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.857289</x>
+            <y>13.175997</y>
+            <z>4.1944</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.940291</x>
+            <y>12.868741</y>
+            <z>4.4825</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>4.2823</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.292274</x>
+            <y>14.282402</y>
+            <z>3.9942</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.473391</x>
+            <y>14.215117</y>
+            <z>3.9942</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.646541</x>
+            <y>14.129097</y>
+            <z>3.9942</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.81294</x>
+            <y>14.030736</y>
+            <z>3.9942</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.975154</x>
+            <y>13.92563</y>
+            <z>3.9942</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.133265</x>
+            <y>13.814444</y>
+            <z>3.9942</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.28696</x>
+            <y>13.697229</y>
+            <z>3.9942</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.436155</x>
+            <y>13.574337</y>
+            <z>3.9942</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.580776</x>
+            <y>13.446095</y>
+            <z>3.9942</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.721025</x>
+            <y>13.313086</y>
+            <z>3.9942</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>4.1944</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.857289</x>
+            <y>13.175997</y>
+            <z>3.9942</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.940291</x>
+            <y>12.868741</y>
+            <z>4.2823</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>4.0821</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.292274</x>
+            <y>14.282402</y>
+            <z>3.794</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.473391</x>
+            <y>14.215117</y>
+            <z>3.794</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.646541</x>
+            <y>14.129097</y>
+            <z>3.794</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.81294</x>
+            <y>14.030736</y>
+            <z>3.794</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.975154</x>
+            <y>13.92563</y>
+            <z>3.794</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.133265</x>
+            <y>13.814444</y>
+            <z>3.794</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.28696</x>
+            <y>13.697229</y>
+            <z>3.794</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.436155</x>
+            <y>13.574337</y>
+            <z>3.794</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.580776</x>
+            <y>13.446095</y>
+            <z>3.794</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.721025</x>
+            <y>13.313086</y>
+            <z>3.794</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>3.9942</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.857289</x>
+            <y>13.175997</y>
+            <z>3.794</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.940291</x>
+            <y>12.868741</y>
+            <z>4.0821</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>3.8819</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.292274</x>
+            <y>14.282402</y>
+            <z>3.5938</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.473391</x>
+            <y>14.215117</y>
+            <z>3.5938</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.646541</x>
+            <y>14.129097</y>
+            <z>3.5938</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.81294</x>
+            <y>14.030736</y>
+            <z>3.5938</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.975154</x>
+            <y>13.92563</y>
+            <z>3.5938</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.133265</x>
+            <y>13.814444</y>
+            <z>3.5938</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.28696</x>
+            <y>13.697229</y>
+            <z>3.5938</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.436155</x>
+            <y>13.574337</y>
+            <z>3.5938</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.580776</x>
+            <y>13.446095</y>
+            <z>3.5938</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.721025</x>
+            <y>13.313086</y>
+            <z>3.5938</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>3.794</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.857289</x>
+            <y>13.175997</y>
+            <z>3.5938</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.940291</x>
+            <y>12.868741</y>
+            <z>3.8819</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>3.6817</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.292274</x>
+            <y>14.282402</y>
+            <z>3.3936</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.473391</x>
+            <y>14.215117</y>
+            <z>3.3936</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.646541</x>
+            <y>14.129097</y>
+            <z>3.3936</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.81294</x>
+            <y>14.030736</y>
+            <z>3.3936</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.975154</x>
+            <y>13.92563</y>
+            <z>3.3936</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.133265</x>
+            <y>13.814444</y>
+            <z>3.3936</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.28696</x>
+            <y>13.697229</y>
+            <z>3.3936</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.436155</x>
+            <y>13.574337</y>
+            <z>3.3936</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.580776</x>
+            <y>13.446095</y>
+            <z>3.3936</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.721025</x>
+            <y>13.313086</y>
+            <z>3.3936</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>3.5938</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.857289</x>
+            <y>13.175997</y>
+            <z>3.3936</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.940291</x>
+            <y>12.868741</y>
+            <z>3.6817</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.989781</x>
+            <y>13.035261</y>
+            <z>3.4815</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.292274</x>
+            <y>14.282402</y>
+            <z>3.1934</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.473391</x>
+            <y>14.215117</y>
+            <z>3.1934</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.646541</x>
+            <y>14.129097</y>
+            <z>3.1934</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.81294</x>
+            <y>14.030736</y>
+            <z>3.1934</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>29.975154</x>
+            <y>13.92563</y>
+            <z>3.1934</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.133265</x>
+            <y>13.814444</y>
+            <z>3.1934</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.28696</x>
+            <y>13.697229</y>
+            <z>3.1934</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.436155</x>
+            <y>13.574337</y>
+            <z>3.1934</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+            <x>30.580776</x>
+            <y>13.446095</y>
+            <z>3.1934</z>
+          </coordinates>
+        </vertex>
+        <vertex>
+          <coordinates>
+           

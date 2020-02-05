@@ -1,0 +1,123 @@
+Application is running with Unicode string encoding.
+NOTEBOOK is not valid with Options_Modeler_Basic
+AE is not valid with Options_Modeler_Basic
+MESH is not valid with Options_Modeler_Basic
+DETAIL is not valid with Options_Modeler_Basic
+TOOLKIT is not valid with Options_Modeler_Basic
+NC-ADVANCED is not valid with Options_Modeler_Basic
+PLOT is not valid with Options_Modeler_Basic
+LIBRARYACCESS is not valid with Options_Modeler_Basic
+ECAD is not valid with Options_Modeler_Basic
+CABLING is not valid with Options_Modeler_Basic
+REPORT is not valid with Options_Modeler_Basic
+COMPOSITE is not valid with Options_Modeler_Basic
+DIAGRAM is not valid with Options_Modeler_Basic
+CDT is not valid with Options_Modeler_Basic
+NC-CHECK is not valid with Options_Modeler_Basic
+HARNESS-MFG is not valid with Options_Modeler_Basic
+DIEFACE is not valid with Options_Modeler_Basic
+FEM-POST is not valid with Options_Modeler_Basic
+PIPING is not valid with Options_Modeler_Basic
+DATA_for_PDGS is not valid with Options_Modeler_Basic
+SCAN_TOOLS is not valid with Options_Modeler_Basic
+LEGACY is not valid with Options_Modeler_Basic
+CASTING is not valid with Options_Modeler_Basic
+WELDING is not valid with Options_Modeler_Basic
+PHOTORENDER is not valid with Options_Modeler_Basic
+VERIFY is not valid with Options_Modeler_Basic
+PROCESS_ASM is not valid with Options_Modeler_Basic
+CMM is not valid with Options_Modeler_Basic
+PROCESS_MFG is not valid with Options_Modeler_Basic
+Web.Publish is not valid with Options_Modeler_Basic
+Web.Link is not valid with Options_Modeler_Basic
+SHEETMTL-DES is not valid with Options_Modeler_Basic
+NC-SHEETMETAL is not valid with Options_Modeler_Basic
+MOLDDESIGN-2 is not valid with Options_Modeler_Basic
+INTF-CADDS5 is not valid with Options_Modeler_Basic
+Mechanism_Design is not valid with Options_Modeler_Basic
+Behavioral_Modeler is not valid with Options_Modeler_Basic
+Expert_Machinist is not valid with Options_Modeler_Basic
+4DNavigator is not valid with Options_Modeler_Basic
+Import_Data_Doctor is not valid with Options_Modeler_Basic
+Design_Animation is not valid with Options_Modeler_Basic
+ADVANCED_RENDER is not valid with Options_Modeler_Basic
+Chinese_Translation is not valid with Options_Modeler_Basic
+ModelCHECK is not valid with Options_Modeler_Basic
+Collaboration_Ext_CatiaV4 is not valid with Options_Modeler_Basic
+Interactive_Surface_Design is not valid with Options_Modeler_Basic
+ISOGEN is not valid with Options_Modeler_Basic
+Mechanism_Dynamics is not valid with Options_Modeler_Basic
+Expert_Moldbase is not valid with Options_Modeler_Basic
+ASSY_PERFORMANCE is not valid with Options_Modeler_Basic
+Progressive_Die is not valid with Options_Modeler_Basic
+Reverse_Engineering is not valid with Options_Modeler_Basic
+Collaboration is not valid with Options_Modeler_Basic
+Advanced_Framework is not valid with Options_Modeler_Basic
+Collaboration_Ext_NX is not valid with Options_Modeler_Basic
+INTF_for_CATIA_V5 is not valid with Options_Modeler_Basic
+INTF_for_I-DEAS is not valid with Options_Modeler_Basic
+Intralink_8_0 is not valid with Options_Modeler_Basic
+Collaboration_Ext_CatiaV5 is not valid with Options_Modeler_Basic
+ECAD_COLLABORATION is not valid with Options_Modeler_Basic
+INTF_for_JT is not valid with Options_Modeler_Basic
+Digital_Rights_Mgt is not valid with Options_Modeler_Basic
+Tolerance_Analysis is not valid with Options_Modeler_Basic
+Manikin is not valid with Options_Modeler_Basic
+Manikin_Analysis is not valid with Options_Modeler_Basic
+Legacy_Migration is not valid with Options_Modeler_Basic
+ADVANCED_RENDER_2 is not valid with Options_Modeler_Basic
+Layout_3D_Integration is not valid with Options_Modeler_Basic
+eLearning is not valid with Options_Modeler_Basic
+Semantic_Anno is not valid with Options_Modeler_Basic
+Freestyle_Design_Extension is not valid with Options_Modeler_Basic
+Flexible_Modeling is not valid with Options_Modeler_Basic
+96 is not valid with Options_Modeler_Basic
+pglSetStatus::   Pgl Session Initialize (INFO MESSAGE)
+Valid file wpplibs.cmp with extension cmp was not found in any of CURRENT_DIR,PROJ_LANG_TEXT_DIR,PROJ_TEXT_DIR,CUSTOM_LOCALE_FONT_DIR,PRO_LANG_TEXT_DIR,PRO_TEXT_DIR,MACHINE_LANG_TEXT_DIR,MACHINE_TEXT_DIR,PRO_FONT_DIR
+Valid file wpplibs.cmp with extension cmp was not found in any of CURRENT_DIR,PROJ_LANG_TEXT_DIR,PROJ_TEXT_DIR,CUSTOM_LOCALE_FONT_DIR,PRO_LANG_TEXT_DIR,PRO_TEXT_DIR,MACHINE_LANG_TEXT_DIR,MACHINE_TEXT_DIR,PRO_FONT_DIR
+uit_get_visual_style_low:  Style is PTC Creo 4 (INFO MESSAGE)
+GalleryBaseWdg::GalleryBaseWdg:  Activate command of 'ProCmdDwgTblFromGallery' should be type uiCmdTypeNone (INFO MESSAGE)
+GalleryBaseWdg::GalleryBaseWdg:  Activate command of 'ProCmdCEFormatsGallery' should be type uiCmdTypeNone (INFO MESSAGE)
+GalleryBaseWdg::GalleryBaseWdg:  Activate command of 'ProCmdCEFltFormatsGallery' should be type uiCmdTypeNone (INFO MESSAGE)
+ProCmdSelBufferAttrSet():  Can't to find the command: ProCmdFaceted (INFO MESSAGE)
+ProCmdSelBufferAttrSet():  Selection Buffer Attribute loaded 55 commands (INFO MESSAGE)
+GalleryBaseWdg::GalleryBaseWdg:  Activate command of 'ProCmdMankSelGalPostr' should be type uiCmdTypeNone (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'man_postures_apply.bif' is not valid ('32x32') in short resource 'procmdmankapplgalpostr.res' (INFO MESSAGE)
+UitGroupItem::initVertCells:  The maximum group height has been increased to 100 (INFO MESSAGE)
+addHints:  adding UGC_NEUTRAL (INFO MESSAGE)
+zTocMgr::internal_maybe_open:  hint is UGC_NEUTRAL (INFO MESSAGE)
+ugc_check_version_dbtype:  file 67 != expected 7 (INFO MESSAGE)
+addHints:  adding UGC_NEUTRAL (INFO MESSAGE)
+zTocMgr::internal_maybe_open:  hint is UGC_NEUTRAL (INFO MESSAGE)
+ugc_check_version_dbtype:  file 67 != expected 7 (INFO MESSAGE)
+addHints:  adding UGC_NEUTRAL (INFO MESSAGE)
+zTocMgr::internal_maybe_open:  hint is UGC_NEUTRAL (INFO MESSAGE)
+ugc_check_version_dbtype:  file 67 != expected 7 (INFO MESSAGE)
+addHints:  adding UGC_NEUTRAL (INFO MESSAGE)
+zTocMgr::internal_maybe_open:  hint is UGC_NEUTRAL (INFO MESSAGE)
+ugc_check_version_dbtype:  file 67 != expected 7 (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'start_session_large.bif' is not valid ('32x32') in short resource 'procmdstartexperiment.res' (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'session_warning_events32x16' is not valid ('32x16') in short resource 'procmdinfonmgrlightdlg.res' (INFO MESSAGE)
+pglSetStatus::   PglWindowEndNoGraphics: Not in nographics mode. (INFO MESSAGE)
+
+ run mode = 4
+cadds5_link_app_path_name():  NuTCRACKER is not installed (INFO MESSAGE)
+check_exec_file_accessible_():  C:\Program Files\PTC\Creo 5.0.0.0\Common Files\\x86e_win64\obj\SWToPro.exe accessible (INFO MESSAGE)
+check_exec_file_accessible_():  C:\Program Files\PTC\Creo 5.0.0.0\Common Files\\x86e_win64\obj\SeodxToPro.exe accessible (INFO MESSAGE)
+PFSDBArrToFilter:  shouldn't do both (INFO MESSAGE)
+PFSTMakeTypeString:  no zip found (INFO MESSAGE)
+uit_get_visual_style_low:  Style is PTC Creo 4 (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'update_model_large.bif' is not valid ('32x32') in short resource 'procmdupdatepb.res' (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'man_postures_apply.bif' is not valid ('32x32') in short resource 'procmdmankapplpostr.res' (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'man_look_at.bif' is not valid ('32x32') in short resource 'procmdmanklookat.res' (INFO MESSAGE)
+AdbPage::buildSizeStateTable:  Can't build Size State Table for page 'ConfVerifierAppHome' (INFO MESSAGE)
+ResizeControlWdg::resizeContainerHorz:  Can't resize the control bar properly (INFO MESSAGE)
+pro_locate_colormap ()
+located color definition C:\Program Files\PTC\Creo 5.0.0.0\Common Files\graphic-library\appearances\appearance.dmt
+pro_locate_colormap ()
+located color definition C:\Program Files\PTC\Creo 5.0.0.0\Common Files\graphic-library\appearances\global.dmt
+pro_locate_colormap ()
+located Default color definition C:\Program Files\PTC\Creo 5.0.0.0\Common Files\graphic-library\appearances\default.dmt
+creoapp_get_root_info:  no active workspace (INFO MESSAGE)
+creoapp_get_root_info:  no workspace for 0 (INFO MESSAGE)
+creoapp_get_root_info:  no roots? (INFO MESSAGE)

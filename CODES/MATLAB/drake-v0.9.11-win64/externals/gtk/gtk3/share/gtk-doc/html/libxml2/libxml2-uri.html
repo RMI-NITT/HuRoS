@@ -1,0 +1,459 @@
+n implies (key, value) {
+    argsert('<string|object> [array|number|string]', [key, value], arguments.length)
+
+    if (typeof key === 'object') {
+      Object.keys(key).forEach((k) => {
+        self.implies(k, key[k])
+      })
+    } else {
+      yargs.global(key)
+      if (!implied[key]) {
+        implied[key] = []
+      }
+      if (Array.isArray(value)) {
+        value.forEach((i) => self.implies(key, i))
+      } else {
+        implied[key].push(value)
+      }
+    }
+  }
+  self.getImplied = function getImplied () {
+    return implied
+  }
+
+  self.implications = function implications (argv) {
+    const implyFail = []
+
+    Object.keys(implied).forEach((key) => {
+      const origKey = key
+      ;(implied[key] || []).forEach((value) => {
+        let num
+        let key = origKey
+        const origValue = value
+
+        // convert string '1' to number 1
+        num = Number(key)
+        key = isNaN(num) ? key : num
+
+        if (typeof key === 'number') {
+          // check length of argv._
+          key = argv._.length >= key
+        } else if (key.match(/^--no-.+/)) {
+          // check if key doesn't exist
+          key = key.match(/^--no-(.+)/)[1]
+          key = !argv[key]
+        } else {
+          // check if key exists
+          key = argv[key]
+        }
+
+        num = Number(value)
+        value = isNaN(num) ? value : num
+
+        if (typeof value === 'number') {
+          value = argv._.length >= value
+        } else if (value.match(/^--no-.+/)) {
+          value = value.match(/^--no-(.+)/)[1]
+          value = !argv[value]
+        } else {
+          value = argv[value]
+        }
+        if (key && !value) {
+          implyFail.push(` ${origKey} -> ${origValue}`)
+        }
+      })
+    })
+
+    if (implyFail.length) {
+      let msg = `${__('Implications failed:')}\n`
+
+      implyFail.forEach((value) => {
+        msg += (value)
+      })
+
+      usage.fail(msg)
+    }
+  }
+
+  let conflicting = {}
+  self.conflicts = function conflicts (key, value) {
+    argsert('<string|object> [array|string]', [key, value], arguments.length)
+
+    if (typeof key === 'object') {
+      Object.keys(key).forEach((k) => {
+        self.conflicts(k, key[k])
+      })
+    } else {
+      yargs.global(key)
+      if (!conflicting[key]) {
+        conflicting[key] = []
+      }
+      if (Array.isArray(value)) {
+        value.forEach((i) => self.conflicts(key, i))
+      } else {
+        conflicting[key].push(value)
+      }
+    }
+  }
+  self.getConflicting = () => conflicting
+
+  self.conflicting = function conflictingFn (argv) {
+    Object.keys(argv).forEach((key) => {
+      if (conflicting[key]) {
+        conflicting[key].forEach((value) => {
+          // we default keys to 'undefined' that have been configured, we should not
+          // apply conflicting check unless they are a value other than 'undefined'.
+          if (value && argv[key] !== undefined && argv[value] !== undefined) {
+            usage.fail(__(`Arguments ${key} and ${value} are mutually exclusive`))
+          }
+        })
+      }
+    })
+  }
+
+  self.recommendCommands = function recommendCommands (cmd, potentialCommands) {
+    const distance = require('./levenshtein')
+    const threshold = 3 // if it takes more than three edits, let's move on.
+    potentialCommands = potentialCommands.sort((a, b) => b.length - a.length)
+
+    let recommended = null
+    let bestDistance = Infinity
+    for (let i = 0, candidate; (candidate = potentialCommands[i]) !== undefined; i++) {
+      const d = distance(cmd, candidate)
+      if (d <= threshold && d < bestDistance) {
+        bestDistance = d
+        recommended = candidate
+      }
+    }
+    if (recommended) usage.fail(__('Did you mean %s?', recommended))
+  }
+
+  self.reset = function reset (localLookup) {
+    implied = objFilter(implied, (k, v) => !localLookup[k])
+    conflicting = objFilter(conflicting, (k, v) => !localLookup[k])
+    checks = checks.filter(c => c.global)
+    return self
+  }
+
+  let frozen
+  self.freeze = function freeze () {
+    frozen = {}
+    frozen.implied = implied
+    frozen.checks = checks
+    frozen.conflicting = conflicting
+  }
+  self.unfreeze = function unfreeze () {
+    implied = frozen.implied
+    checks = frozen.checks
+    conflicting = frozen.conflicting
+    frozen = undefined
+  }
+
+  return self
+}
+'use strict'
+function YError (msg) {
+  this.name = 'YError'
+  this.message = msg || 'yargs error'
+  Error.captureStackTrace(this, YError)
+}
+
+YError.prototype = Object.create(Error.prototype)
+YError.prototype.constructor = YError
+
+module.exports = YError
+Copyright 2010 James Halliday (mail@substack.net)
+Modified work Copyright 2014 Contributors (ben@npmjs.com)
+
+This project is free software released under the MIT/X11 license:
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+{
+  "Commands:": "Каманды:",
+  "Options:": "Опцыі:",
+  "Examples:": "Прыклады:",
+  "boolean": "булевы тып",
+  "count": "падлік",
+  "string": "радковы тып",
+  "number": "лік",
+  "array": "масіў",
+  "required": "неабходна",
+  "default:": "па змаўчанні:",
+  "choices:": "магчымасці:",
+  "aliases:": "аліасы:",
+  "generated-value": "згенераванае значэнне",
+  "Not enough non-option arguments: got %s, need at least %s": "Недастаткова неапцыйных аргументаў: ёсць %s, трэба як мінімум %s",
+  "Too many non-option arguments: got %s, maximum of %s": "Занадта шмат неапцыйных аргументаў: ёсць %s, максімум дапушчальна %s",
+  "Missing argument value: %s": {
+    "one": "Не хапае значэння аргументу: %s",
+    "other": "Не хапае значэнняў аргументаў: %s"
+  },
+  "Missing required argument: %s": {
+    "one": "Не хапае неабходнага аргументу: %s",
+    "other": "Не хапае неабходных аргументаў: %s"
+  },
+  "Unknown argument: %s": {
+    "one": "Невядомы аргумент: %s",
+    "other": "Невядомыя аргументы: %s"
+  },
+  "Invalid values:": "Несапраўдныя значэння:",
+  "Argument: %s, Given: %s, Choices: %s": "Аргумент: %s, Дадзенае значэнне: %s, Магчымасці: %s",
+  "Argument check failed: %s": "Праверка аргументаў не ўдалася: %s",
+  "Implications failed:": "Дадзены аргумент патрабуе наступны дадатковы аргумент:",
+  "Not enough arguments following: %s": "Недастаткова наступных аргументаў: %s",
+  "Invalid JSON config file: %s": "Несапраўдны файл канфігурацыі JSON: %s",
+  "Path to JSON config file": "Шлях да файла канфігурацыі JSON",
+  "Show help": "Паказаць дапамогу",
+  "Show version number": "Паказаць нумар версіі",
+  "Did you mean %s?": "Вы мелі на ўвазе %s?"
+}
+{
+  "Commands:": "Kommandos:",
+  "Options:": "Optionen:",
+  "Examples:": "Beispiele:",
+  "boolean": "boolean",
+  "count": "Zähler",
+  "string": "string",
+  "number": "Zahl",
+  "array": "array",
+  "required": "erforderlich",
+  "default:": "Standard:",
+  "choices:": "Möglichkeiten:",
+  "aliases:": "Aliase:",
+  "generated-value": "Generierter-Wert",
+  "Not enough non-option arguments: got %s, need at least %s": "Nicht genügend Argumente ohne Optionen: %s vorhanden, mindestens %s benötigt",
+  "Too many non-option arguments: got %s, maximum of %s": "Zu viele Argumente ohne Optionen: %s vorhanden, maximal %s erlaubt",
+  "Missing argument value: %s": {
+    "one": "Fehlender Argumentwert: %s",
+    "other": "Fehlende Argumentwerte: %s"
+  },
+  "Missing required argument: %s": {
+    "one": "Fehlendes Argument: %s",
+    "other": "Fehlende Argumente: %s"
+  },
+  "Unknown argument: %s": {
+    "one": "Unbekanntes Argument: %s",
+    "other": "Unbekannte Argumente: %s"
+  },
+  "Invalid values:": "Unzulässige Werte:",
+  "Argument: %s, Given: %s, Choices: %s": "Argument: %s, Gegeben: %s, Möglichkeiten: %s",
+  "Argument check failed: %s": "Argumente-Check fehlgeschlagen: %s",
+  "Implications failed:": "Implikationen fehlgeschlagen:",
+  "Not enough arguments following: %s": "Nicht genügend Argumente nach: %s",
+  "Invalid JSON config file: %s": "Fehlerhafte JSON-Config Datei: %s",
+  "Path to JSON config file": "Pfad zur JSON-Config Datei",
+  "Show help": "Hilfe anzeigen",
+  "Show version number": "Version anzeigen",
+  "Did you mean %s?": "Meintest du %s?"
+}
+{
+  "Commands:": "Commands:",
+  "Options:": "Options:",
+  "Examples:": "Examples:",
+  "boolean": "boolean",
+  "count": "count",
+  "string": "string",
+  "number": "number",
+  "array": "array",
+  "required": "required",
+  "default:": "default:",
+  "choices:": "choices:",
+  "aliases:": "aliases:",
+  "generated-value": "generated-value",
+  "Not enough non-option arguments: got %s, need at least %s": "Not enough non-option arguments: got %s, need at least %s",
+  "Too many non-option arguments: got %s, maximum of %s": "Too many non-option arguments: got %s, maximum of %s",
+  "Missing argument value: %s": {
+    "one": "Missing argument value: %s",
+    "other": "Missing argument values: %s"
+  },
+  "Missing required argument: %s": {
+    "one": "Missing required argument: %s",
+    "other": "Missing required arguments: %s"
+  },
+  "Unknown argument: %s": {
+    "one": "Unknown argument: %s",
+    "other": "Unknown arguments: %s"
+  },
+  "Invalid values:": "Invalid values:",
+  "Argument: %s, Given: %s, Choices: %s": "Argument: %s, Given: %s, Choices: %s",
+  "Argument check failed: %s": "Argument check failed: %s",
+  "Implications failed:": "Implications failed:",
+  "Not enough arguments following: %s": "Not enough arguments following: %s",
+  "Invalid JSON config file: %s": "Invalid JSON config file: %s",
+  "Path to JSON config file": "Path to JSON config file",
+  "Show help": "Show help",
+  "Show version number": "Show version number",
+  "Did you mean %s?": "Did you mean %s?",
+  "Arguments %s and %s are mutually exclusive" : "Arguments %s and %s are mutually exclusive",
+  "Positionals:": "Positionals:",
+  "command": "command"
+}
+{
+  "Commands:": "Comandos:",
+  "Options:": "Opciones:",
+  "Examples:": "Ejemplos:",
+  "boolean": "booleano",
+  "count": "cuenta",
+  "string": "cadena de caracteres",
+  "number": "número",
+  "array": "tabla",
+  "required": "requerido",
+  "default:": "defecto:",
+  "choices:": "selección:",
+  "aliases:": "alias:",
+  "generated-value": "valor-generado",
+  "Not enough non-option arguments: got %s, need at least %s": "Hacen falta argumentos no-opcionales: Número recibido %s, necesita por lo menos %s",
+  "Too many non-option arguments: got %s, maximum of %s": "Demasiados argumentos no-opcionales: Número recibido %s, máximo es %s",
+  "Missing argument value: %s": {
+    "one": "Falta argumento: %s",
+    "other": "Faltan argumentos: %s"
+  },
+  "Missing required argument: %s": {
+    "one": "Falta argumento requerido: %s",
+    "other": "Faltan argumentos requeridos: %s"
+  },
+  "Unknown argument: %s": {
+    "one": "Argumento desconocido: %s",
+    "other": "Argumentos desconocidos: %s"
+  },
+  "Invalid values:": "Valores inválidos:",
+  "Argument: %s, Given: %s, Choices: %s": "Argumento: %s, Recibido: %s, Seleccionados: %s",
+  "Argument check failed: %s": "Verificación de argumento ha fallado: %s",
+  "Implications failed:": "Implicaciones fallidas:",
+  "Not enough arguments following: %s": "No hay suficientes argumentos después de: %s",
+  "Invalid JSON config file: %s": "Archivo de configuración JSON inválido: %s",
+  "Path to JSON config file": "Ruta al archivo de configuración JSON",
+  "Show help": "Muestra ayuda",
+  "Show version number": "Muestra número de versión",
+  "Did you mean %s?": "Quisiste decir %s?"
+}
+{
+  "Commands:": "Commandes:",
+  "Options:": "Options:",
+  "Examples:": "Exemples:",
+  "boolean": "booléen",
+  "count": "comptage",
+  "string": "chaine de caractère",
+  "number": "nombre",
+  "array": "tableau",
+  "required": "requis",
+  "default:": "défaut:",
+  "choices:": "choix:",
+  "generated-value": "valeur générée",
+  "Not enough non-option arguments: got %s, need at least %s": "Pas assez d'arguments non-option: reçu %s, besoin d'au moins %s",
+  "Too many non-option arguments: got %s, maximum of %s": "Trop d'arguments non-option: reçu %s, maximum %s",
+  "Missing argument value: %s": {
+    "one": "Argument manquant: %s",
+    "other": "Arguments manquants: %s"
+  },
+  "Missing required argument: %s": {
+    "one": "Argument requis manquant: %s",
+    "other": "Arguments requis manquants: %s"
+  },
+  "Unknown argument: %s": {
+    "one": "Argument inconnu: %s",
+    "other": "Arguments inconnus: %s"
+  },
+  "Invalid values:": "Valeurs invalides:",
+  "Argument: %s, Given: %s, Choices: %s": "Argument: %s, Donné: %s, Choix: %s",
+  "Argument check failed: %s": "Echec de la vérification de l'argument: %s",
+  "Implications failed:": "Implications échouées:",
+  "Not enough arguments following: %s": "Pas assez d'arguments suivant: %s",
+  "Invalid JSON config file: %s": "Fichier de configuration JSON invalide: %s",
+  "Path to JSON config file": "Chemin du fichier de configuration JSON",
+  "Show help": "Affiche de l'aide",
+  "Show version number": "Affiche le numéro de version"
+}
+{
+  "Commands:": "आदेश:",
+  "Options:": "विकल्प:",
+  "Examples:": "उदाहरण:",
+  "boolean": "सत्यता",
+  "count": "संख्या",
+  "string": "वर्णों का तार ",
+  "number": "अंक",
+  "array": "सरणी",
+  "required": "आवश्यक",
+  "default:": "डिफॉल्ट:",
+  "choices:": "विकल्प:",
+  "aliases:": "उपनाम:",
+  "generated-value": "उत्पन्न-मूल्य",
+  "Not enough non-option arguments: got %s, need at least %s": "पर्याप्त गैर-विकल्प तर्क प्राप्त नहीं: %s प्राप्त, कम से कम %s की आवश्यकता है",
+  "Too many non-option arguments: got %s, maximum of %s": "बहुत सारे गैर-विकल्प तर्क: %s प्राप्त, अधिकतम %s मान्य",
+  "Missing argument value: %s": {
+    "one": "कुछ तर्को के मूल्य गुम हैं: %s",
+    "other": "कुछ तर्को के मूल्य गुम हैं: %s"
+  },
+  "Missing required argument: %s": {
+    "one": "आवश्यक तर्क गुम हैं: %s",
+    "other": "आवश्यक तर्क गुम हैं: %s"
+  },
+  "Unknown argument: %s": {
+    "one": "अज्ञात तर्क प्राप्त: %s",
+    "other": "अज्ञात तर्क प्राप्त: %s"
+  },
+  "Invalid values:": "अमान्य मूल्य:",
+  "Argument: %s, Given: %s, Choices: %s": "तर्क: %s, प्राप्त: %s, विकल्प: %s",
+  "Argument check failed: %s": "तर्क जांच विफल: %s",
+  "Implications failed:": "दिए गए तर्क के लिए अतिरिक्त तर्क की अपेक्षा है:",
+  "Not enough arguments following: %s": "निम्नलिखित के बाद पर्याप्त तर्क नहीं प्राप्त: %s",
+  "Invalid JSON config file: %s": "अमान्य JSON config फाइल: %s",
+  "Path to JSON config file": "JSON config फाइल का पथ",
+  "Show help": "सहायता दिखाएँ",
+  "Show version number": "Version संख्या दिखाएँ",
+  "Did you mean %s?": "क्या आपका मतलब है %s?",
+  "Arguments %s and %s are mutually exclusive" : "तर्क %s और %s परस्पर अनन्य हैं",
+  "Positionals:": "स्थानीय:",
+  "command": "आदेश"
+}
+{
+  "Commands:": "Parancsok:",
+  "Options:": "Opciók:",
+  "Examples:": "Példák:",
+  "boolean": "boolean",
+  "count": "számláló",
+  "string": "szöveg",
+  "number": "szám",
+  "array": "tömb",
+  "required": "kötelező",
+  "default:": "alapértelmezett:",
+  "choices:": "lehetőségek:",
+  "aliases:": "aliaszok:",
+  "generated-value": "generált-érték",
+  "Not enough non-option arguments: got %s, need at least %s": "Nincs elég nem opcionális argumentum: %s van, legalább %s kell",
+  "Too many non-option arguments: got %s, maximum of %s": "Túl sok nem opciánlis argumentum van: %s van, maximum %s lehet",
+  "Missing argument value: %s": {
+    "one": "Hiányzó argumentum érték: %s",
+    "other": "Hiányzó argumentum értékek: %s"
+  },
+  "Missing required argument: %s": {
+    "one": "Hiányzó kötelező argumentum: %s",
+    "other": "Hiányzó kötelező argumentumok: %s"
+  },
+  "Unknown argument: %s": {
+    "one": "Ismeretlen argumentum: %s",
+    "other": "Ismeretlen argumentumok: %s"
+  },
+  "Invalid values:": "Érvénytelen érték:",
+  "Argument: %s, Given: %s, Choices: %s": "Argumentum: %s, Megadott: %s, Lehetőségek: %s",
+  "Argument check failed: %s": "Argumentum ellenőrzés sikertelen: %s",
+  "Implications failed:": "Implikációk sikertelenek:",
+  "Not enough arguments following: %s": "Nem elég argumentum követi: %s",
+  "Invalid JSON config file: %s": "Érvénytelen JSON konfigurációs file: %s",
+  "Path to JSO

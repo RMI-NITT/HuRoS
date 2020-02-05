@@ -1,0 +1,278 @@
+this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+{
+  "_args": [
+    [
+      "ansi-regex@3.0.0",
+      "C:\\projects\\slack-desktop"
+    ]
+  ],
+  "_from": "ansi-regex@3.0.0",
+  "_id": "ansi-regex@3.0.0",
+  "_inBundle": false,
+  "_integrity": "sha1-7QMXwyIGT3lGbAKWa922Bas32Zg=",
+  "_location": "/yargs/ansi-regex",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "ansi-regex@3.0.0",
+    "name": "ansi-regex",
+    "escapedName": "ansi-regex",
+    "rawSpec": "3.0.0",
+    "saveSpec": null,
+    "fetchSpec": "3.0.0"
+  },
+  "_requiredBy": [
+    "/yargs/strip-ansi"
+  ],
+  "_resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-3.0.0.tgz",
+  "_spec": "3.0.0",
+  "_where": "C:\\projects\\slack-desktop",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com"
+  },
+  "bugs": {
+    "url": "https://github.com/chalk/ansi-regex/issues"
+  },
+  "description": "Regular expression for matching ANSI escape codes",
+  "devDependencies": {
+    "ava": "*",
+    "xo": "*"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "files": [
+    "index.js"
+  ],
+  "homepage": "https://github.com/chalk/ansi-regex#readme",
+  "keywords": [
+    "ansi",
+    "styles",
+    "color",
+    "colour",
+    "colors",
+    "terminal",
+    "console",
+    "cli",
+    "string",
+    "tty",
+    "escape",
+    "formatting",
+    "rgb",
+    "256",
+    "shell",
+    "xterm",
+    "command-line",
+    "text",
+    "regex",
+    "regexp",
+    "re",
+    "match",
+    "test",
+    "find",
+    "pattern"
+  ],
+  "license": "MIT",
+  "name": "ansi-regex",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chalk/ansi-regex.git"
+  },
+  "scripts": {
+    "test": "xo && ava",
+    "view-supported": "node fixtures/view-codes.js"
+  },
+  "version": "3.0.0"
+}
+'use strict';
+
+function preserveCamelCase(str) {
+	let isLastCharLower = false;
+	let isLastCharUpper = false;
+	let isLastLastCharUpper = false;
+
+	for (let i = 0; i < str.length; i++) {
+		const c = str[i];
+
+		if (isLastCharLower && /[a-zA-Z]/.test(c) && c.toUpperCase() === c) {
+			str = str.substr(0, i) + '-' + str.substr(i);
+			isLastCharLower = false;
+			isLastLastCharUpper = isLastCharUpper;
+			isLastCharUpper = true;
+			i++;
+		} else if (isLastCharUpper && isLastLastCharUpper && /[a-zA-Z]/.test(c) && c.toLowerCase() === c) {
+			str = str.substr(0, i - 1) + '-' + str.substr(i - 1);
+			isLastLastCharUpper = isLastCharUpper;
+			isLastCharUpper = false;
+			isLastCharLower = true;
+		} else {
+			isLastCharLower = c.toLowerCase() === c;
+			isLastLastCharUpper = isLastCharUpper;
+			isLastCharUpper = c.toUpperCase() === c;
+		}
+	}
+
+	return str;
+}
+
+module.exports = function (str) {
+	if (arguments.length > 1) {
+		str = Array.from(arguments)
+			.map(x => x.trim())
+			.filter(x => x.length)
+			.join('-');
+	} else {
+		str = str.trim();
+	}
+
+	if (str.length === 0) {
+		return '';
+	}
+
+	if (str.length === 1) {
+		return str.toLowerCase();
+	}
+
+	if (/^[a-z0-9]+$/.test(str)) {
+		return str;
+	}
+
+	const hasUpperCase = str !== str.toLowerCase();
+
+	if (hasUpperCase) {
+		str = preserveCamelCase(str);
+	}
+
+	return str
+		.replace(/^[_.\- ]+/, '')
+		.toLowerCase()
+		.replace(/[_.\- ]+(\w|$)/g, (m, p1) => p1.toUpperCase());
+};
+The MIT License (MIT)
+
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+{
+  "_args": [
+    [
+      "camelcase@4.1.0",
+      "C:\\projects\\slack-desktop"
+    ]
+  ],
+  "_from": "camelcase@4.1.0",
+  "_id": "camelcase@4.1.0",
+  "_inBundle": false,
+  "_integrity": "sha1-1UVjW+HjPFQmScaRc+Xeas+uNN0=",
+  "_location": "/yargs/camelcase",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "camelcase@4.1.0",
+    "name": "camelcase",
+    "escapedName": "camelcase",
+    "rawSpec": "4.1.0",
+    "saveSpec": null,
+    "fetchSpec": "4.1.0"
+  },
+  "_requiredBy": [
+    "/yargs/yargs-parser"
+  ],
+  "_resolved": "https://registry.npmjs.org/camelcase/-/camelcase-4.1.0.tgz",
+  "_spec": "4.1.0",
+  "_where": "C:\\projects\\slack-desktop",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com"
+  },
+  "bugs": {
+    "url": "https://github.com/sindresorhus/camelcase/issues"
+  },
+  "description": "Convert a dash/dot/underscore/space separated string to camelCase: foo-bar → fooBar",
+  "devDependencies": {
+    "ava": "*",
+    "xo": "*"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "files": [
+    "index.js"
+  ],
+  "homepage": "https://github.com/sindresorhus/camelcase#readme",
+  "keywords": [
+    "camelcase",
+    "camel-case",
+    "camel",
+    "case",
+    "dash",
+    "hyphen",
+    "dot",
+    "underscore",
+    "separator",
+    "string",
+    "text",
+    "convert"
+  ],
+  "license": "MIT",
+  "name": "camelcase",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sindresorhus/camelcase.git"
+  },
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "version": "4.1.0",
+  "xo": {
+    "esnext": true
+  }
+}
+'use strict';
+const childProcess = require('child_process');
+const util = require('util');
+const crossSpawn = require('cross-spawn');
+const stripEof = require('strip-eof');
+const npmRunPath = require('npm-run-path');
+const isStream = require('is-stream');
+const _getStream = require('get-stream');
+const pFinally = require('p-finally');
+const onExit = require('signal-exit');
+const errname = require('./lib/errname');
+const stdio = require('./lib/stdio');
+
+const TEN_MEGABYTES = 1000 * 1000 * 10;
+
+function handleArgs(cmd, args, opts) {
+	let parsed;
+
+	if (opts && opts.env && opts.extendEnv !== false) {
+		opts.env = Object.assign({}, process.env, opts.env);
+	}
+
+	if 

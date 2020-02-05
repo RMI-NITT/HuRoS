@@ -1,0 +1,2725 @@
+ return false;
+        }
+
+        if (!options.part && obj.length !== ref.length) {
+            return false;
+        }
+
+        for (var i = 0, il = obj.length; i < il; ++i) {
+            if (options.part) {
+                var found = false;
+                for (var r = 0, rl = ref.length; r < rl; ++r) {
+                    if (exports.deepEqual(obj[i], ref[r], options, seen)) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                return found;
+            }
+
+            if (!exports.deepEqual(obj[i], ref[i], options, seen)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    if (Buffer.isBuffer(obj)) {
+        if (!Buffer.isBuffer(ref)) {
+            return false;
+        }
+
+        if (obj.length !== ref.length) {
+            return false;
+        }
+
+        for (var j = 0, jl = obj.length; j < jl; ++j) {
+            if (obj[j] !== ref[j]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    if (obj instanceof Date) {
+        return (ref instanceof Date && obj.getTime() === ref.getTime());
+    }
+
+    if (obj instanceof RegExp) {
+        return (ref instanceof RegExp && obj.toString() === ref.toString());
+    }
+
+    if (options.prototype) {
+        if (Object.getPrototypeOf(obj) !== Object.getPrototypeOf(ref)) {
+            return false;
+        }
+    }
+
+    var keys = Object.getOwnPropertyNames(obj);
+
+    if (!options.part && keys.length !== Object.getOwnPropertyNames(ref).length) {
+        return false;
+    }
+
+    for (var k = 0, kl = keys.length; k < kl; ++k) {
+        var key = keys[k];
+        var descriptor = Object.getOwnPropertyDescriptor(obj, key);
+        if (descriptor.get) {
+            if (!exports.deepEqual(descriptor, Object.getOwnPropertyDescriptor(ref, key), options, seen)) {
+                return false;
+            }
+        }
+        else if (!exports.deepEqual(obj[key], ref[key], options, seen)) {
+            return false;
+        }
+    }
+
+    return true;
+};
+
+
+// Remove duplicate items from array
+
+exports.unique = function (array, key) {
+
+    var index = {};
+    var result = [];
+
+    for (var i = 0, il = array.length; i < il; ++i) {
+        var id = (key ? array[i][key] : array[i]);
+        if (index[id] !== true) {
+
+            result.push(array[i]);
+            index[id] = true;
+        }
+    }
+
+    return result;
+};
+
+
+// Convert array into object
+
+exports.mapToObject = function (array, key) {
+
+    if (!array) {
+        return null;
+    }
+
+    var obj = {};
+    for (var i = 0, il = array.length; i < il; ++i) {
+        if (key) {
+            if (array[i][key]) {
+                obj[array[i][key]] = true;
+            }
+        }
+        else {
+            obj[array[i]] = true;
+        }
+    }
+
+    return obj;
+};
+
+
+// Find the common unique items in two arrays
+
+exports.intersect = function (array1, array2, justFirst) {
+
+    if (!array1 || !array2) {
+        return [];
+    }
+
+    var common = [];
+    var hash = (Array.isArray(array1) ? exports.mapToObject(array1) : array1);
+    var found = {};
+    for (var i = 0, il = array2.length; i < il; ++i) {
+        if (hash[array2[i]] && !found[array2[i]]) {
+            if (justFirst) {
+                return array2[i];
+            }
+
+            common.push(array2[i]);
+            found[array2[i]] = true;
+        }
+    }
+
+    return (justFirst ? null : common);
+};
+
+
+// Test if the reference contains the values
+
+exports.contain = function (ref, values, options) {
+
+    /*
+        string -> string(s)
+        array -> item(s)
+        object -> key(s)
+        object -> object (key:value)
+    */
+
+    var valuePairs = null;
+    if (typeof ref === 'object' &&
+        typeof values === 'object' &&
+        !Array.isArray(ref) &&
+        !Array.isArray(values)) {
+
+        valuePairs = values;
+        values = Object.keys(values);
+    }
+    else {
+        values = [].concat(values);
+    }
+
+    options = options || {};            // deep, once, only, part
+
+    exports.assert(arguments.length >= 2, 'Insufficient arguments');
+    exports.assert(typeof ref === 'string' || typeof ref === 'object', 'Reference must be string or an object');
+    exports.assert(values.length, 'Values array cannot be empty');
+
+    var compare, compareFlags;
+    if (options.deep) {
+        compare = exports.deepEqual;
+
+        var hasOnly = options.hasOwnProperty('only'), hasPart = options.hasOwnProperty('part');
+
+        compareFlags = {
+            prototype: hasOnly ? options.only : hasPart ? !options.part : false,
+            part: hasOnly ? !options.only : hasPart ? options.part : true
+        };
+    }
+    else {
+        compare = function (a, b) {
+
+            return a === b;
+        };
+    }
+
+    var misses = false;
+    var matches = new Array(values.length);
+    for (var i = 0, il = matches.length; i < il; ++i) {
+        matches[i] = 0;
+    }
+
+    if (typeof ref === 'string') {
+        var pattern = '(';
+        for (i = 0, il = values.length; i < il; ++i) {
+            var value = values[i];
+            exports.assert(typeof value === 'string', 'Cannot compare string reference to non-string value');
+            pattern += (i ? '|' : '') + exports.escapeRegex(value);
+        }
+
+        var regex = new RegExp(pattern + ')', 'g');
+        var leftovers = ref.replace(regex, function ($0, $1) {
+
+            var index = values.indexOf($1);
+            ++matches[index];
+            return '';          // Remove from string
+        });
+
+        misses = !!leftovers;
+    }
+    else if (Array.isArray(ref)) {
+        for (i = 0, il = ref.length; i < il; ++i) {
+            for (var j = 0, jl = values.length, matched = false; j < jl && matched === false; ++j) {
+                matched = compare(values[j], ref[i], compareFlags) && j;
+            }
+
+            if (matched !== false) {
+                ++matches[matched];
+            }
+            else {
+                misses = true;
+            }
+        }
+    }
+    else {
+        var keys = Object.keys(ref);
+        for (i = 0, il = keys.length; i < il; ++i) {
+            var key = keys[i];
+            var pos = values.indexOf(key);
+            if (pos !== -1) {
+                if (valuePairs &&
+                    !compare(valuePairs[key], ref[key], compareFlags)) {
+
+                    return false;
+                }
+
+                ++matches[pos];
+            }
+            else {
+                misses = true;
+            }
+        }
+    }
+
+    var result = false;
+    for (i = 0, il = matches.length; i < il; ++i) {
+        result = result || !!matches[i];
+        if ((options.once && matches[i] > 1) ||
+            (!options.part && !matches[i])) {
+
+            return false;
+        }
+    }
+
+    if (options.only &&
+        misses) {
+
+        return false;
+    }
+
+    return result;
+};
+
+
+// Flatten array
+
+exports.flatten = function (array, target) {
+
+    var result = target || [];
+
+    for (var i = 0, il = array.length; i < il; ++i) {
+        if (Array.isArray(array[i])) {
+            exports.flatten(array[i], result);
+        }
+        else {
+            result.push(array[i]);
+        }
+    }
+
+    return result;
+};
+
+
+// Convert an object key chain string ('a.b.c') to reference (object[a][b][c])
+
+exports.reach = function (obj, chain, options) {
+
+    if (chain === false ||
+        chain === null ||
+        typeof chain === 'undefined') {
+
+        return obj;
+    }
+
+    options = options || {};
+    if (typeof options === 'string') {
+        options = { separator: options };
+    }
+
+    var path = chain.split(options.separator || '.');
+    var ref = obj;
+    for (var i = 0, il = path.length; i < il; ++i) {
+        var key = path[i];
+        if (key[0] === '-' && Array.isArray(ref)) {
+            key = key.slice(1, key.length);
+            key = ref.length - key;
+        }
+
+        if (!ref ||
+            !ref.hasOwnProperty(key) ||
+            (typeof ref !== 'object' && options.functions === false)) {         // Only object and function can have properties
+
+            exports.assert(!options.strict || i + 1 === il, 'Missing segment', key, 'in reach path ', chain);
+            exports.assert(typeof ref === 'object' || options.functions === true || typeof ref !== 'function', 'Invalid segment', key, 'in reach path ', chain);
+            ref = options.default;
+            break;
+        }
+
+        ref = ref[key];
+    }
+
+    return ref;
+};
+
+
+exports.reachTemplate = function (obj, template, options) {
+
+    return template.replace(/{([^}]+)}/g, function ($0, chain) {
+
+        var value = exports.reach(obj, chain, options);
+        return (value === undefined || value === null ? '' : value);
+    });
+};
+
+
+exports.formatStack = function (stack) {
+
+    var trace = [];
+    for (var i = 0, il = stack.length; i < il; ++i) {
+        var item = stack[i];
+        trace.push([item.getFileName(), item.getLineNumber(), item.getColumnNumber(), item.getFunctionName(), item.isConstructor()]);
+    }
+
+    return trace;
+};
+
+
+exports.formatTrace = function (trace) {
+
+    var display = [];
+
+    for (var i = 0, il = trace.length; i < il; ++i) {
+        var row = trace[i];
+        display.push((row[4] ? 'new ' : '') + row[3] + ' (' + row[0] + ':' + row[1] + ':' + row[2] + ')');
+    }
+
+    return display;
+};
+
+
+exports.callStack = function (slice) {
+
+    // http://code.google.com/p/v8/wiki/JavaScriptStackTraceApi
+
+    var v8 = Error.prepareStackTrace;
+    Error.prepareStackTrace = function (err, stack) {
+
+        return stack;
+    };
+
+    var capture = {};
+    Error.captureStackTrace(capture, arguments.callee);     /*eslint no-caller:0 */
+    var stack = capture.stack;
+
+    Error.prepareStackTrace = v8;
+
+    var trace = exports.formatStack(stack);
+
+    if (slice) {
+        return trace.slice(slice);
+    }
+
+    return trace;
+};
+
+
+exports.displayStack = function (slice) {
+
+    var trace = exports.callStack(slice === undefined ? 1 : slice + 1);
+
+    return exports.formatTrace(trace);
+};
+
+
+exports.abortThrow = false;
+
+
+exports.abort = function (message, hideStack) {
+
+    if (process.env.NODE_ENV === 'test' || exports.abortThrow === true) {
+        throw new Error(message || 'Unknown error');
+    }
+
+    var stack = '';
+    if (!hideStack) {
+        stack = exports.displayStack(1).join('\n\t');
+    }
+    console.log('ABORT: ' + message + '\n\t' + stack);
+    process.exit(1);
+};
+
+
+exports.assert = function (condition /*, msg1, msg2, msg3 */) {
+
+    if (condition) {
+        return;
+    }
+
+    if (arguments.length === 2 && arguments[1] instanceof Error) {
+        throw arguments[1];
+    }
+
+    var msgs = [];
+    for (var i = 1, il = arguments.length; i < il; ++i) {
+        if (arguments[i] !== '') {
+            msgs.push(arguments[i]);            // Avoids Array.slice arguments leak, allowing for V8 optimizations
+        }
+    }
+
+    msgs = msgs.map(function (msg) {
+
+        return typeof msg === 'string' ? msg : msg instanceof Error ? msg.message : exports.stringify(msg);
+    });
+    throw new Error(msgs.join(' ') || 'Unknown error');
+};
+
+
+exports.Timer = function () {
+
+    this.ts = 0;
+    this.reset();
+};
+
+
+exports.Timer.prototype.reset = function () {
+
+    this.ts = Date.now();
+};
+
+
+exports.Timer.prototype.elapsed = function () {
+
+    return Date.now() - this.ts;
+};
+
+
+exports.Bench = function () {
+
+    this.ts = 0;
+    this.reset();
+};
+
+
+exports.Bench.prototype.reset = function () {
+
+    this.ts = exports.Bench.now();
+};
+
+
+exports.Bench.prototype.elapsed = function () {
+
+    return exports.Bench.now() - this.ts;
+};
+
+
+exports.Bench.now = function () {
+
+    var ts = process.hrtime();
+    return (ts[0] * 1e3) + (ts[1] / 1e6);
+};
+
+
+// Escape string for Regex construction
+
+exports.escapeRegex = function (string) {
+
+    // Escape ^$.*+-?=!:|\/()[]{},
+    return string.replace(/[\^\$\.\*\+\-\?\=\!\:\|\\\/\(\)\[\]\{\}\,]/g, '\\$&');
+};
+
+
+// Base64url (RFC 4648) encode
+
+exports.base64urlEncode = function (value, encoding) {
+
+    var buf = (Buffer.isBuffer(value) ? value : new Buffer(value, encoding || 'binary'));
+    return buf.toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/\=/g, '');
+};
+
+
+// Base64url (RFC 4648) decode
+
+exports.base64urlDecode = function (value, encoding) {
+
+    if (value &&
+        !/^[\w\-]*$/.test(value)) {
+
+        return new Error('Invalid character');
+    }
+
+    try {
+        var buf = new Buffer(value, 'base64');
+        return (encoding === 'buffer' ? buf : buf.toString(encoding || 'binary'));
+    }
+    catch (err) {
+        return err;
+    }
+};
+
+
+// Escape attribute value for use in HTTP header
+
+exports.escapeHeaderAttribute = function (attribute) {
+
+    // Allowed value characters: !#$%&'()*+,-./:;<=>?@[]^_`{|}~ and space, a-z, A-Z, 0-9, \, "
+
+    exports.assert(/^[ \w\!#\$%&'\(\)\*\+,\-\.\/\:;<\=>\?@\[\]\^`\{\|\}~\"\\]*$/.test(attribute), 'Bad attribute value (' + attribute + ')');
+
+    return attribute.replace(/\\/g, '\\\\').replace(/\"/g, '\\"');                             // Escape quotes and slash
+};
+
+
+exports.escapeHtml = function (string) {
+
+    return Escape.escapeHtml(string);
+};
+
+
+exports.escapeJavaScript = function (string) {
+
+    return Escape.escapeJavaScript(string);
+};
+
+
+exports.nextTick = function (callback) {
+
+    return function () {
+
+        var args = arguments;
+        process.nextTick(function () {
+
+            callback.apply(null, args);
+        });
+    };
+};
+
+
+exports.once = function (method) {
+
+    if (method._hoekOnce) {
+        return method;
+    }
+
+    var once = false;
+    var wrapped = function () {
+
+        if (!once) {
+            once = true;
+            method.apply(null, arguments);
+        }
+    };
+
+    wrapped._hoekOnce = true;
+
+    return wrapped;
+};
+
+
+exports.isAbsolutePath = function (path, platform) {
+
+    if (!path) {
+        return false;
+    }
+
+    if (Path.isAbsolute) {                      // node >= 0.11
+        return Path.isAbsolute(path);
+    }
+
+    platform = platform || process.platform;
+
+    // Unix
+
+    if (platform !== 'win32') {
+        return path[0] === '/';
+    }
+
+    // Windows
+
+    return !!/^(?:[a-zA-Z]:[\\\/])|(?:[\\\/]{2}[^\\\/]+[\\\/]+[^\\\/])/.test(path);        // C:\ or \\something\something
+};
+
+
+exports.isInteger = function (value) {
+
+    return (typeof value === 'number' &&
+            parseFloat(value) === parseInt(value, 10) &&
+            !isNaN(value));
+};
+
+
+exports.ignore = function () { };
+
+
+exports.inherits = Util.inherits;
+
+
+exports.format = Util.format;
+
+
+exports.transform = function (source, transform, options) {
+
+    exports.assert(source === null || source === undefined || typeof source === 'object' || Array.isArray(source), 'Invalid source object: must be null, undefined, an object, or an array');
+
+    if (Array.isArray(source)) {
+        var results = [];
+        for (var i = 0, il = source.length; i < il; ++i) {
+            results.push(exports.transform(source[i], transform, options));
+        }
+        return results;
+    }
+
+    var result = {};
+    var keys = Object.keys(transform);
+
+    for (var k = 0, kl = keys.length; k < kl; ++k) {
+        var key = keys[k];
+        var path = key.split('.');
+        var sourcePath = transform[key];
+
+        exports.assert(typeof sourcePath === 'string', 'All mappings must be "." delineated strings');
+
+        var segment;
+        var res = result;
+
+        while (path.length > 1) {
+            segment = path.shift();
+            if (!res[segment]) {
+                res[segment] = {};
+            }
+            res = res[segment];
+        }
+        segment = path.shift();
+        res[segment] = exports.reach(source, sourcePath, options);
+    }
+
+    return result;
+};
+
+
+exports.uniqueFilename = function (path, extension) {
+
+    if (extension) {
+        extension = extension[0] !== '.' ? '.' + extension : extension;
+    }
+    else {
+        extension = '';
+    }
+
+    path = Path.resolve(path);
+    var name = [Date.now(), process.pid, Crypto.randomBytes(8).toString('hex')].join('-') + extension;
+    return Path.join(path, name);
+};
+
+
+exports.stringify = function () {
+
+    try {
+        return JSON.stringify.apply(null, arguments);
+    }
+    catch (err) {
+        return '[Cannot display object: ' + err.message + ']';
+    }
+};
+
+
+exports.shallow = function (source) {
+
+    var target = {};
+    var keys = Object.keys(source);
+    for (var i = 0, il = keys.length; i < il; ++i) {
+        var key = keys[i];
+        target[key] = source[key];
+    }
+
+    return target;
+};
+Copyright (c) 2011-2014, Walmart and other contributors.
+Copyright (c) 2011, Yahoo Inc.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * The names of any contributors may not be used to endorse or promote
+      products derived from this software without specific prior written
+      permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS AND CONTRIBUTORS BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+                                  *   *   *
+
+The complete list of contributors can be found at: https://github.com/hapijs/hapi/graphs/contributors
+Portions of this project were initially based on the Yahoo! Inc. Postmile project,
+published at https://github.com/yahoo/postmile.
+{
+  "_args": [
+    [
+      "hoek@2.16.3",
+      "C:\\projects\\slack-desktop"
+    ]
+  ],
+  "_from": "hoek@2.16.3",
+  "_id": "hoek@2.16.3",
+  "_inBundle": false,
+  "_integrity": "sha1-ILt0A9POo5jpHcRxCo/xuCdKJe0=",
+  "_location": "/hoek",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "hoek@2.16.3",
+    "name": "hoek",
+    "escapedName": "hoek",
+    "rawSpec": "2.16.3",
+    "saveSpec": null,
+    "fetchSpec": "2.16.3"
+  },
+  "_requiredBy": [
+    "/boom",
+    "/hawk",
+    "/sntp"
+  ],
+  "_resolved": "https://registry.npmjs.org/hoek/-/hoek-2.16.3.tgz",
+  "_spec": "2.16.3",
+  "_where": "C:\\projects\\slack-desktop",
+  "bugs": {
+    "url": "https://github.com/hapijs/hoek/issues"
+  },
+  "dependencies": {},
+  "description": "General purpose node utilities",
+  "devDependencies": {
+    "code": "1.x.x",
+    "lab": "5.x.x"
+  },
+  "engines": {
+    "node": ">=0.10.40"
+  },
+  "homepage": "https://github.com/hapijs/hoek#readme",
+  "keywords": [
+    "utilities"
+  ],
+  "license": "BSD-3-Clause",
+  "main": "lib/index.js",
+  "name": "hoek",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hapijs/hoek.git"
+  },
+  "scripts": {
+    "test": "lab -a code -t 100 -L",
+    "test-cov-html": "lab -a code -t 100 -L -r html -o coverage.html"
+  },
+  "version": "2.16.3"
+}
+declare module 'hoist-non-react-statics' {
+  import * as React from 'react';
+  function hoistNonReactStatics<Own, Custom>(
+    TargetComponent: React.ComponentType<Own>,
+    SourceComponent: React.ComponentType<Own & Custom>,
+    customStatic?: any): React.ComponentType<Own>;
+    
+  export = hoistNonReactStatics
+}
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+    typeof define === 'function' && define.amd ? define(factory) :
+    (global.hoistNonReactStatics = factory());
+}(this, (function () {
+    'use strict';
+    
+    var REACT_STATICS = {
+        childContextTypes: true,
+        contextTypes: true,
+        defaultProps: true,
+        displayName: true,
+        getDefaultProps: true,
+        getDerivedStateFromProps: true,
+        mixins: true,
+        propTypes: true,
+        type: true
+    };
+    
+    var KNOWN_STATICS = {
+        name: true,
+        length: true,
+        prototype: true,
+        caller: true,
+        callee: true,
+        arguments: true,
+        arity: true
+    };
+    
+    var defineProperty = Object.defineProperty;
+    var getOwnPropertyNames = Object.getOwnPropertyNames;
+    var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+    var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+    var getPrototypeOf = Object.getPrototypeOf;
+    var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
+    
+    return function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
+        if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
+            
+            if (objectPrototype) {
+                var inheritedComponent = getPrototypeOf(sourceComponent);
+                if (inheritedComponent && inheritedComponent !== objectPrototype) {
+                    hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+                }
+            }
+            
+            var keys = getOwnPropertyNames(sourceComponent);
+            
+            if (getOwnPropertySymbols) {
+                keys = keys.concat(getOwnPropertySymbols(sourceComponent));
+            }
+            
+            for (var i = 0; i < keys.length; ++i) {
+                var key = keys[i];
+                if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
+                    var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+                    try { // Avoid failures from read-only properties
+                        defineProperty(targetComponent, key, descriptor);
+                    } catch (e) {}
+                }
+            }
+            
+            return targetComponent;
+        }
+        
+        return targetComponent;
+    };
+})));
+{
+  "_args": [
+    [
+      "hoist-non-react-statics@2.5.0",
+      "C:\\projects\\slack-desktop"
+    ]
+  ],
+  "_from": "hoist-non-react-statics@2.5.0",
+  "_id": "hoist-non-react-statics@2.5.0",
+  "_inBundle": false,
+  "_integrity": "sha512-6Bl6XsDT1ntE0lHbIhr4Kp2PGcleGZ66qu5Jqk8lc0Xc/IeG6gVLmwUGs/K0Us+L8VWoKgj0uWdPMataOsm31w==",
+  "_location": "/hoist-non-react-statics",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "hoist-non-react-statics@2.5.0",
+    "name": "hoist-non-react-statics",
+    "escapedName": "hoist-non-react-statics",
+    "rawSpec": "2.5.0",
+    "saveSpec": null,
+    "fetchSpec": "2.5.0"
+  },
+  "_requiredBy": [
+    "/recompose"
+  ],
+  "_resolved": "https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-2.5.0.tgz",
+  "_spec": "2.5.0",
+  "_where": "C:\\projects\\slack-desktop",
+  "author": {
+    "name": "Michael Ridgway",
+    "email": "mcridgway@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/mridgway/hoist-non-react-statics/issues"
+  },
+  "description": "Copies non-react specific statics from a child component to a parent component",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-react-jsx-source": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "chai": "^4.0.1",
+    "coveralls": "^2.11.1",
+    "create-react-class": "^15.5.3",
+    "eslint": "^3.8.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.4.2",
+    "pre-commit": "^1.0.7",
+    "react": "^15.0.0"
+  },
+  "homepage": "https://github.com/mridgway/hoist-non-react-statics#readme",
+  "keywords": [
+    "react"
+  ],
+  "license": "BSD-3-Clause",
+  "main": "index.js",
+  "name": "hoist-non-react-statics",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mridgway/hoist-non-react-statics.git"
+  },
+  "scripts": {
+    "cover": "node node_modules/istanbul/lib/cli.js cover --dir artifacts -- ./node_modules/mocha/bin/_mocha tests/unit/ --recursive --compilers js:babel/register --reporter spec",
+    "lint": "eslint ./index.js",
+    "test": "mocha tests/unit/ --recursive --compilers js:babel-register --reporter spec"
+  },
+  "types": "index.d.ts",
+  "version": "2.5.0"
+}
+'use strict'
+
+var gitHosts = module.exports = {
+  github: {
+    // First two are insecure and generally shouldn't be used any more, but
+    // they are still supported.
+    'protocols': [ 'git', 'http', 'git+ssh', 'git+https', 'ssh', 'https' ],
+    'domain': 'github.com',
+    'treepath': 'tree',
+    'filetemplate': 'https://{auth@}raw.githubusercontent.com/{user}/{project}/{committish}/{path}',
+    'bugstemplate': 'https://{domain}/{user}/{project}/issues',
+    'gittemplate': 'git://{auth@}{domain}/{user}/{project}.git{#committish}',
+    'tarballtemplate': 'https://{domain}/{user}/{project}/archive/{committish}.tar.gz'
+  },
+  bitbucket: {
+    'protocols': [ 'git+ssh', 'git+https', 'ssh', 'https' ],
+    'domain': 'bitbucket.org',
+    'treepath': 'src',
+    'tarballtemplate': 'https://{domain}/{user}/{project}/get/{committish}.tar.gz'
+  },
+  gitlab: {
+    'protocols': [ 'git+ssh', 'git+https', 'ssh', 'https' ],
+    'domain': 'gitlab.com',
+    'treepath': 'tree',
+    'docstemplate': 'https://{domain}/{user}/{project}{/tree/committish}#README',
+    'bugstemplate': 'https://{domain}/{user}/{project}/issues',
+    'tarballtemplate': 'https://{domain}/{user}/{project}/repository/archive.tar.gz?ref={committish}'
+  },
+  gist: {
+    'protocols': [ 'git', 'git+ssh', 'git+https', 'ssh', 'https' ],
+    'domain': 'gist.github.com',
+    'pathmatch': /^[/](?:([^/]+)[/])?([a-z0-9]+)(?:[.]git)?$/,
+    'filetemplate': 'https://gist.githubusercontent.com/{user}/{project}/raw{/committish}/{path}',
+    'bugstemplate': 'https://{domain}/{project}',
+    'gittemplate': 'git://{domain}/{project}.git{#committish}',
+    'sshtemplate': 'git@{domain}:/{project}.git{#committish}',
+    'sshurltemplate': 'git+ssh://git@{domain}/{project}.git{#committish}',
+    'browsetemplate': 'https://{domain}/{project}{/committish}',
+    'docstemplate': 'https://{domain}/{project}{/committish}',
+    'httpstemplate': 'git+https://{domain}/{project}.git{#committish}',
+    'shortcuttemplate': '{type}:{project}{#committish}',
+    'pathtemplate': '{project}{#committish}',
+    'tarballtemplate': 'https://{domain}/{user}/{project}/archive/{committish}.tar.gz'
+  }
+}
+
+var gitHostDefaults = {
+  'sshtemplate': 'git@{domain}:{user}/{project}.git{#committish}',
+  'sshurltemplate': 'git+ssh://git@{domain}/{user}/{project}.git{#committish}',
+  'browsetemplate': 'https://{domain}/{user}/{project}{/tree/committish}',
+  'docstemplate': 'https://{domain}/{user}/{project}{/tree/committish}#readme',
+  'httpstemplate': 'git+https://{auth@}{domain}/{user}/{project}.git{#committish}',
+  'filetemplate': 'https://{domain}/{user}/{project}/raw/{committish}/{path}',
+  'shortcuttemplate': '{type}:{user}/{project}{#committish}',
+  'pathtemplate': '{user}/{project}{#committish}',
+  'pathmatch': /^[/]([^/]+)[/]([^/]+?)(?:[.]git|[/])?$/
+}
+
+Object.keys(gitHosts).forEach(function (name) {
+  Object.keys(gitHostDefaults).forEach(function (key) {
+    if (gitHosts[name][key]) return
+    gitHosts[name][key] = gitHostDefaults[key]
+  })
+  gitHosts[name].protocols_re = RegExp('^(' +
+    gitHosts[name].protocols.map(function (protocol) {
+      return protocol.replace(/([\\+*{}()[\]$^|])/g, '\\$1')
+    }).join('|') + '):$')
+})
+'use strict'
+var gitHosts = require('./git-host-info.js')
+var extend = Object.assign || require('util')._extend
+
+var GitHost = module.exports = function (type, user, auth, project, committish, defaultRepresentation, opts) {
+  var gitHostInfo = this
+  gitHostInfo.type = type
+  Object.keys(gitHosts[type]).forEach(function (key) {
+    gitHostInfo[key] = gitHosts[type][key]
+  })
+  gitHostInfo.user = user
+  gitHostInfo.auth = auth
+  gitHostInfo.project = project
+  gitHostInfo.committish = committish
+  gitHostInfo.default = defaultRepresentation
+  gitHostInfo.opts = opts || {}
+}
+GitHost.prototype = {}
+
+GitHost.prototype.hash = function () {
+  return this.committish ? '#' + this.committish : ''
+}
+
+GitHost.prototype._fill = function (template, opts) {
+  if (!template) return
+  var vars = extend({}, opts)
+  opts = extend(extend({}, this.opts), opts)
+  var self = this
+  Object.keys(this).forEach(function (key) {
+    if (self[key] != null && vars[key] == null) vars[key] = self[key]
+  })
+  var rawAuth = vars.auth
+  var rawComittish = vars.committish
+  Object.keys(vars).forEach(function (key) {
+    vars[key] = encodeURIComponent(vars[key])
+  })
+  vars['auth@'] = rawAuth ? rawAuth + '@' : ''
+  if (opts.noCommittish) {
+    vars['#committish'] = ''
+    vars['/tree/committish'] = ''
+    vars['/comittish'] = ''
+    vars.comittish = ''
+  } else {
+    vars['#committish'] = rawComittish ? '#' + rawComittish : ''
+    vars['/tree/committish'] = vars.committish
+                            ? '/' + vars.treepath + '/' + vars.committish
+                            : ''
+    vars['/committish'] = vars.committish ? '/' + vars.committish : ''
+    vars.committish = vars.committish || 'master'
+  }
+  var res = template
+  Object.keys(vars).forEach(function (key) {
+    res = res.replace(new RegExp('[{]' + key + '[}]', 'g'), vars[key])
+  })
+  if (opts.noGitPlus) {
+    return res.replace(/^git[+]/, '')
+  } else {
+    return res
+  }
+}
+
+GitHost.prototype.ssh = function (opts) {
+  return this._fill(this.sshtemplate, opts)
+}
+
+GitHost.prototype.sshurl = function (opts) {
+  return this._fill(this.sshurltemplate, opts)
+}
+
+GitHost.prototype.browse = function (opts) {
+  return this._fill(this.browsetemplate, opts)
+}
+
+GitHost.prototype.docs = function (opts) {
+  return this._fill(this.docstemplate, opts)
+}
+
+GitHost.prototype.bugs = function (opts) {
+  return this._fill(this.bugstemplate, opts)
+}
+
+GitHost.prototype.https = function (opts) {
+  return this._fill(this.httpstemplate, opts)
+}
+
+GitHost.prototype.git = function (opts) {
+  return this._fill(this.gittemplate, opts)
+}
+
+GitHost.prototype.shortcut = function (opts) {
+  return this._fill(this.shortcuttemplate, opts)
+}
+
+GitHost.prototype.path = function (opts) {
+  return this._fill(this.pathtemplate, opts)
+}
+
+GitHost.prototype.tarball = function (opts) {
+  return this._fill(this.tarballtemplate, opts)
+}
+
+GitHost.prototype.file = function (P, opts) {
+  return this._fill(this.filetemplate, extend({
+    path: P.replace(/^[/]+/g, '')
+  }, opts))
+}
+
+GitHost.prototype.getDefaultRepresentation = function () {
+  return this.default
+}
+
+GitHost.prototype.toString = function (opts) {
+  return (this[this.default] || this.sshurl).call(this, opts)
+}
+'use strict'
+var url = require('url')
+var gitHosts = require('./git-host-info.js')
+var GitHost = module.exports = require('./git-host.js')
+
+var protocolToRepresentationMap = {
+  'git+ssh': 'sshurl',
+  'git+https': 'https',
+  'ssh': 'sshurl',
+  'git': 'git'
+}
+
+function protocolToRepresentation (protocol) {
+  if (protocol.substr(-1) === ':') protocol = protocol.slice(0, -1)
+  return protocolToRepresentationMap[protocol] || protocol
+}
+
+var authProtocols = {
+  'git:': true,
+  'https:': true,
+  'git+https:': true,
+  'http:': true,
+  'git+http:': true
+}
+
+var cache = {}
+
+module.exports.fromUrl = function (giturl, opts) {
+  var key = giturl + JSON.stringify(opts || {})
+
+  if (!(key in cache)) {
+    cache[key] = fromUrl(giturl, opts)
+  }
+
+  return cache[key]
+}
+
+function fromUrl (giturl, opts) {
+  if (giturl == null || giturl === '') return
+  var url = fixupUnqualifiedGist(
+    isGitHubShorthand(giturl) ? 'github:' + giturl : giturl
+  )
+  var parsed = parseGitUrl(url)
+  var shortcutMatch = url.match(new RegExp('^([^:]+):(?:(?:[^@:]+(?:[^@]+)?@)?([^/]*))[/](.+?)(?:[.]git)?($|#)'))
+  var matches = Object.keys(gitHosts).map(function (gitHostName) {
+    try {
+      var gitHostInfo = gitHosts[gitHostName]
+      var auth = null
+      if (parsed.auth && authProtocols[parsed.protocol]) {
+        auth = decodeURIComponent(parsed.auth)
+      }
+      var committish = parsed.hash ? decodeURIComponent(parsed.hash.substr(1)) : null
+      var user = null
+      var project = null
+      var defaultRepresentation = null
+      if (shortcutMatch && shortcutMatch[1] === gitHostName) {
+        user = shortcutMatch[2] && decodeURIComponent(shortcutMatch[2])
+        project = decodeURIComponent(shortcutMatch[3])
+        defaultRepresentation = 'shortcut'
+      } else {
+        if (parsed.host !== gitHostInfo.domain) return
+        if (!gitHostInfo.protocols_re.test(parsed.protocol)) return
+        if (!parsed.path) return
+        var pathmatch = gitHostInfo.pathmatch
+        var matched = parsed.path.match(pathmatch)
+        if (!matched) return
+        if (matched[1] != null) user = decodeURIComponent(matched[1].replace(/^:/, ''))
+        if (matched[2] != null) project = decodeURIComponent(matched[2])
+        defaultRepresentation = protocolToRepresentation(parsed.protocol)
+      }
+      return new GitHost(gitHostName, user, auth, project, committish, defaultRepresentation, opts)
+    } catch (ex) {
+      if (!(ex instanceof URIError)) throw ex
+    }
+  }).filter(function (gitHostInfo) { return gitHostInfo })
+  if (matches.length !== 1) return
+  return matches[0]
+}
+
+function isGitHubShorthand (arg) {
+  // Note: This does not fully test the git ref format.
+  // See https://www.kernel.org/pub/software/scm/git/docs/git-check-ref-format.html
+  //
+  // The only way to do this properly would be to shell out to
+  // git-check-ref-format, and as this is a fast sync function,
+  // we don't want to do that.  Just let git fail if it turns
+  // out that the commit-ish is invalid.
+  // GH usernames cannot start with . or -
+  return /^[^:@%/\s.-][^:@%/\s]*[/][^:@\s/%]+(?:#.*)?$/.test(arg)
+}
+
+function fixupUnqualifiedGist (giturl) {
+  // necessary for round-tripping gists
+  var parsed = url.parse(giturl)
+  if (parsed.protocol === 'gist:' && parsed.host && !parsed.path) {
+    return parsed.protocol + '/' + parsed.host
+  } else {
+    return giturl
+  }
+}
+
+function parseGitUrl (giturl) {
+  if (typeof giturl !== 'string') giturl = '' + giturl
+  var matched = giturl.match(/^([^@]+)@([^:/]+):[/]?((?:[^/]+[/])?[^/]+?)(?:[.]git)?(#.*)?$/)
+  if (!matched) return url.parse(giturl)
+  return {
+    protocol: 'git+ssh:',
+    slashes: true,
+    auth: matched[1],
+    host: matched[2],
+    port: null,
+    hostname: matched[2],
+    hash: matched[4],
+    search: null,
+    query: null,
+    pathname: '/' + matched[3],
+    path: '/' + matched[3],
+    href: 'git+ssh://' + matched[1] + '@' + matched[2] +
+          '/' + matched[3] + (matched[4] || '')
+  }
+}
+Copyright (c) 2015, Rebecca Turner
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+{
+  "_args": [
+    [
+      "hosted-git-info@2.5.0",
+      "C:\\projects\\slack-desktop"
+    ]
+  ],
+  "_from": "hosted-git-info@2.5.0",
+  "_id": "hosted-git-info@2.5.0",
+  "_inBundle": false,
+  "_integrity": "sha512-pNgbURSuab90KbTqvRPsseaTxOJCZBD0a7t+haSN33piP9cCM4l0CqdzAif2hUqm716UovKB2ROmiabGAKVXyg==",
+  "_location": "/hosted-git-info",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "hosted-git-info@2.5.0",
+    "name": "hosted-git-info",
+    "escapedName": "hosted-git-info",
+    "rawSpec": "2.5.0",
+    "saveSpec": null,
+    "fetchSpec": "2.5.0"
+  },
+  "_requiredBy": [
+    "/normalize-package-data"
+  ],
+  "_resolved": "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.5.0.tgz",
+  "_spec": "2.5.0",
+  "_where": "C:\\projects\\slack-desktop",
+  "author": {
+    "name": "Rebecca Turner",
+    "email": "me@re-becca.org",
+    "url": "http://re-becca.org"
+  },
+  "bugs": {
+    "url": "https://github.com/npm/hosted-git-info/issues"
+  },
+  "description": "Provides metadata and conversions from repository urls for Github, Bitbucket and Gitlab",
+  "devDependencies": {
+    "standard": "^9.0.2",
+    "tap": "^10.3.0"
+  },
+  "files": [
+    "index.js",
+    "git-host.js",
+    "git-host-info.js"
+  ],
+  "homepage": "https://github.com/npm/hosted-git-info",
+  "keywords": [
+    "git",
+    "github",
+    "bitbucket",
+    "gitlab"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "hosted-git-info",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npm/hosted-git-info.git"
+  },
+  "scripts": {
+    "test": "standard && tap -J --coverage test/*.js"
+  },
+  "version": "2.5.0"
+}
+((nil . ((indent-tabs-mode . nil)
+         (tab-width . 8)
+         (fill-column . 80)))
+ (js-mode . ((js-indent-level . 2)
+             (indent-tabs-mode . nil)
+             ))).gitmodules
+deps
+docs
+Makefile
+node_modules
+test
+tools// Copyright 2015 Joyent, Inc.
+
+var parser = require('./parser');
+var signer = require('./signer');
+var verify = require('./verify');
+var utils = require('./utils');
+
+
+
+///--- API
+
+module.exports = {
+
+  parse: parser.parseRequest,
+  parseRequest: parser.parseRequest,
+
+  sign: signer.signRequest,
+  signRequest: signer.signRequest,
+  createSigner: signer.createSigner,
+  isSigner: signer.isSigner,
+
+  sshKeyToPEM: utils.sshKeyToPEM,
+  sshKeyFingerprint: utils.fingerprint,
+  pemToRsaSSHKey: utils.pemToRsaSSHKey,
+
+  verify: verify.verifySignature,
+  verifySignature: verify.verifySignature,
+  verifyHMAC: verify.verifyHMAC
+};
+// Copyright 2012 Joyent, Inc.  All rights reserved.
+
+var assert = require('assert-plus');
+var util = require('util');
+var utils = require('./utils');
+
+
+
+///--- Globals
+
+var HASH_ALGOS = utils.HASH_ALGOS;
+var PK_ALGOS = utils.PK_ALGOS;
+var HttpSignatureError = utils.HttpSignatureError;
+var InvalidAlgorithmError = utils.InvalidAlgorithmError;
+var validateAlgorithm = utils.validateAlgorithm;
+
+var State = {
+  New: 0,
+  Params: 1
+};
+
+var ParamsState = {
+  Name: 0,
+  Quote: 1,
+  Value: 2,
+  Comma: 3
+};
+
+
+///--- Specific Errors
+
+
+function ExpiredRequestError(message) {
+  HttpSignatureError.call(this, message, ExpiredRequestError);
+}
+util.inherits(ExpiredRequestError, HttpSignatureError);
+
+
+function InvalidHeaderError(message) {
+  HttpSignatureError.call(this, message, InvalidHeaderError);
+}
+util.inherits(InvalidHeaderError, HttpSignatureError);
+
+
+function InvalidParamsError(message) {
+  HttpSignatureError.call(this, message, InvalidParamsError);
+}
+util.inherits(InvalidParamsError, HttpSignatureError);
+
+
+function MissingHeaderError(message) {
+  HttpSignatureError.call(this, message, MissingHeaderError);
+}
+util.inherits(MissingHeaderError, HttpSignatureError);
+
+function StrictParsingError(message) {
+  HttpSignatureError.call(this, message, StrictParsingError);
+}
+util.inherits(StrictParsingError, HttpSignatureError);
+
+///--- Exported API
+
+module.exports = {
+
+  /**
+   * Parses the 'Authorization' header out of an http.ServerRequest object.
+   *
+   * Note that this API will fully validate the Authorization header, and throw
+   * on any error.  It will not however check the signature, or the keyId format
+   * as those are specific to your environment.  You can use the options object
+   * to pass in extra constraints.
+   *
+   * As a response object you can expect this:
+   *
+   *     {
+   *       "scheme": "Signature",
+   *       "params": {
+   *         "keyId": "foo",
+   *         "algorithm": "rsa-sha256",
+   *         "headers": [
+   *           "date" or "x-date",
+   *           "digest"
+   *         ],
+   *         "signature": "base64"
+   *       },
+   *       "signingString": "ready to be passed to crypto.verify()"
+   *     }
+   *
+   * @param {Object} request an http.ServerRequest.
+   * @param {Object} options an optional options object with:
+   *                   - clockSkew: allowed clock skew in seconds (default 300).
+   *                   - headers: required header names (def: date or x-date)
+   *                   - algorithms: algorithms to support (default: all).
+   *                   - strict: should enforce latest spec parsing
+   *                             (default: false).
+   * @return {Object} parsed out object (see above).
+   * @throws {TypeError} on invalid input.
+   * @throws {InvalidHeaderError} on an invalid Authorization header error.
+   * @throws {InvalidParamsError} if the params in the scheme are invalid.
+   * @throws {MissingHeaderError} if the params indicate a header not present,
+   *                              either in the request headers from the params,
+   *                              or not in the params from a required header
+   *                              in options.
+   * @throws {StrictParsingError} if old attributes are used in strict parsing
+   *                              mode.
+   * @throws {ExpiredRequestError} if the value of date or x-date exceeds skew.
+   */
+  parseRequest: function parseRequest(request, options) {
+    assert.object(request, 'request');
+    assert.object(request.headers, 'request.headers');
+    if (options === undefined) {
+      options = {};
+    }
+    if (options.headers === undefined) {
+      options.headers = [request.headers['x-date'] ? 'x-date' : 'date'];
+    }
+    assert.object(options, 'options');
+    assert.arrayOfString(options.headers, 'options.headers');
+    assert.optionalNumber(options.clockSkew, 'options.clockSkew');
+
+    if (!request.headers.authorization)
+      throw new MissingHeaderError('no authorization header present in ' +
+                                   'the request');
+
+    options.clockSkew = options.clockSkew || 300;
+
+
+    var i = 0;
+    var state = State.New;
+    var substate = ParamsState.Name;
+    var tmpName = '';
+    var tmpValue = '';
+
+    var parsed = {
+      scheme: '',
+      params: {},
+      signingString: '',
+
+      get algorithm() {
+        return this.params.algorithm.toUpperCase();
+      },
+
+      get keyId() {
+        return this.params.keyId;
+      }
+    };
+
+    var authz = request.headers.authorization;
+    for (i = 0; i < authz.length; i++) {
+      var c = authz.charAt(i);
+
+      switch (Number(state)) {
+
+      case State.New:
+        if (c !== ' ') parsed.scheme += c;
+        else state = State.Params;
+        break;
+
+      case State.Params:
+        switch (Number(substate)) {
+
+        case ParamsState.Name:
+          var code = c.charCodeAt(0);
+          // restricted name of A-Z / a-z
+          if ((code >= 0x41 && code <= 0x5a) || // A-Z
+              (code >= 0x61 && code <= 0x7a)) { // a-z
+            tmpName += c;
+          } else if (c === '=') {
+            if (tmpName.length === 0)
+              throw new InvalidHeaderError('bad param format');
+            substate = ParamsState.Quote;
+          } else {
+            throw new InvalidHeaderError('bad param format');
+          }
+          break;
+
+        case ParamsState.Quote:
+          if (c === '"') {
+            tmpValue = '';
+            substate = ParamsState.Value;
+          } else {
+            throw new InvalidHeaderError('bad param format');
+          }
+          break;
+
+        case ParamsState.Value:
+          if (c === '"') {
+            parsed.params[tmpName] = tmpValue;
+            substate = ParamsState.Comma;
+          } else {
+            tmpValue += c;
+          }
+          break;
+
+        case ParamsState.Comma:
+          if (c === ',') {
+            tmpName = '';
+            substate = ParamsState.Name;
+          } else {
+            throw new InvalidHeaderError('bad param format');
+          }
+          break;
+
+        default:
+          throw new Error('Invalid substate');
+        }
+        break;
+
+      default:
+        throw new Error('Invalid substate');
+      }
+
+    }
+
+    if (!parsed.params.headers || parsed.params.headers === '') {
+      if (request.headers['x-date']) {
+        parsed.params.headers = ['x-date'];
+      } else {
+        parsed.params.headers = ['date'];
+      }
+    } else {
+      parsed.params.headers = parsed.params.headers.split(' ');
+    }
+
+    // Minimally validate the parsed object
+    if (!parsed.scheme || parsed.scheme !== 'Signature')
+      throw new InvalidHeaderError('scheme was not "Signature"');
+
+    if (!parsed.params.keyId)
+      throw new InvalidHeaderError('keyId was not specified');
+
+    if (!parsed.params.algorithm)
+      throw new InvalidHeaderError('algorithm was not specified');
+
+    if (!parsed.params.signature)
+      throw new InvalidHeaderError('signature was not specified');
+
+    // Check the algorithm against the official list
+    parsed.params.algorithm = parsed.params.algorithm.toLowerCase();
+    try {
+      validateAlgorithm(parsed.params.algorithm);
+    } catch (e) {
+      if (e instanceof InvalidAlgorithmError)
+        throw (new InvalidParamsError(parsed.params.algorithm + ' is not ' +
+          'supported'));
+      else
+        throw (e);
+    }
+
+    // Build the signingString
+    for (i = 0; i < parsed.params.headers.length; i++) {
+      var h = parsed.params.headers[i].toLowerCase();
+      parsed.params.headers[i] = h;
+
+      if (h === 'request-line') {
+        if (!options.strict) {
+          /*
+           * We allow headers from the older spec drafts if strict parsing isn't
+           * specified in options.
+           */
+          parsed.signingString +=
+            request.method + ' ' + request.url + ' HTTP/' + request.httpVersion;
+        } else {
+          /* Strict parsing doesn't allow older draft headers. */
+          throw (new StrictParsingError('request-line is not a valid header ' +
+            'with strict parsing enabled.'));
+        }
+      } else if (h === '(request-target)') {
+        parsed.signingString +=
+          '(request-target): ' + request.method.toLowerCase() + ' ' +
+          request.url;
+      } else {
+        var value = request.headers[h];
+        if (value === undefined)
+          throw new MissingHeaderError(h + ' was not in the request');
+        parsed.signingString += h + ': ' + value;
+      }
+
+      if ((i + 1) < parsed.params.headers.length)
+        parsed.signingString += '\n';
+    }
+
+    // Check against the constraints
+    var date;
+    if (request.headers.date || request.headers['x-date']) {
+        if (request.headers['x-date']) {
+          date = new Date(request.headers['x-date']);
+        } else {
+          date = new Date(request.headers.date);
+        }
+      var now = new Date();
+      var skew = Math.abs(now.getTime() - date.getTime());
+
+      if (skew > options.clockSkew * 1000) {
+        throw new ExpiredRequestError('clock skew of ' +
+                                      (skew / 1000) +
+                                      's was greater than ' +
+                                      options.clockSkew + 's');
+      }
+    }
+
+    options.headers.forEach(function (hdr) {
+      // Remember that we already checked any headers in the params
+      // were in the request, so if this passes we're good.
+      if (parsed.params.headers.indexOf(hdr) < 0)
+        throw new MissingHeaderError(hdr + ' was not a signed header');
+    });
+
+    if (options.algorithms) {
+      if (options.algorithms.indexOf(parsed.params.algorithm) === -1)
+        throw new InvalidParamsError(parsed.params.algorithm +
+                                     ' is not a supported algorithm');
+    }
+
+    return parsed;
+  }
+
+};
+// Copyright 2012 Joyent, Inc.  All rights reserved.
+
+var assert = require('assert-plus');
+var crypto = require('crypto');
+var http = require('http');
+var util = require('util');
+var sshpk = require('sshpk');
+var jsprim = require('jsprim');
+var utils = require('./utils');
+
+var sprintf = require('util').format;
+
+var HASH_ALGOS = utils.HASH_ALGOS;
+var PK_ALGOS = utils.PK_ALGOS;
+var InvalidAlgorithmError = utils.InvalidAlgorithmError;
+var HttpSignatureError = utils.HttpSignatureError;
+var validateAlgorithm = utils.validateAlgorithm;
+
+///--- Globals
+
+var AUTHZ_FMT =
+  'Signature keyId="%s",algorithm="%s",headers="%s",signature="%s"';
+
+///--- Specific Errors
+
+function MissingHeaderError(message) {
+  HttpSignatureError.call(this, message, MissingHeaderError);
+}
+util.inherits(MissingHeaderError, HttpSignatureError);
+
+function StrictParsingError(message) {
+  HttpSignatureError.call(this, message, StrictParsingError);
+}
+util.inherits(StrictParsingError, HttpSignatureError);
+
+/* See createSigner() */
+function RequestSigner(options) {
+  assert.object(options, 'options');
+
+  var alg = [];
+  if (options.algorithm !== undefined) {
+    assert.string(options.algorithm, 'options.algorithm');
+    alg = validateAlgorithm(options.algorithm);
+  }
+  this.rs_alg = alg;
+
+  /*
+   * RequestSigners come in two varieties: ones with an rs_signFunc, and ones
+   * with an rs_signer.
+   *
+   * rs_signFunc-based RequestSigners have to build up their entire signing
+   * string within the rs_lines array and give it to rs_signFunc as a single
+   * concat'd blob. rs_signer-based RequestSigners can add a line at a time to
+   * their signing state by using rs_signer.update(), thus only needing to
+   * buffer the hash function state and one line at a time.
+   */
+  if (options.sign !== undefined) {
+    assert.func(options.sign, 'options.sign');
+    this.rs_signFunc = options.sign;
+
+  } else if (alg[0] === 'hmac' && options.key !== undefined) {
+    assert.string(options.keyId, 'options.keyId');
+    this.rs_keyId = options.keyId;
+
+    if (typeof (options.key) !== 'string' && !Buffer.isBuffer(options.key))
+      throw (new TypeError('options.key for HMAC must be a string or Buffer'));
+
+    /*
+     * Make an rs_signer for HMACs, not a rs_signFunc -- HMACs digest their
+     * data in chunks rather than requiring it all to be given in one go
+     * at the end, so they are more similar to signers than signFuncs.
+     */
+    this.rs_signer = crypto.createHmac(alg[1].toUpperCase(), options.key);
+    this.rs_signer.sign = function () {
+      var digest = this.digest('base64');
+      return ({
+        hashAlgorithm: alg[1],
+        toString: function () { return (digest); }
+      });
+    };
+
+  } else if (options.key !== undefined) {
+    var key = options.key;
+    if (typeof (key) === 'string' || Buffer.isBuffer(key))
+      key = sshpk.parsePrivateKey(key);
+
+    assert.ok(sshpk.PrivateKey.isPrivateKey(key, [1, 2]),
+      'options.key must be a sshpk.PrivateKey');
+    this.rs_key = key;
+
+    assert.string(options.keyId, 'options.keyId');
+    this.rs_keyId = options.keyId;
+
+    if (!PK_ALGOS[key.type]) {
+      throw (new InvalidAlgorithmError(key.type.toUpperCase() + ' type ' +
+        'keys are not supported'));
+    }
+
+    if (alg[0] !== undefined && key.type !== alg[0]) {
+      throw (new InvalidAlgorithmError('options.key must be a ' +
+        alg[0].toUpperCase() + ' key, was given a ' +
+        key.type.toUpperCase() + ' key instead'));
+    }
+
+    this.rs_signer = key.createSign(alg[1]);
+
+  } else {
+    throw (new TypeError('options.sign (func) or options.key is required'));
+  }
+
+  this.rs_headers = [];
+  this.rs_lines = [];
+}
+
+/**
+ * Adds a header to be signed, with its value, into this signer.
+ *
+ * @param {String} header
+ * @param {String} value
+ * @return {String} value written
+ */
+RequestSigner.prototype.writeHeader = function (header, value) {
+  assert.string(header, 'header');
+  header = header.toLowerCase();
+  assert.string(value, 'value');
+
+  this.rs_headers.push(header);
+
+  if (this.rs_signFunc) {
+    this.rs_lines.push(header + ': ' + value);
+
+  } else {
+    var line = header + ': ' + value;
+    if (this.rs_headers.length > 0)
+      line = '\n' + line;
+    this.rs_signer.update(line);
+  }
+
+  return (value);
+};
+
+/**
+ * Adds a default Date header, returning its value.
+ *
+ * @return {String}
+ */
+RequestSigner.prototype.writeDateHeader = function () {
+  return (this.writeHeader('date', jsprim.rfc1123(new Date())));
+};
+
+/**
+ * Adds the request target line to be signed.
+ *
+ * @param {String} method, HTTP method (e.g. 'get', 'post', 'put')
+ * @param {String} path
+ */
+RequestSigner.prototype.writeTarget = function (method, path) {
+  assert.string(method, 'method');
+  assert.string(path, 'path');
+  method = method.toLowerCase();
+  this.writeHeader('(request-target)', method + ' ' + path);
+};
+
+/**
+ * Calculate the value for the Authorization header on this request
+ * asynchronously.
+ *
+ * @param {Func} callback (err, authz)
+ */
+RequestSigner.prototype.sign = function (cb) {
+  assert.func(cb, 'callback');
+
+  if (this.rs_headers.length < 1)
+    throw (new Error('At least one header must be signed'));
+
+  var alg, authz;
+  if (this.rs_signFunc) {
+    var data = this.rs_lines.join('\n');
+    var self = this;
+    this.rs_signFunc(data, function (err, sig) {
+      if (err) {
+        cb(err);
+        return;
+      }
+      try {
+        assert.object(sig, 'signature');
+        assert.string(sig.keyId, 'signature.keyId');
+        assert.string(sig.algorithm, 'signature.algorithm');
+        assert.string(sig.signature, 'signature.signature');
+        alg = validateAlgorithm(sig.algorithm);
+
+        authz = sprintf(AUTHZ_FMT,
+          sig.keyId,
+          sig.algorithm,
+          self.rs_headers.join(' '),
+          sig.signature);
+      } catch (e) {
+        cb(e);
+        return;
+      }
+      cb(null, authz);
+    });
+
+  } else {
+    try {
+      var sigObj = this.rs_signer.sign();
+    } catch (e) {
+      cb(e);
+      return;
+    }
+    alg = (this.rs_alg[0] || this.rs_key.type) + '-' + sigObj.hashAlgorithm;
+    var signature = sigObj.toString();
+    authz = sprintf(AUTHZ_FMT,
+      this.rs_keyId,
+      alg,
+      this.rs_headers.join(' '),
+      signature);
+    cb(null, authz);
+  }
+};
+
+///--- Exported API
+
+module.exports = {
+  /**
+   * Identifies whether a given object is a request signer or not.
+   *
+   * @param {Object} object, the object to identify
+   * @returns {Boolean}
+   */
+  isSigner: function (obj) {
+    if (typeof (obj) === 'object' && obj instanceof RequestSigner)
+      return (true);
+    return (false);
+  },
+
+  /**
+   * Creates a request signer, used to asynchronously build a signature
+   * for a request (does not have to be an http.ClientRequest).
+   *
+   * @param {Object} options, either:
+   *                   - {String} keyId
+   *                   - {String|Buffer} key
+   *                   - {String} algorithm (optional, required for HMAC)
+   *                 or:
+   *                   - {Func} sign (data, cb)
+   * @return {RequestSigner}
+   */
+  createSigner: function createSigner(options) {
+    return (new RequestSigner(options));
+  },
+
+  /**
+   * Adds an 'Authorization' header to an http.ClientRequest object.
+   *
+   * Note that this API will add a Date header if it's not already set. Any
+   * other headers in the options.headers array MUST be present, or this
+   * will throw.
+   *
+   * You shouldn't need to check the return type; it's just there if you want
+   * to be pedantic.
+   *
+   * The optional flag indicates whether parsing should use strict enforcement
+   * of the version draft-cavage-http-signatures-04 of the spec or beyond.
+   * The default is to be loose and support
+   * older versions for compatibility.
+   *
+   * @param {Object} request an instance of http.ClientRequest.
+   * @param {Object} options signing parameters object:
+   *                   - {String} keyId required.
+   *                   - {String} key required (either a PEM or HMAC key).
+   *                   - {Array} headers optional; defaults to ['date'].
+   *                   - {String} algorithm optional (unless key is HMAC);
+   *                              default is the same as the sshpk default
+   *                              signing algorithm for the type of key given
+   *                   - {String} httpVersion optional; defaults to '1.1'.
+   *                   - {Boolean} strict optional; defaults to 'false'.
+   * @return {Boolean} true if Authorization (and optionally Date) were added.
+   * @throws {TypeError} on bad parameter types (input).
+   * @throws {InvalidAlgorithmError} if algorithm was bad or incompatible with
+   *                                 the given key.
+   * @throws {sshpk.KeyParseError} if key was bad.
+   * @throws {MissingHeaderError} if a header to be signed was specified but
+   *                              was not present.
+   */
+  signRequest: function signRequest(request, options) {
+    assert.object(request, 'request');
+    assert.object(options, 'options');
+    assert.optionalString(options.algorithm, 'options.algorithm');
+    assert.string(options.keyId, 'options.keyId');
+    assert.optionalArrayOfString(options.headers, 'options.headers');
+    assert.optionalString(options.httpVersion, 'options.httpVersion');
+
+    if (!request.getHeader('Date'))
+      request.setHeader('Date', jsprim.rfc1123(new Date()));
+    if (!options.headers)
+      options.headers = ['date'];
+    if (!options.httpVersion)
+      options.httpVersion = '1.1';
+
+    var alg = [];
+    if (options.algorithm) {
+      options.algorithm = options.algorithm.toLowerCase();
+      alg = validateAlgorithm(options.algorithm);
+    }
+
+    var i;
+    var stringToSign = '';
+    for (i = 0; i < options.headers.length; i++) {
+      if (typeof (options.headers[i]) !== 'string')
+        throw new TypeError('options.headers must be an array of Strings');
+
+      var h = options.headers[i].toLowerCase();
+
+      if (h === 'request-line') {
+        if (!options.strict) {
+          /**
+           * We allow headers from the older spec drafts if strict parsing isn't
+           * specified in options.
+           */
+          stringToSign +=
+            request.method + ' ' + request.path + ' HTTP/' +
+            options.httpVersion;
+        } else {
+          /* Strict parsing doesn't allow older draft headers. */
+          throw (new StrictParsingError('request-line is not a valid header ' +
+            'with strict parsing enabled.'));
+        }
+      } else if (h === '(request-target)') {
+        stringToSign +=
+          '(request-target): ' + request.method.toLowerCase() + ' ' +
+          request.path;
+      } else {
+        var value = request.getHeader(h);
+        if (value === undefined || value === '') {
+          throw new MissingHeaderError(h + ' was not in the request');
+        }
+        stringToSign += h + ': ' + value;
+      }
+
+      if ((i + 1) < options.headers.length)
+        stringToSign += '\n';
+    }
+
+    /* This is just for unit tests. */
+    if (request.hasOwnProperty('_stringToSign')) {
+      request._stringToSign = stringToSign;
+    }
+
+    var signature;
+    if (alg[0] === 'hmac') {
+      if (typeof (options.key) !== 'string' && !Buffer.isBuffer(options.key))
+        throw (new TypeError('options.key must be a string or Buffer'));
+
+      var hmac = crypto.createHmac(alg[1].toUpperCase(), options.key);
+      hmac.update(stringToSign);
+      signature = hmac.digest('base64');
+
+    } else {
+      var key = options.key;
+      if (typeof (key) === 'string' || Buffer.isBuffer(key))
+        key = sshpk.parsePrivateKey(options.key);
+
+      assert.ok(sshpk.PrivateKey.isPrivateKey(key, [1, 2]),
+        'options.key must be a sshpk.PrivateKey');
+
+      if (!PK_ALGOS[key.type]) {
+        throw (new InvalidAlgorithmError(key.type.toUpperCase() + ' type ' +
+          'keys are not supported'));
+      }
+
+      if (alg[0] !== undefined && key.type !== alg[0]) {
+        throw (new InvalidAlgorithmError('options.key must be a ' +
+          alg[0].toUpperCase() + ' key, was given a ' +
+          key.type.toUpperCase() + ' key instead'));
+      }
+
+      var signer = key.createSign(alg[1]);
+      signer.update(stringToSign);
+      var sigObj = signer.sign();
+      if (!HASH_ALGOS[sigObj.hashAlgorithm]) {
+        throw (new InvalidAlgorithmError(sigObj.hashAlgorithm.toUpperCase() +
+          ' is not a supported hash algorithm'));
+      }
+      options.algorithm = key.type + '-' + sigObj.hashAlgorithm;
+      signature = sigObj.toString();
+      assert.notStrictEqual(signature, '', 'empty signature produced');
+    }
+
+    request.setHeader('Authorization', sprintf(AUTHZ_FMT,
+                                               options.keyId,
+                                               options.algorithm,
+                                               options.headers.join(' '),
+                                               signature));
+
+    return true;
+  }
+
+};
+// Copyright 2012 Joyent, Inc.  All rights reserved.
+
+var assert = require('assert-plus');
+var sshpk = require('sshpk');
+var util = require('util');
+
+var HASH_ALGOS = {
+  'sha1': true,
+  'sha256': true,
+  'sha512': true
+};
+
+var PK_ALGOS = {
+  'rsa': true,
+  'dsa': true,
+  'ecdsa': true
+};
+
+function HttpSignatureError(message, caller) {
+  if (Error.captureStackTrace)
+    Error.captureStackTrace(this, caller || HttpSignatureError);
+
+  this.message = message;
+  this.name = caller.name;
+}
+util.inherits(HttpSignatureError, Error);
+
+function InvalidAlgorithmError(message) {
+  HttpSignatureError.call(this, message, InvalidAlgorithmError);
+}
+util.inherits(InvalidAlgorithmError, HttpSignatureError);
+
+function validateAlgorithm(algorithm) {
+  var alg = algorithm.toLowerCase().split('-');
+
+  if (alg.length !== 2) {
+    throw (new InvalidAlgorithmError(alg[0].toUpperCase() + ' is not a ' +
+      'valid algorithm'));
+  }
+
+  if (alg[0] !== 'hmac' && !PK_ALGOS[alg[0]]) {
+    throw (new InvalidAlgorithmError(alg[0].toUpperCase() + ' type keys ' +
+      'are not supported'));
+  }
+
+  if (!HASH_ALGOS[alg[1]]) {
+    throw (new InvalidAlgorithmError(alg[1].toUpperCase() + ' is not a ' +
+      'supported hash algorithm'));
+  }
+
+  return (alg);
+}
+
+///--- API
+
+module.exports = {
+
+  HASH_ALGOS: HASH_ALGOS,
+  PK_ALGOS: PK_ALGOS,
+
+  HttpSignatureError: HttpSignatureError,
+  InvalidAlgorithmError: InvalidAlgorithmError,
+
+  validateAlgorithm: validateAlgorithm,
+
+  /**
+   * Converts an OpenSSH public key (rsa only) to a PKCS#8 PEM file.
+   *
+   * The intent of this module is to interoperate with OpenSSL only,
+   * specifically the node crypto module's `verify` method.
+   *
+   * @param {String} key an OpenSSH public key.
+   * @return {String} PEM encoded form of the RSA public key.
+   * @throws {TypeError} on bad input.
+   * @throws {Error} on invalid ssh key formatted data.
+   */
+  sshKeyToPEM: function sshKeyToPEM(key) {
+    assert.string(key, 'ssh_key');
+
+    var k = sshpk.parseKey(key, 'ssh');
+    return (k.toString('pem'));
+  },
+
+
+  /**
+   * Generates an OpenSSH fingerprint from an ssh public key.
+   *
+   * @param {String} key an OpenSSH public key.
+   * @return {String} key fingerprint.
+   * @throws {TypeError} on bad input.
+   * @throws {Error} if what you passed doesn't look like an ssh public key.
+   */
+  fingerprint: function fingerprint(key) {
+    assert.string(key, 'ssh_key');
+
+    var k = sshpk.parseKey(key, 'ssh');
+    return (k.fingerprint('md5').toString('hex'));
+  },
+
+  /**
+   * Converts a PKGCS#8 PEM file to an OpenSSH public key (rsa)
+   *
+   * The reverse of the above function.
+   */
+  pemToRsaSSHKey: function pemToRsaSSHKey(pem, comment) {
+    assert.equal('string', typeof (pem), 'typeof pem');
+
+    var k = sshpk.parseKey(pem, 'pem');
+    k.comment = comment;
+    return (k.toString('ssh'));
+  }
+};
+// Copyright 2015 Joyent, Inc.
+
+var assert = require('assert-plus');
+var crypto = require('crypto');
+var sshpk = require('sshpk');
+var utils = require('./utils');
+
+var HASH_ALGOS = utils.HASH_ALGOS;
+var PK_ALGOS = utils.PK_ALGOS;
+var InvalidAlgorithmError = utils.InvalidAlgorithmError;
+var HttpSignatureError = utils.HttpSignatureError;
+var validateAlgorithm = utils.validateAlgorithm;
+
+///--- Exported API
+
+module.exports = {
+  /**
+   * Verify RSA/DSA signature against public key.  You are expected to pass in
+   * an object that was returned from `parse()`.
+   *
+   * @param {Object} parsedSignature the object you got from `parse`.
+   * @param {String} pubkey RSA/DSA private key PEM.
+   * @return {Boolean} true if valid, false otherwise.
+   * @throws {TypeError} if you pass in bad arguments.
+   * @throws {InvalidAlgorithmError}
+   */
+  verifySignature: function verifySignature(parsedSignature, pubkey) {
+    assert.object(parsedSignature, 'parsedSignature');
+    if (typeof (pubkey) === 'string' || Buffer.isBuffer(pubkey))
+      pubkey = sshpk.parseKey(pubkey);
+    assert.ok(sshpk.Key.isKey(pubkey, [1, 1]), 'pubkey must be a sshpk.Key');
+
+    var alg = validateAlgorithm(parsedSignature.algorithm);
+    if (alg[0] === 'hmac' || alg[0] !== pubkey.type)
+      return (false);
+
+    var v = pubkey.createVerify(alg[1]);
+    v.update(parsedSignature.signingString);
+    return (v.verify(parsedSignature.params.signature, 'base64'));
+  },
+
+  /**
+   * Verify HMAC against shared secret.  You are expected to pass in an object
+   * that was returned from `parse()`.
+   *
+   * @param {Object} parsedSignature the object you got from `parse`.
+   * @param {String} secret HMAC shared secret.
+   * @return {Boolean} true if valid, false otherwise.
+   * @throws {TypeError} if you pass in bad arguments.
+   * @throws {InvalidAlgorithmError}
+   */
+  verifyHMAC: function verifyHMAC(parsedSignature, secret) {
+    assert.object(parsedSignature, 'parsedHMAC');
+    assert.string(secret, 'secret');
+
+    var alg = validateAlgorithm(parsedSignature.algorithm);
+    if (alg[0] !== 'hmac')
+      return (false);
+
+    var hashAlg = alg[1].toUpperCase();
+
+    var hmac = crypto.createHmac(hashAlg, secret);
+    hmac.update(parsedSignature.signingString);
+
+    /*
+     * Now double-hash to avoid leaking timing information - there's
+     * no easy constant-time compare in JS, so we use this approach
+     * instead. See for more info:
+     * https://www.isecpartners.com/blog/2011/february/double-hmac-
+     * verification.aspx
+     */
+    var h1 = crypto.createHmac(hashAlg, secret);
+    h1.update(hmac.digest());
+    h1 = h1.digest();
+    var h2 = crypto.createHmac(hashAlg, secret);
+    h2.update(new Buffer(parsedSignature.params.signature, 'base64'));
+    h2 = h2.digest();
+
+    /* Node 0.8 returns strings from .digest(). */
+    if (typeof (h1) === 'string')
+      return (h1 === h2);
+    /* And node 0.10 lacks the .equals() method on Buffers. */
+    if (Buffer.isBuffer(h1) && !h1.equals)
+      return (h1.toString('binary') === h2.toString('binary'));
+
+    return (h1.equals(h2));
+  }
+};
+Copyright Joyent, Inc. All rights reserved.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to
+deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+IN THE SOFTWARE.
+{
+  "_args": [
+    [
+      "http-signature@1.1.1",
+      "C:\\projects\\slack-desktop"
+    ]
+  ],
+  "_from": "http-signature@1.1.1",
+  "_id": "http-signature@1.1.1",
+  "_inBundle": false,
+  "_integrity": "sha1-33LiZwZs0Kxn+3at+OE0qPvPkb8=",
+  "_location": "/http-signature",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "http-signature@1.1.1",
+    "name": "http-signature",
+    "escapedName": "http-signature",
+    "rawSpec": "1.1.1",
+    "saveSpec": null,
+    "fetchSpec": "1.1.1"
+  },
+  "_requiredBy": [
+    "/less/request",
+    "/request"
+  ],
+  "_resolved": "https://registry.npmjs.org/http-signature/-/http-signature-1.1.1.tgz",
+  "_spec": "1.1.1",
+  "_where": "C:\\projects\\slack-desktop",
+  "author": {
+    "name": "Joyent, Inc"
+  },
+  "bugs": {
+    "url": "https://github.com/joyent/node-http-signature/issues"
+  },
+  "contributors": [
+    {
+      "name": "Mark Cavage",
+      "email": "mcavage@gmail.com"
+    },
+    {
+      "name": "David I. Lehn",
+      "email": "dil@lehn.org"
+    },
+    {
+      "name": "Patrick Mooney",
+      "email": "patrick.f.mooney@gmail.com"
+    }
+  ],
+  "dependencies": {
+    "assert-plus": "^0.2.0",
+    "jsprim": "^1.2.2",
+    "sshpk": "^1.7.0"
+  },
+  "description": "Reference implementation of Joyent's HTTP Signature scheme.",
+  "devDependencies": {
+    "node-uuid": "^1.4.1",
+    "tap": "0.4.2"
+  },
+  "engines": {
+    "node": ">=0.8",
+    "npm": ">=1.3.7"
+  },
+  "homepage": "https://github.com/joyent/node-http-signature/",
+  "keywords": [
+    "https",
+    "request"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "name": "http-signature",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/joyent/node-http-signature.git"
+  },
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "version": "1.1.1"
+}
+/*tslint:disable:no-console*/
+
+/**
+ * Script to download hunspell wasm binary from https://github.com/kwonoj/docker-hunspell-wasm.
+ */
+
+import * as crypto from 'crypto';
+import * as fs from 'fs';
+import * as path from 'path';
+import { exec, mkdir, rm } from 'shelljs';
+import { promisify } from 'util';
+//tslint:disable-next-line: no-require-imports no-var-requires
+const { config } = require('./package.json');
+
+// Package.json defines `hunspell-version` under `config` section to find corresponding release version
+const version = config['hunspell-version'];
+const readFile = promisify(fs.readFile);
+const asyncExec = promisify(exec);
+
+/**
+ * Generate sha512 checksum from given string.
+ */
+const calculateChecksumFromFile = async (filePath: string) =>
+  crypto
+    .createHash('sha512')
+    .update(await readFile(filePath, { encoding: 'utf-8' }), 'utf8')
+    .digest('hex');
+
+/**
+ * Get remote release checksum.
+ */
+const getRemoteChecksum = (url: string) => {
+  const { stdout } = exec(`wget -qO- ${url}.sha512`, { silent: true });
+  return (stdout as string).slice(0, (stdout as string).indexOf(' '));
+};
+
+/**
+ * Main script execution
+ */
+(async () => {
+  const libPath = path.resolve('./src/lib');
+  const fileName = 'hunspell.js';
+  const localBinarypath = path.join(libPath, fileName);
+
+  const url = `https://github.com/kwonoj/docker-hunspell-wasm/releases/download/${version}/${fileName}`;
+
+  //Create checksum validator
+  const remoteChecksum = getRemoteChecksum(url);
+  const validateBinary = async () => (await calculateChecksumFromFile(localBinarypath)) === remoteChecksum;
+  const isBinaryExists = () => fs.existsSync(localBinarypath);
+
+  if (isBinaryExists() && (await validateBinary())) {
+    return;
+  }
+
+  console.log(`Downloading hunspell wasm binary version '${version}'`);
+
+  rm('-rf', libPath);
+  mkdir(libPath);
+  await asyncExec(`wget -q --directory-prefix=${libPath} ${url}`);
+
+  if (!isBinaryExists() || !await validateBinary()) {
+    throw new Error(`Downloaded binary checksum mismatch, cannot complete bootstrap`);
+  }
+})();
+module.exports = { extends: ['@commitlint/config-angular'] };/**
+ * Interface for hunspell spellchecker.
+ *
+ */
+export interface Hunspell {
+    /**
+     * Dispose current instance.
+     * This should be called to free object created via `HunspellFactory::create`
+     * once it's not being used anymore.
+     *
+     */
+    dispose: () => void;
+    /**
+     * Check spell for given word using current hunspell instance.
+     *
+     * @returns {boolean} false for misspelled, true otherwise.
+     */
+    spell: (word: string) => boolean;
+    /**
+     * Get suggestion list for given word using current hunspell instance.
+     * This'll return suggestion list only if word is misspelled one, otherwise
+     * returns empty array.
+     */
+    suggest: (word: string) => Array<string>;
+}
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+//# sourceMappingURL=Hunspell.js.map/// <reference types="node" />
+import fsType = require('fs');
+/** @internal */
+export declare type stringToUTF8Signature = (str: string, outPtr: number, maxBytesToWrite: number) => void;
+/** @internal */
+export declare type cwrapSignature = <T = Function>(fn: string, returnType: string | null, parameterType: Array<string>) => T;
+/** @internal */
+export declare type FILESYSTEMS = {
+    NODEFS: any;
+    MEMFS: any;
+};
+/**
+ * Subset of internal filesystem api for wasm module.
+ */
+/** @internal */
+export declare type FS = {
+    filesystems: FILESYSTEMS;
+    stat: (path: string) => fsType.Stats;
+    isDir: (mode: number) => boolean;
+    isFile: (mode: number) => boolean;
+    mkdir: (path: string, mode?: number) => void;
+    mount: (type: FILESYSTEMS, option: {
+        root?: string;
+    }, mountpoint: string) => void;
+    writeFile: (path: string, data: ArrayBufferView, opts: {
+        encoding?: string;
+        flags?: string;
+    }) => void;
+    unlink: (path: string) => void;
+    unmount: (mountpoint: string) => void;
+    rmdir: (path: string) => void;
+};
+/**
+ * Interface for module generated by emscripten to load wasm binary.
+ * https://kripken.github.io/emscripten-site/docs/api_reference/preamble.js.html
+ */
+/** @internal */
+export interface HunspellAsmModule {
+    cwrap: cwrapSignature;
+    FS: FS;
+    stringToUTF8: stringToUTF8Signature;
+    stackAlloc: (length: number) => number;
+    stackSave: () => number;
+    stackRestore: (stack: number) => void;
+    getValue: <T = any>(ptr: number, type: string, nosafe?: boolean) => T;
+    Pointer_stringify: (ptr: number) => string;
+    initializeRuntime(): Promise<boolean>;
+}
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+//# sourceMappingURL=HunspellAsmModule.js.mapimport { Hunspell } from './Hunspell';
+/**
+ * Interface for factory function for mounting files into wasm filesystem
+ * and creating hunspell instance.
+ *
+ */
+export interface HunspellFactory {
+    /**
+     * (Node.js only) Mount physical directory into hunspell loader's in-memory filesystem path.
+     * Once it's mounted, hunspell can access physical file with generated in-memory path.
+     *
+     * @param {string} dirPath Absoulte path to directory to mount.
+     *
+     * @return {string} In-memory mounted path for given phsysical path.
+     *                  This path uses unix separator *regardless of platform*
+     */
+    mountDirectory: (dirPath: string) => string;
+    /**
+     * Mount a file into hunspell loader's in-memory filesystem path.
+     *
+     * @param {ArrayBufferView} contents Contents of file to be mounted.
+     * @param {string} [fileName] Name of file. If not specified, will be generated randomly.
+     *
+     * @return {string} Path to in-memory mounted file.
+     *                  This path uses unix separator *regardless of platform*
+     */
+    mountBuffer: (contents: ArrayBufferView, fileName?: string) => string;
+    /**
+     * Unmount file / path from in-memory filesystem.
+     * If given path is physical directory path, it'll be simply unmounted.
+     * If given path is in-memory file mounted via `mountBuffer`, it'll be removed.
+     *
+     * @param {string} mountedFilePath path to unmount
+     */
+    unmount: (mountedFilePath: string) => void;
+    /**
+     * Creates new hunspell dictionary instance.
+     *
+     * @param {string} affPath In-memory file path to aff file. Path should use unix separator.
+     * @param {string} dictPath In-memory file path to dic file. Path should use unix separator.
+     *
+     * @return {Hunspell} Hunspell dictionary instance created.
+     */
+    create: (affPath: string, dictPath: string) => Hunspell;
+}
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+//# sourceMappingURL=HunspellFactory.js.mapimport { ENVIRONMENT } from 'emscripten-wasm-loader';
+import { HunspellAsmModule } from './HunspellAsmModule';
+import { HunspellFactory } from './HunspellFactory';
+/**
+ * Creates a factory function for mounting files into wasm filesystem
+ * and creating hunspell instance.
+ *
+ * @param {HunspellAsmModule} asmModule wasm / asm module loaded into memory.
+ *
+ * @return {HunspellFactory} factory function for mounting files and creating hunspell instance.
+ */
+/** @internal */
+export declare const hunspellLoader: (asmModule: HunspellAsmModule, environment: ENVIRONMENT) => HunspellFactory;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var emscripten_wasm_loader_1 = require("emscripten-wasm-loader");
+var nanoid = require("nanoid");
+var mountBuffer_1 = require("./mountBuffer");
+var mountDirectory_1 = require("./mountDirectory");
+var unmount_1 = require("./unmount");
+var logger_1 = require("./util/logger");
+var wrapHunspellInterface_1 = require("./wrapHunspellInterface");
+/**
+ * Creates a factory function for mounting files into wasm filesystem
+ * and creating hunspell instance.
+ *
+ * @param {HunspellAsmModule} asmModule wasm / asm module loaded into memory.
+ *
+ * @return {HunspellFactory} factory function for mounting files and creating hunspell instance.
+ */
+/** @internal */
+exports.hunspellLoader = function (asmModule, environment) {
+    var cwrap = asmModule.cwrap, FS = asmModule.FS, stringToUTF8 = asmModule.stringToUTF8, stackAlloc = asmModule.stackAlloc, stackSave = asmModule.stackSave, stackRestore = asmModule.stackRestore, getValue = asmModule.getValue, Pointer_stringify = asmModule.Pointer_stringify;
+    var hunspellInterface = wrapHunspellInterface_1.wrapHunspellInterface(cwrap);
+    //creating top-level path to mount files
+    var memPathId = "/" + nanoid(45);
+    FS.mkdir(memPathId);
+    logger_1.log("hunspellLoader: mount path for bufferFile created at " + memPathId);
+    var nodePathId = "/" + nanoid(45);
+    if (environment === emscripten_wasm_loader_1.ENVIRONMENT.NODE) {
+        FS.mkdir(nodePathId);
+        logger_1.log("hunspellLoader: mount path for directory created at " + nodePathId);
+    }
+    var allocString = function (value) {
+        var len = (value.length << 2) + 1;
+        var ret = stackAlloc(len);
+        stringToUTF8(value, ret, len);
+        return ret;
+    };
+    return {
+        mountDirectory: mountDirectory_1.mountDirectory(FS, nodePathId, environment),
+        mountBuffer: mountBuffer_1.mountBuffer(FS, memPathId),
+        unmount: unmount_1.unmount(FS, memPathId),
+        create: function (affPath, dictPath) {
+            var hunspellPtr = hunspellInterface.create(allocString(affPath), allocString(dictPath));
+            return {
+                dispose: function () { return hunspellInterface.destroy(hunspellPtr); },
+                spell: function (word) {
+                    //let allocated string volatile via manually save / restore stacks, instead of malloc / free
+                    var stack = stackSave();
+                    var ret = hunspellInterface.spell(hunspellPtr, allocString(word));
+                    stackRestore(stack);
+                    return !!ret;
+                },
+                suggest: function (word) {
+                    var stack = stackSave();
+                    var suggestionListPtr = stackAlloc(4);
+                    var suggestionCount = hunspellInterface.suggest(hunspellPtr, suggestionListPtr, allocString(word));
+                    var suggestionListValuePtr = getValue(suggestionListPtr, '*');
+                    var ret = suggestionCount > 0
+                        ? Array.from(Array(suggestionCount).keys()).map(function (idx) {
+                            return Pointer_stringify(getValue(suggestionListValuePtr + idx * 4, '*'));
+                        })
+                        : [];
+                    hunspellInterface.free_list(hunspellPtr, suggestionListPtr, suggestionCount);
+                    stackRestore(stack);
+                    return ret;
+                }
+            };
+        }
+    };
+};
+//# sourceMappingURL=hunspellLoader.js.mapexport { loadModule } from './loadModule';
+export { HunspellFactory } from './HunspellFactory';
+export { Hunspell } from './Hunspell';
+export { log, enableLogger } from './util/logger';
+export { ENVIRONMENT } from 'emscripten-wasm-loader';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var loadModule_1 = require("./loadModule");
+exports.loadModule = loadModule_1.loadModule;
+var logger_1 = require("./util/logger");
+exports.log = logger_1.log;
+exports.enableLogger = logger_1.enableLogger;
+var emscripten_wasm_loader_1 = require("emscripten-wasm-loader");
+exports.ENVIRONMENT = emscripten_wasm_loader_1.ENVIRONMENT;
+//# sourceMappingURL=index.js.mapimport { FS } from './HunspellAsmModule';
+/**
+ * Check if given mount path is already mounted
+ *
+ * @param {FS} FS wasm module filesystem
+ * @param {string} mountPath path to wasm filesystem
+ * @param {dir | file} type type of mountPath
+ *
+ * @returns {boolean} true if mounted, false otherwise or error occurred
+ */
+/** @internal */
+export declare const isMounted: (FS: FS, mountPath: string, type: "dir" | "file") => boolean;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var logger_1 = require("./util/logger");
+/**
+ * Check if given mount path is already mounted
+ *
+ * @param {FS} FS wasm module filesystem
+ * @param {string} mountPath path to wasm filesystem
+ * @param {dir | file} type type of mountPath
+ *
+ * @returns {boolean} true if mounted, false otherwise or error occurred
+ */
+/** @internal */
+exports.isMounted = function (FS, mountPath, type) {
+    try {
+        var stat = FS.stat(mountPath);
+        var typeFunction = type === 'dir' ? FS.isDir : FS.isFile;
+        if (!!stat && typeFunction(stat.mode)) {
+            logger_1.log("isMounted: " + mountPath + " is mounted");
+            return true;
+        }
+    }
+    catch (e) {
+        if (e.code !== 'ENOENT') {
+            logger_1.log("isMounted check failed", e);
+        }
+    }
+    return false;
+};
+//# sourceMappingURL=isMounted.js.mapvar Module = function(Module) {
+  Module = Module || {};
+
+var Module=typeof Module!=="undefined"?Module:{};Module["preRun"]=(function(){Module.FS={filesystems:FS.filesystems,stat:FS.stat,isDir:FS.isDir,isFile:FS.isFile,mkdir:FS.mkdir,mount:FS.mount,writeFile:FS.writeFile,unlink:FS.unlink,unmount:FS.unmount,rmdir:FS.rmdir}});var moduleOverrides={};var key;for(key in Module){if(Module.hasOwnProperty(key)){moduleOverrides[key]=Module[key]}}Module["arguments"]=[];Module["thisProgram"]="./this.program";Module["quit"]=(function(status,toThrow){throw toThrow});Module["preRun"]=[];Module["postRun"]=[];var ENVIRONMENT_IS_WEB=false;var ENVIRONMENT_IS_WORKER=false;var ENVIRONMENT_IS_NODE=false;var ENVIRONMENT_IS_SHELL=false;if(Module["ENVIRONMENT"]){if(Module["ENVIRONMENT"]==="WEB"){ENVIRONMENT_IS_WEB=true}else if(Module["ENVIRONMENT"]==="WORKER"){ENVIRONMENT_IS_WORKER=true}else if(Module["ENVIRONMENT"]==="NODE"){ENVIRONMENT_IS_NODE=true}else if(Module["ENVIRONMENT"]==="SHELL"){ENVIRONMENT_IS_SHELL=true}else{throw new Error("Module['ENVIRONMENT'] value is not valid. must be one of: WEB|WORKER|NODE|SHELL.")}}else{ENVIRONMENT_IS_WEB=typeof window==="object";ENVIRONMENT_IS_WORKER=typeof importScripts==="function";ENVIRONMENT_IS_NODE=typeof process==="object"&&typeof require==="function"&&!ENVIRONMENT_IS_WEB&&!ENVIRONMENT_IS_WORKER;ENVIRONMENT_IS_SHELL=!ENVIRONMENT_IS_WEB&&!ENVIRONMENT_IS_NODE&&!ENVIRONMENT_IS_WORKER}if(ENVIRONMENT_IS_NODE){var nodeFS;var nodePath;Module["read"]=function shell_read(filename,binary){var ret;ret=tryParseAsDataURI(filename);if(!ret){if(!nodeFS)nodeFS=require("fs");if(!nodePath)nodePath=require("path");filename=nodePath["normalize"](filename);ret=nodeFS["readFileSync"](filename)}return binary?ret:ret.toString()};Module["readBinary"]=function readBinary(filename){var ret=Module["read"](filename,true);if(!ret.buffer){ret=new Uint8Array(ret)}assert(ret.buffer);return ret};if(process["argv"].length>1){Module["thisProgram"]=process["argv"][1].replace(/\\/g,"/")}Module["arguments"]=process["argv"].slice(2);process["on"]("uncaughtException",(function(ex){if(!(ex instanceof ExitStatus)){throw ex}}));process["on"]("unhandledRejection",(function(reason,p){process["exit"](1)}));Module["inspect"]=(function(){return"[Emscripten Module object]"})}else if(ENVIRONMENT_IS_SHELL){if(typeof read!="undefined"){Module["read"]=function shell_read(f){var data=tryParseAsDataURI(f);if(data){return intArrayToString(data)}return read(f)}}Module["readBinary"]=function readBinary(f){var data;data=tryParseAsDataURI(f);if(data){return data}if(typeof readbuffer==="function"){return new Uint8Array(readbuffer(f))}data=read(f,"binary");assert(typeof data==="object");return data};if(typeof scriptArgs!="undefined"){Module["arguments"]=scriptArgs}else if(typeof arguments!="undefined"){Module["arguments"]=arguments}if(typeof quit==="function"){Module["quit"]=(function(status,toThrow){quit(status)})}}else if(ENVIRONMENT_IS_WEB||ENVIRONMENT_IS_WORKER){Module["read"]=function shell_read(url){try{var xhr=new XMLHttpRequest;xhr.open("GET",url,false);xhr.send(null);return xhr.responseText}catch(err){var data=tryParseAsDataURI(url);if(data){return intArrayToString(data)}throw err}};if(ENVIRONMENT_IS_WORKER){Module["readBinary"]=function readBinary(url){try{var xhr=new XMLHttpRequest;xhr.open("GET",url,false);xhr.responseType="arraybuffer";xhr.send(null);return new Uint8Array(xhr.response)}catch(err){var data=tryParseAsDataURI(url);if(data){return data}throw err}}}Module["readAsync"]=function readAsync(url,onload,onerror){var xhr=new XMLHttpRequest;xhr.open("GET",url,true);xhr.responseType="arraybuffer";xhr.onload=function xhr_onload(){if(xhr.status==200||xhr.status==0&&xhr.response){onload(xhr.response);return}var data=tryParseAsDataURI(url);if(data){onload(data.buffer);return}onerror()};xhr.onerror=onerror;xhr.send(null)};if(typeof arguments!="undefined"){Module["arguments"]=arguments}Module["setWindowTitle"]=(function(title){document.title=title})}Module["print"]=typeof console!=="undefined"?console.log.bind(console):typeof print!=="undefined"?print:null;Module["printErr"]=typeof printErr!=="undefined"?printErr:typeof console!=="undefined"&&console.warn.bind(console)||Module["print"];Module.print=Module["print"];Module.printErr=Module["printErr"];for(key in moduleOverrides){if(moduleOverrides.hasOwnProperty(key)){Module[key]=moduleOverrides[key]}}moduleOverrides=undefined;var STACK_ALIGN=16;function staticAlloc(size){assert(!staticSealed);var ret=STATICTOP;STATICTOP=STATICTOP+size+15&-16;return ret}function dynamicAlloc(size){assert(DYNAMICTOP_PTR);var ret=HEAP32[DYNAMICTOP_PTR>>2];var end=ret+size+15&-16;HEAP32[DYNAMICTOP_PTR>>2]=end;if(end>=TOTAL_MEMORY){var success=enlargeMemory();if(!success){HEAP32[DYNAMICTOP_PTR>>2]=ret;return 0}}return ret}function alignMemory(size,factor){if(!factor)factor=STACK_ALIGN;var ret=size=Math.ceil(size/factor)*factor;return ret}var functionPointers=new Array(0);var GLOBAL_BASE=1024;var ABORT=0;var EXITSTATUS=0;function assert(condition,text){if(!condition){abort("Assertion failed: "+text)}}function getCFunc(ident){var func=Module["_"+ident];assert(func,"Cannot call unknown function "+ident+", make sure it is exported");return func}var JSfuncs={"stackSave":(function(){stackSave()}),"stackRestore":(function(){stackRestore()}),"arrayToC":(function(arr){var ret=stackAlloc(arr.length);writeArrayToMemory(arr,ret);return ret}),"stringToC":(function(str){var ret=0;if(str!==null&&str!==undefined&&str!==0){var len=(str.length<<2)+1;ret=stackAlloc(len);stringToUTF8(str,ret,len)}return ret})};var toC={"string":JSfuncs["stringToC"],"array":JSfuncs["arrayToC"]};function ccall(ident,returnType,argTypes,args,opts){var func=getCFunc(ident);var cArgs=[];var stack=0;if(args){for(var i=0;i<args.length;i++){var converter=toC[argTypes[i]];if(converter){if(stack===0)stack=stackSave();cArgs[i]=converter(args[i])}else{cArgs[i]=args[i]}}}var ret=func.apply(null,cArgs);if(returnType==="string")ret=Pointer_stringify(ret);if(stack!==0){stackRestore(stack)}return ret}function cwrap(ident,returnType,argTypes){argTypes=argTypes||[];var cfunc=getCFunc(ident);var numericArgs=argTypes.every((function(type){return type==="number"}));var numericRet=returnType!=="string";if(numericRet&&numericArgs){return cfunc}return(function(){return ccall(ident,returnType,argTypes,arguments)})}function getValue(ptr,type,noSafe){type=type||"i8";if(type.charAt(type.length-1)==="*")type="i32";switch(type){case"i1":return HEAP8[ptr>>0];case"i8":return HEAP8[ptr>>0];case"i16":return HEAP16[ptr>>1];case"i32":return HEAP32[ptr>>2];case"i64":return HEAP32[ptr>>2];case"float":return HEAPF32[ptr>>2];case"double":return HEAPF64[ptr>>3];default:abort("invalid type for getValue: "+type)}return null}function getMemory(size){if(!staticSealed)return staticAlloc(size);if(!runtimeInitialized)return dynamicAlloc(size);return _malloc(size)}function Pointer_stringify(ptr,length){if(length===0||!ptr)return"";var hasUtf=0;var t;var i=0;while(1){t=HEAPU8[ptr+i>>0];hasUtf|=t;if(t==0&&!length)break;i++;if(length&&i==length)break}if(!length)length=i;var ret="";if(hasUtf<128){var MAX_CHUNK=1024;var curr;while(length>0){curr=String.fromCharCode.apply(String,HEAPU8.subarray(ptr,ptr+Math.min(length,MAX_CHUNK)));ret=ret?ret+curr:curr;ptr+=MAX_CHUNK;length-=MAX_CHUNK}return ret}return UTF8ToString(ptr)}var UTF8Decoder=typeof TextDecoder!=="undefined"?new TextDecoder("utf8"):undefined;function UTF8ArrayToString(u8Array,idx){var endPtr=idx;while(u8Array[endPtr])++endPtr;if(endPtr-idx>16&&u8Array.subarray&&UTF8Decoder){return UTF8Decoder.decode(u8Array.subarray(idx,endPtr))}else{var u0,u1,u2,u3,u4,u5;var str="";while(1){u0=u8Array[idx++];if(!u0)return str;if(!(u0&128)){str+=String.fromCharCode(u0);continue}u1=u8Array[idx++]&63;if((u0&224)==192){str+=String.fromCharCode((u0&31)<<6|u1);continue}u2=u8Array[idx++]&63;if((u0&240)==224){u0=(u0&15)<<12|u1<<6|u2}else{u3=u8Array[idx++]&63;if((u0&248)==240){u0=(u0&7)<<18|u1<<12|u2<<6|u3}else{u4=u8Array[idx++]&63;if((u0&252)==248){u0=(u0&3)<<24|u1<<18|u2<<12|u3<<6|u4}else{u5=u8Array[idx++]&63;u0=(u0&1)<<30|u1<<24|u2<<18|u3<<12|u4<<6|u5}}}if(u0<65536){str+=String.fromCharCode(u0)}else{var ch=u0-65536;str+=String.fromCharCode(55296|ch>>10,56320|ch&1023)}}}}function UTF8ToString(ptr){return UTF8ArrayToString(HEAPU8,ptr)}function stringToUTF8Array(str,outU8Array,outIdx,maxBytesToWrite){if(!(maxBytesToWrite>0))return 0;var startIdx=outIdx;var endIdx=outIdx+maxBytesToWrite-1;for(var i=0;i<str.length;++i){var u=str.charCodeAt(i);if(u>=55296&&u<=57343)u=65536+((u&1023)<<10)|str.charCodeAt(++i)&1023;if(u<=127){if(outIdx>=endIdx)break;outU8Array[outIdx++]=u}else if(u<=2047){if(outIdx+1>=endIdx)break;outU8Array[outIdx++]=192|u>>6;outU8Array[outIdx++]=128|u&63}else if(u<=65535){if(outIdx+2>=endIdx)break;outU8Array[outIdx++]=224|u>>12;outU8Array[outIdx++]=128|u>>6&63;outU8Array[outIdx++]=128|u&63}else if(u<=2097151){if(outIdx+3>=endIdx)break;outU8Array[outIdx++]=240|u>>18;outU8Array[outIdx++]=128|u>>12&63;outU8Array[outIdx++]=128|u>>6&63;outU8Array[outIdx++]=128|u&63}else if(u<=67108863){if(outIdx+4>=endIdx)break;outU8Array[outIdx++]=248|u>>24;outU8Array[outIdx++]=128|u>>18&63;outU8Array[outIdx++]=128|u>>12&63;outU8Array[outIdx++]=128|u>>6&63;outU8Array[outIdx++]=128|u&63}else{if(outIdx+5>=endIdx)break;outU8Array[outIdx++]=252|u>>30;outU8Array[outIdx++]=128|u>>24&63;outU8Array[outIdx++]=128|u>>18&63;outU8Array[outIdx++]=128|u>>12&63;outU8Array[outIdx++]=128|u>>6&63;outU8Array[outIdx++]=128|u&63}}outU8Array[outIdx]=0;return outIdx-startIdx}function stringToUTF8(str,outPtr,maxBytesToWrite){return stringToUTF8Array(str,HEAPU8,outPtr,maxBytesToWrite)}function lengthBytesUTF8(str){var len=0;for(var i=0;i<str.length;++i){var u=str.charCodeAt(i);if(u>=55296&&u<=57343)u=65536+((u&1023)<<10)|str.charCodeAt(++i)&1023;if(u<=127){++len}else if(u<=2047){len+=2}else if(u<=65535){len+=3}else if(u<=2097151){len+=4}else if(u<=67108863){len+=5}else{len+=6}}return len}var UTF16Decoder=typeof TextDecoder!=="undefined"?new TextDecoder("utf-16le"):undefined;function allocateUTF8(str){var size=lengthBytesUTF8(str)+1;var ret=_malloc(size);if(ret)stringToUTF8Array(str,HEAP8,ret,size);return ret}function demangle(func){return func}function demangleAll(text){var regex=/__Z[\w\d_]+/g;return text.replace(regex,(function(x){var y=demangle(x);return x===y?x:x+" ["+y+"]"}))}function jsStackTrace(){var err=new Error;if(!err.stack){try{throw new Error(0)}catch(e){err=e}if(!err.stack){return"(no stack trace available)"}}return err.stack.toString()}function stackTrace(){var js=jsStackTrace();if(Module["extraStackTrace"])js+="\n"+Module["extraStackTrace"]();return demangleAll(js)}var WASM_PAGE_SIZE=65536;var ASMJS_PAGE_SIZE=16777216;var MIN_TOTAL_MEMORY=16777216;function alignUp(x,multiple){if(x%multiple>0){x+=multiple-x%multiple}return x}var buffer,HEAP8,HEAPU8,HEAP16,HEAPU16,HEAP32,HEAPU32,HEAPF32,HEAPF64;function updateGlobalBuffer(buf){Module["buffer"]=buffer=buf}function updateGlobalBufferViews(){Module["HEAP8"]=HEAP8=new Int8Array(buffer);Module["HEAP16"]=HEAP16=new Int16Array(buffer);Module["HEAP32"]=HEAP32=new Int32Array(buffer);Module["HEAPU8"]=HEAPU8=new Uint8Array(buffer);Module["HEAPU16"]=HEAPU16=new Uint16Array(buffer);Module["HEAPU32"]=HEAPU32=new Uint32Array(buffer);Module["HEAPF32"]=HEAPF32=new Float32Array(buffer);Module["HEAPF64"]=HEAPF64=new Float64Array(buffer)}var STATIC_BASE,STATICTOP,staticSealed;var STACK_BASE,STACKTOP,STACK_MAX;var DYNAMIC_BASE,DYNAMICTOP_PTR;STATIC_BASE=STATICTOP=STACK_BASE=STACKTOP=STACK_MAX=DYNAMIC_BASE=DYNAMICTOP_PTR=0;staticSealed=false;function abortOnCannotGrowMemory(){abort("Cannot enlarge memory arrays. Either (1) compile with  -s TOTAL_MEMORY=X  with X higher than the current value "+TOTAL_MEMORY+", (2) compile with  -s ALLOW_MEMORY_GROWTH=1  which allows increasing the size at runtime, or (3) if you want malloc to return NULL (0) instead of this abort, compile with  -s ABORTING_MALLOC=0 ")}if(!Module["reallocBuffer"])Module["reallocBuffer"]=(function(size){var ret;try{if(ArrayBuffer.transfer){ret=ArrayBuffer.transfer(buffer,size)}else{var oldHEAP8=HEAP8;ret=new ArrayBuffer(size);var temp=new Int8Array(ret);temp.set(oldHEAP8)}}catch(e){return false}var success=_emscripten_replace_memory(ret);if(!success)return false;return ret});function enlargeMemory(){var PAGE_MULTIPLE=Module["usingWasm"]?WASM_PAGE_SIZE:ASMJS_PAGE_SIZE;var LIMIT=2147483648-PAGE_MULTIPLE;if(HEAP32[DYNAMICTOP_PTR>>2]>LIMIT){return false}var OLD_TOTAL_MEMORY=TOTAL_MEMORY;TOTAL_MEMORY=Math.max(TOTAL_MEMORY,MIN_TOTAL_MEMORY);while(TOTAL_MEMORY<HEAP32[DYNAMICTOP_PTR>>2]){if(TOTAL_MEMORY<=536870912){TOTAL_MEMORY=alignUp(2*TOTAL_MEMORY,PAGE_MULTIPLE)}else{TOTAL_MEMORY=Math.min(alignUp((3*TOTAL_MEMORY+2147483648)/4,PAGE_MULTIPLE),LIMIT)}}var replacement=Module["reallocBuffer"](TOTAL_MEMORY);if(!replacement||replacement.byteLength!=TOTAL_MEMORY){TOTAL_MEMORY=OLD_TOTAL_MEMORY;return false}updateGlobalBuffer(replacement);updateGlobalBufferViews();return true}var byteLength;try{byteLength=Function.prototype.call.bind(Object.getOwnPropertyDescriptor(ArrayBuffer.prototype,"byteLength").get);byteLength(new ArrayBuffer(4))}catch(e){byteLength=(function(buffer){return buffer.byteLength})}var TOTAL_STACK=Module["TOTAL_STACK"]||5242880;var TOTAL_MEMORY=Module["TOTAL_MEMORY"]||16777216;if(TOTAL_MEMORY<TOTAL_STACK)Module.printErr("TOTAL_MEMORY should be larger than TOTAL_STACK, was "+TOTAL_MEMORY+"! (TOTAL_STACK="+TOTAL_STACK+")");if(Module["buffer"]){buffer=Module["buffer"]}else{if(typeof WebAssembly==="object"&&typeof WebAssembly.Memory==="function"){Module["wasmMemory"]=new WebAssembly.Memory({"initial":TOTAL_MEMORY/WASM_PAGE_SIZE});buffer=Module["wasmMemory"].buffer}else{buffer=new ArrayBuffer(TOTAL_MEMORY)}Module["buffer"]=buffer}updateGlobalBufferViews();function getTotalMemory(){return TOTAL_MEMORY}HEAP32[0]=1668509029;HEAP16[1]=25459;if(HEAPU8[2]!==115||HEAPU8[3]!==99)throw"Runtime error: expected the system to be little-endian!";function callRuntimeCallbacks(callbacks){while(callbacks.length>0){var callback=callbacks.shift();if(typeof callback=="function"){callback();continue}var func=callback.func;if(typeof func==="number"){if(callback.arg===undefined){Module["dynCall_v"](func)}else{Module["dynCall_vi"](func,callback.arg)}}else{func(callback.arg===undefined?null:callback.arg)}}}var __ATPRERUN__=[];var __ATINIT__=[];var __ATMAIN__=[];var __ATEXIT__=[];var __ATPOSTRUN__=[];var runtimeInitialized=false;var runtimeExited=false;function preRun(){if(Module["preRun"]){if(typeof Module["preRun"]=="function")Module["preRun"]=[Module["preRun"]];while(Module["preRun"].length){addOnPreRun(Module["preRun"].shift())}}callRuntimeCallbacks(__ATPRERUN__)}function ensureInitRuntime(){if(runtimeInitialized)return;runtimeInitialized=true;callRuntimeCallbacks(__ATINIT__)}function preMain(){callRuntimeCallbacks(__ATMAIN__)}function exitRuntime(){callRuntimeCallbacks(__ATEXIT__);runtimeExited=true}function postRun(){if(Module["postRun"]){if(typeof Module["postRun"]=="function")Module["postRun"]=[Module["postRun"]];while(Module["postRun"].length){addOnPostRun(Module["postRun"].shift())}}callRuntimeCallbacks(__ATPOSTRUN__)}function addOnPreRun(cb){__ATPRERUN__.unshift(cb)}function addOnPostRun(cb){__ATPOSTRUN__.unshift(cb)}function writeArrayToMemory(array,buffer){HEAP8.set(array,buffer)}function writeAsciiToMemory(str,buffer,dontAddNull){for(var i=0;i<str.length;++i){HEAP8[buffer++>>0]=str.charCodeAt(i)}if(!dontAddNull)HEAP8[buffer>>0]=0}var Math_abs=Math.abs;var Math_cos=Math.cos;var Math_sin=Math.sin;var Math_tan=Math.tan;var Math_acos=Math.acos;var Math_asin=Math.asin;var Math_atan=Math.atan;var Math_atan2=Math.atan2;var Math_exp=Math.exp;var Math_log=Math.log;var Math_sqrt=Math.sqrt;var Math_ceil=Math.ceil;var Math_floor=Math.floor;var Math_pow=Math.pow;var Math_imul=Math.imul;var Math_fround=Math.fround;var Math_round=Math.round;var Math_min=Math.min;var Math_max=Math.max;var Math_clz32=Math.clz32;var Math_trunc=Math.trunc;var runDependencies=0;var runDependencyWatcher=null;var dependenciesFulfilled=null;function getUniqueRunDependency(id){return id}function addRunDependency(id){runDependencies++;if(Module["monitorRunDependencies"]){Module["monitorRunDependencies"](runDependencies)}}function removeRunDependency(id){runDependencies--;if(Module["monitorRunDependencies"]){Module["monitorRunDependencies"](runDependencies)}if(runDependencies==0){if(runDependencyWatcher!==null){clearInterval(runDependencyWatcher);runDependencyWatcher=null}if(dependenciesFulfilled){var callback=dependenciesFulfilled;dependenciesFulfilled=null;callback()}}}Module["preloadedImages"]={};Module["preloadedAudios"]={};var dataURIPrefix="data:application/octet-stream;base64,";function isDataURI(filename){return String.prototype.startsWith?filename.startsWith(dataURIPrefix):filename.indexOf(dataURIPrefix)===0}function integrateWasmJS(){var wasmTextFile="";var wasmBinaryFile="data:application/octet-stream;base64,AGFzbQEAAAAB/QIsYAF/AGABfwF/YAV/f35/fwBgAn9/AX9gA39/fwF/YAV/f39/fwF/YAh/f39/f39/fwF/YAN/f38AYAZ/f39/f38Bf2ACf38AYAR/f39/AX9gAABgBH9/f38AYAZ/f39/f38AYAV/f39/fwBgBX9/f398AX9gBn9/f39/fAF/YAd/f39/f39/AX9gBX9/f39+AX9gAAF/YAd/f39/f39/AGAKf39/f39/f39/fwF/YAp/f39/f39/f39/AGAIf39/f39/f38AYAl/f39/f39/f38AYAl/f39/f39/f38Bf2ADfn9/AX9gAn5/AX9gBn98f39/fwF/YAF8AX5gAnx/AXxgBH9/f34BfmADf39+AGADf39/AXxgBX9/f39/AXxgBn9/f39/fwF8YAJ/fwF+YAJ8fAF8YAN/f38BfmAMf39/f39/f39/f39/AX9gA39/fwF9YAR/f39/AX5gC39/f39/f39/f39/AX9gD39/f39/f39/f39/f39/fwAC0AUkA2VudgZtZW1vcnkCAIACA2VudgV0YWJsZQFwAb0FvQUDZW52CXRhYmxlQmFzZQN/AANlbnYORFlOQU1JQ1RPUF9QVFIDfwADZW52CFNUQUNLVE9QA38ABmdsb2JhbANOYU4DfAAGZ2xvYmFsCEluZmluaXR5A3wAA2VudgVhYm9ydAAAA2Vudg1lbmxhcmdlTWVtb3J5ABMDZW52DmdldFRvdGFsTWVtb3J5ABMDZW52F2Fib3J0T25DYW5ub3RHcm93TWVtb3J5ABMDZW52Gl9fWlN0MTh1bmNhdWdodF9leGNlcHRpb252ABMDZW52GV9fX2N4YV9hbGxvY2F0ZV9leGNlcHRpb24AAQNlbnYMX19fY3hhX3Rocm93AAcDZW52B19fX2xvY2sAAANlbnYLX19fbWFwX2ZpbGUAAwNlbnYLX19fc2V0RXJyTm8AAANlbnYNX19fc3lzY2FsbDE0MAADA2Vudg1fX19zeXNjYWxsMTQ1AAMDZW52DV9fX3N5c2NhbGwxNDYAAwNlbnYNX19fc3lzY2FsbDIyMQADA2VudgtfX19zeXNjYWxsNQADA2VudgxfX19zeXNjYWxsNTQAAwNlbnYLX19fc3lzY2FsbDYAAwNlbnYMX19fc3lzY2FsbDkxAAMDZW52CV9fX3VubG9j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

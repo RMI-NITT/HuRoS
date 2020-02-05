@@ -1,0 +1,17 @@
+I would use gazebo, matlab or Webots.
+
+A simulation is composed on three main elements.
+-The model (It includes the robot model and the world model)
+-The viewer (Displays the robot/world state)
+-The controller (Sends the desired motion to the robot)
+Also there is a common interface between these components (written in some programming language Matlab/Python/C++/C).
+
+Most of the simulators include a robot model but it is only for internal purposes and you only have access to sensors and actuators just like in a real robot. The problem is that you need more than just this information. You need your own model which can be a kinematic or a dynamic model depending on your goals.
+- A kinematic model allows you to compute the forward kinematics and the robot jacobians to any point within the robot's structure.
+- A dynamic model allows you to evualute the robot's inertia, coriolis and gravity matrices.
+
+The controller is the one that you have to design carefully. It includes:
+-A trajectory/path/goal generator. (The output could be a position/orientation goal, a Polynomial Interpolation trajectory, a B-spline trajectory, etc)
+-A control algorithm (Inverse Kinematics/ Inverse Dynamics)  and a control law  (Proportional, P+Derivative, etc..)
+
+I have designed and implemented some algorithms based on inverse kinematic control for a humanoid robot, and also I have worked with trajectory generators, so you can contact me for some more specific questions.
