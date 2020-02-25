@@ -32,7 +32,7 @@ long positionRight = -999;
 
 int posControl(long error){
   long pwm=0;
-  double kp = 0.001, ki = 0.00001;
+ double kp = 0.04, ki = 0.000015;
   int dir;
   
   //if(abs(error)<25000){
