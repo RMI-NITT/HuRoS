@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SimscapeMultibodyImportXML version="2.0" xmlns="urn:mathworks:SimscapeMultibody:import" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Created by="" on="02/23/20||02:05:16" using="Simscape Multibody Link Version 6.1" from="SolidWorks 24.0.0"/>
+<ModelUnits mass="kilogram" length="meter"/>
+<DataUnits mass="kilogram" length="meter"/>
+<RootAssembly name="FULL_BIPED" uid="FULL_BIPED" version="198">
+<AssemblyFile name="FULL_BIPED.SLDASM" type="SolidWorks Assembly"/>
+<InstanceTree>
+<Instance name="thigh-2" uid="thigh-2" entityUid="thigh*:*Default">
+<Transform>
+<Rotation>0.96486213821634248 0 0.26275664451462982 0.045399726253903497 0.98496001890052942 -0.16671120545284235 -0.25880478954736941 0.17278240989021185 0.9503506298939739</Rotation>
+<Translation>0.17200005138487759 0.11203702012296579 0.29569039352184634</Translation>
+</Transform>
+</Instance>
+<Instance name="hip-1" uid="hip-1" grounded="true" entityUid="hip*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0.084117352049439001 0.12014843966457547 0.16945059428481785</Translation>
+</Transform>
+</Instance>
+<Instance name="spider_univ_8-1" uid="spider_univ_8-1" entityUid="spider_univ_8*:*Default">
+<Transform>
+<Rotation>1 0 0 0 0.3185153077871406 0.94791771726519758 0 -0.94791771726519758 0.3185153077871406</Rotation>
+<Translation>0.0041173520494389628 0.076498455433799101 0.25377250088410597</Translation>
+</Transform>
+</Instance>
+<Instance name="spider_univ_8-2" uid="spider_univ_8-2" entityUid="spider_univ_8*:*Default">
+<Transform>
+<Rotation>1 0 0 0 0.1727824098902116 0.9849600189005292 0 -0.9849600189005292 0.1727824098902116</Rotation>
+<Translation>0.16411735204943903 0.07763995553053038 0.26026857822941918</Translation>
+</Transform>
+</Instance>
+<Instance name="thigh-1" uid="thigh-1" entityUid="thigh*:*Default">
+<Transform>
+<Rotation>0.99224038409523785 1.7412286890117201e-16 -0.12433430809931573 -0.039602380412754795 0.9479177172651978 -0.31604375133892482 0.11785869351125114 0.31851530778714016 0.94056223986990062</Rotation>
+<Translation>0.00038732280645951273 0.10493385158423926 0.29472998039168818</Translation>
+</Transform>
+</Instance>
+<Instance name="spider_univ_8-4" uid="spider_univ_8-4" entityUid="spider_univ_8*:*Default">
+<Transform>
+<Rotation>0.98379538176569259 0.10653357490118362 0.1442124968068616 0.091517951510881976 0.39328425658920702 -0.91485078459294467 -0.15417882918139905 0.91322400917729296 0.37716150081152805</Rotation>
+<Translation>0.39490906795545472 0.26824449002862466 1.1534875023757347</Translation>
+</Transform>
+</Instance>
+<Instance name="revolute-3" uid="revolute-3" entityUid="revolute*:*Default">
+<Transform>
+<Rotation>0.25984760629624298 -0.038990713493087061 -0.96486213821634259 -0.018706334866118716 0.9987937414160879 -0.045399726253905683 0.96546843269885796 0.029846044450696319 0.25880478954736857</Rotation>
+<Translation>0.33146259339026118 0.037002108511741634 0.72247076722075132</Translation>
+</Transform>
+</Instance>
+<Instance name="calf-1" uid="calf-1" entityUid="calf*:*Default">
+<Transform>
+<Rotation>-0.049990707576804329 0.99224038409523752 -0.11384177320520811 -0.99499395164482662 -0.039602380412754629 0.091753406780651761 0.086533030376745285 0.11785869351125131 0.98925293177106033</Rotation>
+<Translation>-0.060213692653328293 -0.037691643839248411 0.75699936508379984</Translation>
+</Transform>
+</Instance>
+<Instance name="revolute-2" uid="revolute-2" entityUid="revolute*:*Default">
+<Transform>
+<Rotation>0.11785334512456566 0.039618293924468521 0.9922403840952374 -0.0024777508519167346 0.99921244598751835 -0.039602380412754261 -0.99302791994669803 0.0022087485495405051 0.11785869351125126</Rotation>
+<Translation>-0.096496074283035319 -0.039019766815332382 0.72262131093715309</Translation>
+</Transform>
+</Instance>
+<Instance name="spider_univ_8-3" uid="spider_univ_8-3" entityUid="spider_univ_8*:*Default">
+<Transform>
+<Rotation>0.049990707576803767 -0.0022492457205470812 -0.99874715020852955 0.99499395164482662 -0.086528981043298425 0.049997716246052766 -0.086533030376745729 -0.99624679489235846 -0.0020876591005469713</Rotation>
+<Translation>-0.072755492384698292 0.004079120045815442 1.2300520687756085</Translation>
+</Transform>
+</Instance>
+<Instance name="foot-2" uid="foot-2" entityUid="foot*:*Default">
+<Transform>
+<Rotation>0.98379538176569259 0.083830167460302835 -0.15849022001395749 0.091517951510881615 -0.99492431277897608 0.041833914382160164 -0.15417882918139897 -0.05566071204053688 -0.98647390931914314</Rotation>
+<Translation>0.39909682715885147 0.23614103917311999 1.2260127392379663</Translation>
+</Transform>
+</Instance>
+<Instance name="calf-2" uid="calf-2" entityUid="calf*:*Default">
+<Transform>
+<Rotation>-0.14421249680686157 -0.96486213821634259 0.21964473588346783 0.91485078459294467 -0.0453997262539034 0.40123173701209663 -0.37716150081152844 0.25880478954736913 0.88925209204867073</Rotation>
+<Translation>0.29948058437052821 0.047076312073877039 0.75956102545554061</Translation>
+</Transform>
+</Instance>
+<Instance name="foot-1" uid="foot-1" entityUid="foot*:*Default">
+<Transform>
+<Rotation>0.99874715020852967 -0.047645130389083197 -0.015299395430805614 -0.049997716246052634 -0.93734085725650806 -0.34480769377700038 0.0020876591005466391 0.34514063636123998 -0.93854865766865714</Rotation>
+<Translation>-0.10210593107372186 0.019371359284276784 1.2675313853093348</Translation>
+</Transform>
+</Instance>
+</InstanceTree>
+<Constraints>
+<Concentric name="Concentric1">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>hip-1</Uid>
+</InstancePath>
+<Position>0.13600000000000007 0 0.080000000000000016</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>spider_univ_8-1</Uid>
+</InstancePath>
+<Position>-0.040000000000000001 0.018000000000000016 0.040000000000000008</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>hip-1</Uid>
+</InstancePath>
+<Position>-0.12000000000000004 0.014999999999999986 0.080000000000000016</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>spider_univ_8-1</Uid>
+</InstancePath>
+<Position>-0.040000000000000001 0.018000000000000016 0.040000000000000008</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric2">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>hip-1</Uid>
+</InstancePath>
+<Position>0.13600000000000007 0 0.080000000000000016</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>spider_univ_8-2</Uid>
+</InstancePath>
+<Position>-0.040000000000000008 0.017999999999999988 0.040000000000000008</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident2">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>hip-1</Uid>
+</InstancePath>
+<Position>0.12000000000000004 0.014999999999999986 0.080000000000000016</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>spider_univ_8-2</Uid>
+</InstancePath>
+<Position>0.040000000000000008 0.017999999999999988 0.040000000000000008</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident3">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>spider_univ_8-1</Uid>
+</InstancePath>
+<Position>0 0 0.080000000000000016</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>thigh-1</Uid>
+</InstancePath>
+<Position>-0.040000000000000022 0.040000000000000008 0.015000000000000013</Position>
+<Axis>0 1.0000000000000002 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric3">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>spider_univ_8-1</Uid>
+</InstancePath>
+<Position>0 0 0.080000000000000016</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>thigh-1</Uid>
+</InstancePath>
+<Position>0 -0.025000000000000022 -0.030000000000000027</Position>
+<Axis>0 -1.0000000000000002 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident4">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>spider_univ_8-2</Uid>
+</InstancePath>
+<Position>0 0 0.079999999999999988</Position>
+<Axis>0 0 1.0000000000000002</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>thigh-2</Uid>
+</InstancePath>
+<Position>-0.039999999999999994 0.040000000000000036 0.015000000000000013</Position>
+<Axis>0 1.0000000000000002 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric4">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>spider_univ_8-2</Uid>
+</InstancePath>
+<Position>0 0 0.079999999999999988</Position>
+<Axis>0 0 -1.0000000000000002</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>thigh-2</Uid>
+</InstancePath>
+<Position>0 0.02500000000000005 -0.030000000000000027</Position>
+<Axis>0 1.0000000000000002 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Concentric5">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>thigh-1</Uid>
+</InstancePath>
+<Position>-0.02500000000000005 -0.00016624649724938934 0.46000000000000008</Position>
+<Axis>-1 -5.6898930012039273e-16 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>revolute-2</Uid>
+</InstancePath>
+<Position>0 0 0.079999999999999988</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Concentric6">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>revolute-2</Uid>
+</InstancePath>
+<Position>0 0 0.079999999999999988</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>calf-1</Uid>
+</InstancePath>
+<Position>0.00016041905471975149 -0.025000000000000015 -0.030000000000000027</Position>
+<Axis>2.3418766925686896e-16 1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident5">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>thigh-1</Uid>
+</InstancePath>
+<Position>-0.02500000000000005 -0.00016624649724938934 0.46000000000000008</Position>
+<Axis>1 5.6898930012039273e-16 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>calf-1</Uid>
+</InstancePath>
+<Position>-0.014839580945280234 -0.024999999999999988 -0.030000000000000027</Position>
+<Axis>-1.231653667943533e-16 -1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric7">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>thigh-2</Uid>
+</InstancePath>
+<Position>-0.025000000000000008 -0.00016624649724938934 0.46000000000000019</Position>
+<Axis>-0.99999999999999989 -5.3429483060085659e-16 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>revolute-3</Uid>
+</InstancePath>
+<Position>0 0 0.079999999999999988</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident6">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>thigh-2</Uid>
+</InstancePath>
+<Position>0.040000000000000022 0.040000000000000036 0.43000000000000016</Position>
+<Axis>0.99999999999999989 5.3429483060085659e-16 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>revolute-3</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric8">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>revolute-3</Uid>
+</InstancePath>
+<Position>0 0 0.079999999999999988</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>calf-2</Uid>
+</InstancePath>
+<Position>0.00016041905471975149 -0.025000000000000022 -0.030000000000000027</Position>
+<Axis>2.2204460492503131e-16 1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident7">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>thigh-2</Uid>
+</InstancePath>
+<Position>0.024999999999999981 -0.00016624649724933382 0.4600000000000003</Position>
+<Axis>-0.99999999999999989 -5.3429483060085659e-16 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>calf-2</Uid>
+</InstancePath>
+<Position>-0.014839580945280206 -0.024999999999999939 -0.029999999999999916</Position>
+<Axis>-1.1102230246251565e-16 -1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric11">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>calf-1</Uid>
+</InstancePath>
+<Position>0.024999999999999967 -0.00016624649724935464 0.45999999999999996</Position>
+<Axis>1 5.1174342541315809e-16 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>spider_univ_8-3</Uid>
+</InstancePath>
+<Position>-0.03999999999999998 0.018000000000000016 0.03999999999999998</Position>
+<Axis>1.0000000000000002 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident8">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>calf-1</Uid>
+</InstancePath>
+<Position>-0.040000000000000036 0.040000000000000001 0.42999999999999994</Position>
+<Axis>-1 -5.1174342541315809e-16 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>spider_univ_8-3</Uid>
+</InstancePath>
+<Position>0.039999999999999994 0.018000000000000016 0.03999999999999998</Position>
+<Axis>1.0000000000000002 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric12">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>spider_univ_8-3</Uid>
+</InstancePath>
+<Position>0 0 0.080000000000000002</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>foot-1</Uid>
+</InstancePath>
+<Position>-0.034999999999999989 0 0.039999999999999813</Position>
+<Axis>-1.0000000000000002 -1.0007186052041206e-16 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident9">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>spider_univ_8-3</Uid>
+</InstancePath>
+<Position>0 0 0.080000000000000002</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>foot-1</Uid>
+</InstancePath>
+<Position>-0.050000000000000003 0.075000000000000067 0.01499999999999968</Position>
+<Axis>-1.0000000000000002 -1.0007186052041206e-16 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric13">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>calf-2</Uid>
+</InstancePath>
+<Position>-0.024999999999999967 -0.00016624649724941709 0.45999999999999996</Position>
+<Axis>-1 -4.9960036108132044e-16 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>spider_univ_8-4</Uid>
+</InstancePath>
+<Position>0 0 0.080000000000000071</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident10">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>calf-2</Uid>
+</InstancePath>
+<Position>0.03999999999999998 0.039999999999999952 0.43000000000000016</Position>
+<Axis>1 4.9960036108132044e-16 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>spider_univ_8-4</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric14">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>spider_univ_8-4</Uid>
+</InstancePath>
+<Position>-0.040000000000000036 0.017999999999999794 0.040000000000000036</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>foot-2</Uid>
+</InstancePath>
+<Position>-0.035000000000000003 0 0.039999999999999813</Position>
+<Axis>-1 -1.3357370765021415e-16 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident11">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>spider_univ_8-4</Uid>
+</InstancePath>
+<Position>0.039999999999999952 0.018000000000000016 0.03999999999999998</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>foot-2</Uid>
+</InstancePath>
+<Position>0.050000000000000017 0.074999999999999983 0.015000000000000124</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident12">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>thigh-1</Uid>
+</InstancePath>
+<Position>0.03999999999999998 0.040000000000000036 0.43000000000000016</Position>
+<Axis>1 5.6898930012039273e-16 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>revolute-2</Uid>
+</InstancePath>
+<Position>0 0 0.079999999999999988</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Coincident>
+</Constraints>
+</RootAssembly>
+<Assemblies>
+</Assemblies>
+<Parts>
+<Part name="calf" uid="calf*:*Default" version="185">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="calf.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>2.2777608909510585</Mass>
+<CenterOfMass>3.3075638315218346e-06 -2.0566293787696488e-06 0.21307819048635762</CenterOfMass>
+<Inertia>0.040080999292405731 0.040103097628091999 0.0018597350202718859 1.1005994847041291e-06 1.7410763644620581e-06 -1.5494315687236393e-11</Inertia>
+</MassProperties>
+<GeometryFile name="calf_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="foot" uid="foot*:*Default" version="133">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="foot.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.24867809724509593</Mass>
+<CenterOfMass>0 0 0.0097349702954250879</CenterOfMass>
+<Inertia>0.00044306440474856448 0.00024985363993955411 0.00065463581975361111 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="foot_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="hip" uid="hip*:*Default" version="156">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="hip.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>2.6563561944901957</Mass>
+<CenterOfMass>0 0 0.02591275059496528</CenterOfMass>
+<Inertia>0.0093240409441902074 0.015720531913441787 0.023739367471710147 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="hip_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="revolute" uid="revolute*:*Default" version="120">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="revolute.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.02513274122871835</Mass>
+<CenterOfMass>0 0 0.039999999999999994</CenterOfMass>
+<Inertia>1.4032447186034414e-05 1.4032447186034414e-05 1.2566370614359175e-06 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="revolute_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="spider_univ_8" uid="spider_univ_8*:*Default" version="125">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="spider_univ_8.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.050557981350355732</Mass>
+<CenterOfMass>3.7424852013737225e-09 0.0089999987332685695 0.039999975530676239</CenterOfMass>
+<Inertia>1.9377710500516905e-05 2.8096952213209879e-05 1.9377727578411173e-05 9.7701146915208686e-13 -2.6984183165414946e-12 -1.2135886921420727e-12</Inertia>
+</MassProperties>
+<GeometryFile name="spider_univ_8_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="thigh" uid="thigh*:*Default" version="153">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="thigh.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>2.2589754927876609</Mass>
+<CenterOfMass>0 -2.073732088329216e-06 0.21500000000000002</CenterOfMass>
+<Inertia>0.039086935204677049 0.039086934435608095 0.0018786507013465075 1.0915967488842962e-06 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="thigh_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+</Parts>
+</SimscapeMultibodyImportXML>
