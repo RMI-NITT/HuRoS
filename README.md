@@ -8,4 +8,4 @@ A 10 DoF Bipedal Walking robot, to be developed as a platform for further resear
 * Dual_DC_Motor_Driver_20A.pdf -> motor drivers used 
 * Biped Recent picture.jpeg -> complete fabrication 
 
-![Image of HuRoS](https://github.com/RMI-NITT/HuRoS/blob/master/Biped%20Recent%20picture.jpeg)
+<img src="https://github.com/RMI-NITT/HuRoS/blob/master/Biped%20Recent%20picture.jpeg" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="700" height="700" />
