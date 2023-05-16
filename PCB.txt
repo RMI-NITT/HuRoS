@@ -1,0 +1,28 @@
+Wiring of PCB
+
+TMD1 TMD2 TMD3 motor power output
+
+ST1 Vin to Mega
+ST2 5V output of Mega
+Common GND
+
+MD3 
+PWM - 7
+DIR - 39
+BRK - 45
+INT0 MC3 A 2 
+INT1 MC3 B 3
+
+MD2
+PWM - 6
+DIR - 37
+BRK - 43
+INT4 MC2 B 19
+INT5 MC2 A 18
+
+MD1
+PWM - 5
+DIR - 35
+BRK - 41
+INT2 MC1 B 21
+INT3 MC1 A 20 

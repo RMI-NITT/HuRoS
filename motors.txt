@@ -1,0 +1,9 @@
+HuRoS motors and power supply
+
+Rhino motor - RMCS 3013 DC geared motor with quad encoder, 100RPM 12V, 10 nos
+Rated voltage - 12V, 
+Running current - 0.8A/1.04A,
+Starting peak current - 7.5A
+
+Corsair VS550 power supply
+GND the Green wire in motherboard connector for by-passing
